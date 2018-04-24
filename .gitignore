@@ -1,0 +1,28 @@
+﻿# java文件
+*.class
+*.jar
+*.navmesh
+
+
+# ide工具文件
+.classpath
+.project
+.settings
+/.idea/
+
+
+# 项目文件
+/log/
+/target/
+/mmo-cluster/target/
+/mmo-common/target/
+/mmo-db/target/
+/mmo-engine/target/
+/mmo-game/target/
+/mmo-gate/target/
+/mmo-log/target/
+/mmo-login/target/
+/mmo-manage/target/
+/mmo-scene/target/
+/mmo-world/target/
+
