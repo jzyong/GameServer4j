@@ -1,6 +1,10 @@
-package org.mmo.db.memory.collection;
+package org.mmo.db.memory.message;
+
+import java.io.Serializable;
 
 import com.alibaba.fastjson.JSON;
+
+import akka.serialization.Serialization;
 
 /**
  * 数据存储请求
@@ -8,7 +12,8 @@ import com.alibaba.fastjson.JSON;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
-public class SetRequest {
+public class SetRequest implements scala.Serializable{
+	private static final long serialVersionUID = 1L;
 	private final String key;
 	private final Object value;
 

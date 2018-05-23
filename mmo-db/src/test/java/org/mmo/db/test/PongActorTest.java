@@ -26,6 +26,7 @@ public class PongActorTest {
 	ActorSystem system = ActorSystem.create();
 	ActorRef actorRef = system.actorOf(Props.create(PongActor.class), "BruceWillis");
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldReplyToPingWithPong() throws Exception {
 		Future sFuture = ask(actorRef, "Ping", 1000);
