@@ -17,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
 
 /**
  * 缓存客户端
+ * TODO 将缓存数据定时存数据库
  * 
  * @author JiangZhiYong
  * @mail 359135103@qq.com

@@ -30,8 +30,6 @@ public class ServerCacheApp implements CommandLineRunner{
 	private SpringExtension springExtension;
 
 	public static void main(String[] args) {
-//		ActorSystem actorSystem = ActorSystem.create("ServerCacheApp");
-//		actorSystem.actorOf(Props.create(MapCache.class), CacheType.Map.getName());
 		 SpringApplication.run(ServerCacheApp.class, args);
 	}
 
