@@ -9,7 +9,7 @@
 .project
 .settings
 /.idea/
-
+*.iml
 
 # 项目文件
 /log/
