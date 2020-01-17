@@ -34,10 +34,6 @@ public class ServerProperties {
 	private String name;
 
 
-
-	/** 网络地址 */
-	private Address address;
-
 	public int getId() {
 		return id;
 	}
@@ -46,14 +42,6 @@ public class ServerProperties {
 		this.id = id;
 	}
 
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 
 	public int getVersion() {
 		return version;
@@ -78,81 +66,5 @@ public class ServerProperties {
 		return JSON.toJSONString(this);
 	}
 
-
-	/**
-	 * 需要连接的服务器
-	 * 
-	 * @author JiangZhiYong
-	 * @mail 359135103@qq.com
-	 */
-	public static class ConnectionServer {
-		@NotEmpty
-		private String host;
-		private int port;
-
-		public String getHost() {
-			return host;
-		}
-
-		public void setHost(String host) {
-			this.host = host;
-		}
-
-		public int getPort() {
-			return port;
-		}
-
-		public void setPort(int port) {
-			this.port = port;
-		}
-
-		@Override
-		public String toString() {
-			return JSON.toJSONString(this);
-		}
-	}
-
-	/**
-	 * 网络地址
-	 * 
-	 * @author JiangZhiYong
-	 * @mail 359135103@qq.com
-	 */
-	public static class Address {
-		@NotEmpty
-		private String host;
-		/** 网关需要开多个端口 */
-		private List<Integer> ports;
-		private int httpPort;
-
-		public String getHost() {
-			return host;
-		}
-
-		public void setHost(String host) {
-			this.host = host;
-		}
-
-		public List<Integer> getPorts() {
-			return ports;
-		}
-
-		public void setPorts(List<Integer> ports) {
-			this.ports = ports;
-		}
-
-		public int getHttpPort() {
-			return httpPort;
-		}
-
-		public void setHttpPort(int httpPort) {
-			this.httpPort = httpPort;
-		}
-
-		@Override
-		public String toString() {
-			return JSON.toJSONString(this);
-		}
-	}
 
 }

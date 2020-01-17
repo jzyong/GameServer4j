@@ -47,7 +47,6 @@ public class ServerInfo implements Serializable{
     // 在线人数
     private int online;
 
-    protected transient final ConcurrentCoverSetBlockingQueue<Channel> allChannels = new ConcurrentCoverSetBlockingQueue<>();//
     public ServerInfo() {
     }
 
@@ -79,20 +78,6 @@ public class ServerInfo implements Serializable{
         this.openTime = openTime;
     }
 
-//    //是否在准备开服时间内
-//    public boolean isOpenTime() {
-//        if (getOpenTime() != null && TimeUtil.currentTimeMillis() < DateTimeUtil.parseTimestamp(getOpenTime())) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean isMaintainTime() {
-//        if (getMaintainTime() != null && TimeUtil.currentTimeMillis() < DateTimeUtil.parseTimestamp(getMaintainTime())) {
-//            return true;
-//        }
-//        return this.gamestate <= ServerState.MAINTAIN.getState();
-//    }
 
     @Override
     public String toString() {
@@ -139,13 +124,6 @@ public class ServerInfo implements Serializable{
     public void setPort(int port) {
         this.port = port;
     }
-
-//    public int getGamestate() {
-//        if (isOpenTime()) {//等待开服状态永远显示0
-//            return 0;
-//        }
-//        return gamestate;
-//    }
 
 
     public String getVersion() {
@@ -198,26 +176,6 @@ public class ServerInfo implements Serializable{
     }
 
 
-//    public String getMaintainTimeString() {
-//        if (getMaintainTime() != null && TimeUtil.currentTimeMillis() < DateTimeUtil.parseTimestamp(getMaintainTime())) {
-//            return getMaintainTime();
-//        }
-//        return null;
-//    }
-//
-//    public String getOpenTimeString() {
-//        if (getOpenTime() != null && TimeUtil.currentTimeMillis() < DateTimeUtil.parseTimestamp(getOpenTime())) {
-//            return getOpenTime();
-//        }
-//        return null;
-//    }
-//
-//    public Channel getActiveChannel() {
-//        if (activeChannel == null || !activeChannel.isActive()) {
-//            activeChannel = getMostIdleChannel();
-//        }
-//        return activeChannel;
-//    }
 
     public int getMaxUserCount() {
         return maxUserCount;
@@ -227,19 +185,6 @@ public class ServerInfo implements Serializable{
         this.maxUserCount = maxUserCount;
     }
 
-//    public void sendMsg(Object msg) {
-//        Channel se = getActiveChannel();
-//        if (se != null) {
-//            if(msg instanceof Message) {
-//                MsgUtil.sendInnerMsg(se, (Message)msg, getId());
-//            }else {
-//                MsgUtil.sendInnerMsg(se, msg);
-//            }
-//           
-//        } else {
-//            log.warn("服务器:{}-{} {}:{}连接会话为空,消息{}发送失败",this.getId(), name ,this.getIp(),this.port,msg.getClass().getSimpleName());
-//        }
-//    }
 
     public String getWwwip() {
         return wwwip;

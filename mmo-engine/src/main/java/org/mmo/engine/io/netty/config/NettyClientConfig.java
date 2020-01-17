@@ -1,6 +1,7 @@
 package org.mmo.engine.io.netty.config;
 
 /**
+ * 客户端连接配置
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */

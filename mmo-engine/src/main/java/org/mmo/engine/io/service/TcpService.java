@@ -48,7 +48,7 @@ public abstract class TcpService implements INettyService<Integer> {
      *
      * @param obj
      */
-    public void broadcastMsgAllSessions(Object obj) {
+    public void broadcastMsgAllChannel(Object obj) {
         allChannels.forEach(s -> {
             if(obj instanceof Message) {
                 MsgUtil.sendInnerMsg(s, (Message)obj, serverProperties.getId());

@@ -105,29 +105,6 @@ public class FileUtil {
     }
     //</editor-fold>
 
-//    /**
-//     * 获取xml的实例
-//     *
-//     * @param <T>
-//     * @param path
-//     * @param fileName
-//     * @param configClass
-//     * @return
-//     */
-//    public static <T extends Object> T getConfigXML(String path, String fileName, Class<T> configClass) {
-//        T ob = null;
-//        fileName = path + File.separatorChar + fileName;
-//        if (!new File(fileName).exists()) {
-//            return ob;
-//        }
-//        Serializer serializer = new Persister();
-//        try {
-//            ob = serializer.read(configClass, new File(fileName));
-//        } catch (Exception ex) {
-//            log.error("文件" + fileName + "配置有误", ex);
-//        }
-//        return ob;
-//    }
 
     public static String readTxtFile(String path, String fileName, String encoding) {
         return readTxtFile(path + File.separatorChar + fileName, encoding);

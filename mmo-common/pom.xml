@@ -24,5 +24,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>mmo-engine</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+    </dependencies>
 </project>

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO 待完善
+ * http消息处理
  */
 @Component
 @Scope("prototype")
@@ -36,6 +36,7 @@ public abstract class HttpServerIoHandler extends ChannelInboundHandlerAdapter {
 
     @Autowired
     ScriptService scriptService;
+
     
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -62,7 +63,7 @@ public abstract class HttpServerIoHandler extends ChannelInboundHandlerAdapter {
 
                 decoder = new HttpPostRequestDecoder(factory, request);
                 HttpHandler handler = scriptService.getHttpHandler(uri);
-                LOGGER.warn(uri);
+                LOGGER.debug("http request uri:{}",uri);
                 if (handler == null) {
                     LOGGER.warn("{} 请求地址{}处理器未实现", MsgUtil.getRemoteIpPort(ctx.channel()), uri);
                     return;
@@ -76,14 +77,9 @@ public abstract class HttpServerIoHandler extends ChannelInboundHandlerAdapter {
                 handler.setMessage(msg);
                 handler.setChannel(ctx.channel());
                 handler.setCreateTime(TimeUtil.currentTimeMillis());
-        //      xecute(handler);  Executor executor =
-        // getHttpService().getExecutor("io");
-        ////                executor.execute(handler);
-
-                //TODO 待完善，分配指定线程
                 handler.run();
 
-        time = TimeUtil.currentTimeMillis() - time;
+                time = TimeUtil.currentTimeMillis() - time;
                 if (time > 20) {
                     LOGGER.warn("{}处理时间超过{}", handler.getClass().getSimpleName(), time);
                 }

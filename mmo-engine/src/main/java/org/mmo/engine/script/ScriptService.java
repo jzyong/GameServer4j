@@ -279,7 +279,6 @@ public final class ScriptService {
         return str == null || str.length() <= 0 || "".equals(str.trim());
     }
 
-    // <editor-fold desc="public final void Compile()">
     /**
      * 编译 java 源文件
      *
@@ -291,9 +290,7 @@ public final class ScriptService {
         FileUtil.getFiles(this.sourceDir, sourceFileList, ".java", null);
         return this.compile(sourceFileList);
     }
-    // </editor-fold>
 
-    // <editor-fold desc="public final void Compile(String... fileNames)">
     /**
      * 编译文件
      *
@@ -378,9 +375,7 @@ public final class ScriptService {
         }
         return sb.toString();
     }
-    // </editor-fold>
 
-    // <editor-fold desc="加载脚本 public void loadJava()">
     /**
      * 加载脚本文件
      *
@@ -510,7 +505,6 @@ public final class ScriptService {
             LOGGER.error("", e);
         }
     }
-    // </editor-fold>
 
     public void setSourceDir(String sourceDir) {
         this.sourceDir = sourceDir;
@@ -520,7 +514,6 @@ public final class ScriptService {
         this.outDir = outDir;
     }
 
-    // <editor-fold desc="自定义文件加载器 class ScriptClassLoader extends ClassLoader">
     class ScriptClassLoader extends ClassLoader {
 
         @Override
@@ -565,12 +558,10 @@ public final class ScriptService {
                                     TcpMessageBean messageBean = new TcpMessageBean(handler.msg(), defineClass,
                                             handler.executor());
                                     messagebeans.put(handler.mid(), messageBean);
-                                    LOGGER.warn("加载到tcp handler到容器：{}", nameString);
+                                    LOGGER.info("加载到tcp handler到容器：{}", nameString);
                                 } else if (HttpHandler.class.isAssignableFrom(defineClass)) {
-//                                    HttpMessageBean httpMessageBean = new HttpMessageBean(
-//                                            (Class<? extends IHandler>) (defineClass));
                                     httpHandlerClazzs.put(handler.path(), (Class<? extends HttpHandler>) (defineClass));
-                                    LOGGER.warn("[{}]加载到http handler容器", nameString);
+                                    LOGGER.info("[{}]加载到http handler容器", nameString);
                                 } else {
                                     LOGGER.warn("handler[{}]未继承Handler", defineClass.getSimpleName());
                                 }
@@ -657,7 +648,6 @@ public final class ScriptService {
             return "";
         }
     }
-    // </editor-fold>
 
     public TcpMessageBean getMessagebean(int msgId) {
         return messagebeans.get(msgId);
