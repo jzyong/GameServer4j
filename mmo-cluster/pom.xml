@@ -26,6 +26,11 @@
 			<artifactId>mmo-engine</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>mmo-message</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 	</dependencies>
 
@@ -34,16 +39,44 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<!-- <classpathPrefix>lib/</classpathPrefix> -->
-							<mainClass>org.mmo.ClusterApp</mainClass>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>org.mmo.cluster.ClusterApp</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>13</source>
+					<target>13</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/lib
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.9.Final</version>
+			<version>6.0.18.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.typesafe.akka</groupId>
@@ -38,5 +38,38 @@
 			<artifactId>akka-testkit_2.12</artifactId>
 			<version>2.5.17</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.44.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>3.11.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.concurrentlinkedhashmap</groupId>
+			<artifactId>concurrentlinkedhashmap-lru</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>13</source>
+					<target>13</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -1,16 +1,13 @@
 package org.mmo.engine.server;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.fastjson.JSON;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
-import com.alibaba.fastjson.JSON;
+import java.util.List;
 
 /**
  * 服务器配置信息
@@ -32,8 +29,11 @@ public class ServerProperties {
 	@Max(999999)
 	private int version;
 
-	/** 需要连接的其他服务器 */
-	private List<ConnectionServer> connections = new ArrayList<>();
+
+	/**服务器名字*/
+	private String name;
+
+
 
 	/** 网络地址 */
 	private Address address;
@@ -46,13 +46,6 @@ public class ServerProperties {
 		this.id = id;
 	}
 
-	public List<ConnectionServer> getConnections() {
-		return connections;
-	}
-
-	public void setConnections(List<ConnectionServer> connections) {
-		this.connections = connections;
-	}
 
 	public Address getAddress() {
 		return address;
@@ -70,10 +63,21 @@ public class ServerProperties {
 		this.version = version;
 	}
 
+
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);
 	}
+
 
 	/**
 	 * 需要连接的服务器
