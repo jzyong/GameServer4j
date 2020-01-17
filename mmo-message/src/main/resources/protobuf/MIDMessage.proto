@@ -1,0 +1,24 @@
+package ProtoMessage;
+option java_package = "com.proto";
+syntax = "proto2"
+
+//消息ID枚举
+// 客户端请求消息XXRequest，服务器返回消息XXResponse
+// 十万位：服务器类型；万位千位：模块编号，百位十位个位：消息编号，依次递增
+//
+// 1网关服务器+内部服务器转发
+// 2游戏服务器
+// 3登录服务器
+// 4日志服务器
+// 5聊天服务器
+// 6充值服务器
+	
+
+enum MID{
+
+	//服务器内部消息
+	ServerRegisterUpdateReq				= 110001; // 服务器注册更新
+	ServerListReq				        = 110003; // 服务器间请求游戏服务器列表
+	ServerListRes   				    = 110004; // 服务器间响应游戏服务器列表
+
+}
