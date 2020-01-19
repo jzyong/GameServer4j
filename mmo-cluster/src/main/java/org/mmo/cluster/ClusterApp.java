@@ -1,6 +1,5 @@
 package org.mmo.cluster;
 
-import org.mmo.cluster.service.ServerService;
 import org.mmo.cluster.service.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan("org.mmo")
 public class ClusterApp implements CommandLineRunner{
-	private static final Logger LOGGER=LoggerFactory.getLogger(ServerService.class);
+	private static final Logger LOGGER=LoggerFactory.getLogger(ClusterApp.class);
 	
 	@Autowired
 	private TestService testService;

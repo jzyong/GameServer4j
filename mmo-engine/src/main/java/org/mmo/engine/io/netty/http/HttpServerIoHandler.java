@@ -29,7 +29,6 @@ public abstract class HttpServerIoHandler extends ChannelInboundHandlerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpServerIoHandler.class);
 
-    protected abstract HttpService getHttpService();
     private static final HttpDataFactory factory = new DefaultHttpDataFactory(DefaultHttpDataFactory.MINSIZE);
     private HttpRequest request;
     private HttpPostRequestDecoder decoder;

@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public final class IDMessage implements Runnable {
 
-    @Autowired
-    protected ServerProperties serverProperties;
 
     public static IDMessage newIDMessage(Object msg) {
         return new IDMessage(msg);
@@ -25,14 +23,13 @@ public final class IDMessage implements Runnable {
 
     /**纯消息内容*/
     private Object msg;
-    /**玩家唯一编号*/
-    private long pid;
+    /**唯一编号*/
+    private long id;
     private Channel channel;
     /**消息唯一编号*/
     private int msgId;
 
     private IDMessage(Object msg) {
-        this.pid = serverProperties.getId();
         this.msg = msg;
     }
 
@@ -40,12 +37,12 @@ public final class IDMessage implements Runnable {
      *
      * @param channel
      * @param msg byte[]
-     * @param pid
+     * @param id
      */
-    private IDMessage(Channel channel, Object msg, long pid, int msgId) {
+    private IDMessage(Channel channel, Object msg, long id, int msgId) {
         if (msg instanceof Message || msg instanceof ByteBuf || msg instanceof byte[]) {
             this.msg = msg;
-            this.pid = pid;
+            this.id = id;
             this.channel = channel;
             this.msgId=msgId;
         } else {
@@ -53,8 +50,8 @@ public final class IDMessage implements Runnable {
         }
     }
 
-    public long getPid() {
-        return pid;
+    public long getId() {
+        return id;
     }
 
     public Channel getSession() {
