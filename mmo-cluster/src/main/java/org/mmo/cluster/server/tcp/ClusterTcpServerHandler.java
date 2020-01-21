@@ -1,7 +1,6 @@
 package org.mmo.cluster.server.tcp;
 
 import com.google.protobuf.Message;
-import com.proto.MIDMessage.MID;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,6 +12,7 @@ import org.mmo.engine.io.message.TcpMessageBean;
 import org.mmo.engine.io.service.TcpService;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.thread.IExecutorService;
+import org.mmo.message.MIDMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +90,7 @@ public class ClusterTcpServerHandler extends ChannelInboundHandlerAdapter {
 						executor.execute(handler);
 					}
 				} else {
-					LOGGER.warn("消息[{}]代码未实现逻辑", MID.forNumber(msgId));
+					LOGGER.warn("消息[{}]代码未实现逻辑", MIDMessage.MID.forNumber(msgId));
 				}
 			} else {
 				LOGGER.warn("消息类型{}未实现,玩家{}消息发送失败", msgType, id);

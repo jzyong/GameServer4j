@@ -1,6 +1,7 @@
+syntax = "proto3";
 package ProtoMessage;
-option java_package = "com.proto";
-syntax = "proto2"
+option java_package = "org.mmo.message";
+
 
 //消息ID枚举
 // 客户端请求消息XXRequest，服务器返回消息XXResponse
@@ -15,6 +16,7 @@ syntax = "proto2"
 	
 
 enum MID{
+	None								=0;
 
 	//服务器内部消息
 	ServerRegisterUpdateReq				= 110001; // 服务器注册更新

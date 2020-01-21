@@ -1,5 +1,6 @@
+syntax = "proto3";
 package ProtoMessage;
-option java_package = "com.proto";
+option java_package = "org.mmo.message";
 import "MIDMessage.proto";
 
 
@@ -7,12 +8,12 @@ import "MIDMessage.proto";
 
 //服务器列表
 message ServerListRequest {
-	optional MID msgID                      = 1 [default = ServerListReq];
-	optional int32 type		                =2;//服务器类型
+    MID msgID                               = 1;//ServerListReq
+	int32 type		                        = 2;//服务器类型
 }
 
 message ServerListResponse {
-	optional MID msgID                      = 1 [default = ServerListRes];
+    MID msgID                               = 1;// ServerListRes];
 	repeated ServerInfo server              = 2; // 服务器列表
 }
 
@@ -21,27 +22,27 @@ message ServerListResponse {
 
 // 服务器信息
 message ServerInfo {
-    optional int32 id			            = 1;// 服务器ID
-    optional int32 belongID		            = 2;// 归属服务器ID，即被合并到哪个服
-    optional string ip			            = 3;// 内网地址
-    optional int32 type			            = 4;// 类型
-    optional int32 port			            = 5;// 端口
-    optional int32 state		            = 6; //// 状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
-    optional string version		            = 7;// 版本号
-    optional string content		            = 8;//服务器信息：
-    optional int32 online		            = 11;// 在线人数
-    optional int32 maxUserCount		        = 12;// 最大在线人数
-    optional int32 httpPort		            = 13;// http端口
-    optional string openTime		        = 14;//开服时间
-    optional string maintainTime	        = 15;//维护时间
-    optional string name		            = 16;//名字
-    optional string wwwip		            = 17;// 外网地址
+    int32 id			                    = 1;// 服务器ID
+    int32 belongID		                    = 2;// 归属服务器ID，即被合并到哪个服
+    string ip			                    = 3;// 内网地址
+    int32 type			                    = 4;// 类型
+    int32 port			                    = 5;// 端口
+    int32 state		                        = 6; //// 状态 -1表示维护；0表示准备开启；1表示正常，2表示不显示，3表示内部开启
+    string version		                    = 7;// 版本号
+    string content		                    = 8;//服务器信息：
+    int32 online		                    = 11;// 在线人数
+    int32 maxUserCount		                = 12;// 最大在线人数
+    int32 httpPort		                    = 13;// http端口
+    string openTime		                    = 14;//开服时间
+    string maintainTime	                    = 15;//维护时间
+    string name		                        = 16;//名字
+    string wwwip		                    = 17;// 外网地址
 }
 
 
 // 注册更新服务器
 message ServerRegisterUpdateRequest {
-    optional MID msgID                      = 1 [default = ServerRegisterUpdateReq];
-    optional ServerInfo serverInfo          = 2;
+    MID msgID                               = 1; //[default = ServerRegisterUpdateReq];
+    ServerInfo serverInfo                   = 2;
 }
 

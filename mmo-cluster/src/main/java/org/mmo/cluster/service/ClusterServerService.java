@@ -1,7 +1,6 @@
 package org.mmo.cluster.service;
 
 
-import com.proto.ServerMessage;
 import org.mmo.cluster.server.http.ClusterHttpService;
 import org.mmo.cluster.server.tcp.ClusterTcpService;
 import org.mmo.common.constant.ServerType;
