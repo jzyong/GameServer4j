@@ -155,7 +155,7 @@ public final class MIDMessage {
       "\n\020MIDMessage.proto\022\014ProtoMessage*N\n\003MID\022" +
       "\035\n\027ServerRegisterUpdateReq\020\261\333\006\022\023\n\rServer" +
       "ListReq\020\263\333\006\022\023\n\rServerListRes\020\264\333\006B\013\n\tcom." +
-              "com/proto"
+      "proto"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

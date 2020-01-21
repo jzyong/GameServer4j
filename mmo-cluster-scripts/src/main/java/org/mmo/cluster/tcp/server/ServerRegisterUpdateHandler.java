@@ -1,4 +1,4 @@
-package org.game.cluster.tcp.server;
+package org.mmo.cluster.tcp.server;
 
 import com.proto.MIDMessage.MID;
 import com.proto.ServerMessage;

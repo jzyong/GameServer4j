@@ -137,13 +137,13 @@ public final class ServerMessage {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return internal_static_ProtoMessage_ServerListRequest_descriptor;
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListRequest_descriptor;
     }
 
     @Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return internal_static_ProtoMessage_ServerListRequest_fieldAccessorTable
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.proto.ServerMessage.ServerListRequest.class, com.proto.ServerMessage.ServerListRequest.Builder.class);
     }
@@ -364,7 +364,7 @@ public final class ServerMessage {
 
     @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -381,13 +381,13 @@ public final class ServerMessage {
         com.proto.ServerMessage.ServerListRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return internal_static_ProtoMessage_ServerListRequest_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListRequest_descriptor;
       }
 
       @Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return internal_static_ProtoMessage_ServerListRequest_fieldAccessorTable
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.proto.ServerMessage.ServerListRequest.class, com.proto.ServerMessage.ServerListRequest.Builder.class);
       }
@@ -398,7 +398,7 @@ public final class ServerMessage {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -420,12 +420,12 @@ public final class ServerMessage {
       @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return internal_static_ProtoMessage_ServerListRequest_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListRequest_descriptor;
       }
 
       @Override
       public com.proto.ServerMessage.ServerListRequest getDefaultInstanceForType() {
-        return getDefaultInstance();
+        return com.proto.ServerMessage.ServerListRequest.getDefaultInstance();
       }
 
       @Override
@@ -498,7 +498,7 @@ public final class ServerMessage {
       }
 
       public Builder mergeFrom(com.proto.ServerMessage.ServerListRequest other) {
-        if (other == getDefaultInstance()) return this;
+        if (other == com.proto.ServerMessage.ServerListRequest.getDefaultInstance()) return this;
         if (other.hasMsgID()) {
           setMsgID(other.getMsgID());
         }
@@ -704,7 +704,7 @@ public final class ServerMessage {
      *
      * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
      */
-    java.util.List<com.proto.ServerMessage.ServerInfo>
+    java.util.List<ServerInfo>
         getServerList();
     /**
      * <pre>
@@ -729,7 +729,7 @@ public final class ServerMessage {
      *
      * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
      */
-    java.util.List<? extends com.proto.ServerMessage.ServerInfoOrBuilder>
+    java.util.List<? extends ServerInfoOrBuilder>
         getServerOrBuilderList();
     /**
      * <pre>
@@ -803,7 +803,7 @@ public final class ServerMessage {
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                server_ = new java.util.ArrayList<com.proto.ServerMessage.ServerInfo>();
+                server_ = new java.util.ArrayList<ServerInfo>();
                 mutable_bitField0_ |= 0x00000002;
               }
               server_.add(
@@ -834,13 +834,13 @@ public final class ServerMessage {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return internal_static_ProtoMessage_ServerListResponse_descriptor;
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListResponse_descriptor;
     }
 
     @Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return internal_static_ProtoMessage_ServerListResponse_fieldAccessorTable
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.proto.ServerMessage.ServerListResponse.class, com.proto.ServerMessage.ServerListResponse.Builder.class);
     }
@@ -866,7 +866,7 @@ public final class ServerMessage {
     }
 
     public static final int SERVER_FIELD_NUMBER = 2;
-    private java.util.List<com.proto.ServerMessage.ServerInfo> server_;
+    private java.util.List<ServerInfo> server_;
     /**
      * <pre>
      * 服务器列表
@@ -874,7 +874,7 @@ public final class ServerMessage {
      *
      * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
      */
-    public java.util.List<com.proto.ServerMessage.ServerInfo> getServerList() {
+    public java.util.List<ServerInfo> getServerList() {
       return server_;
     }
     /**
@@ -884,7 +884,7 @@ public final class ServerMessage {
      *
      * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
      */
-    public java.util.List<? extends com.proto.ServerMessage.ServerInfoOrBuilder>
+    public java.util.List<? extends ServerInfoOrBuilder>
         getServerOrBuilderList() {
       return server_;
     }
@@ -1088,7 +1088,7 @@ public final class ServerMessage {
 
     @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1101,13 +1101,13 @@ public final class ServerMessage {
         com.proto.ServerMessage.ServerListResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return internal_static_ProtoMessage_ServerListResponse_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListResponse_descriptor;
       }
 
       @Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return internal_static_ProtoMessage_ServerListResponse_fieldAccessorTable
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.proto.ServerMessage.ServerListResponse.class, com.proto.ServerMessage.ServerListResponse.Builder.class);
       }
@@ -1118,7 +1118,7 @@ public final class ServerMessage {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1145,12 +1145,12 @@ public final class ServerMessage {
       @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return internal_static_ProtoMessage_ServerListResponse_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerListResponse_descriptor;
       }
 
       @Override
       public com.proto.ServerMessage.ServerListResponse getDefaultInstanceForType() {
-        return getDefaultInstance();
+        return com.proto.ServerMessage.ServerListResponse.getDefaultInstance();
       }
 
       @Override
@@ -1228,7 +1228,7 @@ public final class ServerMessage {
       }
 
       public Builder mergeFrom(com.proto.ServerMessage.ServerListResponse other) {
-        if (other == getDefaultInstance()) return this;
+        if (other == com.proto.ServerMessage.ServerListResponse.getDefaultInstance()) return this;
         if (other.hasMsgID()) {
           setMsgID(other.getMsgID());
         }
@@ -1330,17 +1330,17 @@ public final class ServerMessage {
         return this;
       }
 
-      private java.util.List<com.proto.ServerMessage.ServerInfo> server_ =
+      private java.util.List<ServerInfo> server_ =
         java.util.Collections.emptyList();
       private void ensureServerIsMutable() {
         if (!((bitField0_ & 0x00000002) != 0)) {
-          server_ = new java.util.ArrayList<com.proto.ServerMessage.ServerInfo>(server_);
+          server_ = new java.util.ArrayList<ServerInfo>(server_);
           bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.proto.ServerMessage.ServerInfo, com.proto.ServerMessage.ServerInfo.Builder, com.proto.ServerMessage.ServerInfoOrBuilder> serverBuilder_;
+          ServerInfo, ServerInfo.Builder, ServerInfoOrBuilder> serverBuilder_;
 
       /**
        * <pre>
@@ -1349,7 +1349,7 @@ public final class ServerMessage {
        *
        * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
        */
-      public java.util.List<com.proto.ServerMessage.ServerInfo> getServerList() {
+      public java.util.List<ServerInfo> getServerList() {
         if (serverBuilder_ == null) {
           return java.util.Collections.unmodifiableList(server_);
         } else {
@@ -1508,7 +1508,7 @@ public final class ServerMessage {
        * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
        */
       public Builder addAllServer(
-          Iterable<? extends com.proto.ServerMessage.ServerInfo> values) {
+          Iterable<? extends ServerInfo> values) {
         if (serverBuilder_ == null) {
           ensureServerIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1585,7 +1585,7 @@ public final class ServerMessage {
        *
        * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
        */
-      public java.util.List<? extends com.proto.ServerMessage.ServerInfoOrBuilder>
+      public java.util.List<? extends ServerInfoOrBuilder>
            getServerOrBuilderList() {
         if (serverBuilder_ != null) {
           return serverBuilder_.getMessageOrBuilderList();
@@ -1623,16 +1623,16 @@ public final class ServerMessage {
        *
        * <code>repeated .ProtoMessage.ServerInfo server = 2;</code>
        */
-      public java.util.List<com.proto.ServerMessage.ServerInfo.Builder>
+      public java.util.List<ServerInfo.Builder>
            getServerBuilderList() {
         return getServerFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.proto.ServerMessage.ServerInfo, com.proto.ServerMessage.ServerInfo.Builder, com.proto.ServerMessage.ServerInfoOrBuilder>
+          ServerInfo, ServerInfo.Builder, ServerInfoOrBuilder>
           getServerFieldBuilder() {
         if (serverBuilder_ == null) {
           serverBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              com.proto.ServerMessage.ServerInfo, com.proto.ServerMessage.ServerInfo.Builder, com.proto.ServerMessage.ServerInfoOrBuilder>(
+              ServerInfo, ServerInfo.Builder, ServerInfoOrBuilder>(
                   server_,
                   ((bitField0_ & 0x00000002) != 0),
                   getParentForChildren(),
@@ -2213,13 +2213,13 @@ public final class ServerMessage {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return internal_static_ProtoMessage_ServerInfo_descriptor;
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerInfo_descriptor;
     }
 
     @Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return internal_static_ProtoMessage_ServerInfo_fieldAccessorTable
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.proto.ServerMessage.ServerInfo.class, com.proto.ServerMessage.ServerInfo.Builder.class);
     }
@@ -3197,7 +3197,7 @@ public final class ServerMessage {
 
     @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -3214,13 +3214,13 @@ public final class ServerMessage {
         com.proto.ServerMessage.ServerInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return internal_static_ProtoMessage_ServerInfo_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerInfo_descriptor;
       }
 
       @Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return internal_static_ProtoMessage_ServerInfo_fieldAccessorTable
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.proto.ServerMessage.ServerInfo.class, com.proto.ServerMessage.ServerInfo.Builder.class);
       }
@@ -3231,7 +3231,7 @@ public final class ServerMessage {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -3279,12 +3279,12 @@ public final class ServerMessage {
       @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return internal_static_ProtoMessage_ServerInfo_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerInfo_descriptor;
       }
 
       @Override
       public com.proto.ServerMessage.ServerInfo getDefaultInstanceForType() {
-        return getDefaultInstance();
+        return com.proto.ServerMessage.ServerInfo.getDefaultInstance();
       }
 
       @Override
@@ -3409,7 +3409,7 @@ public final class ServerMessage {
       }
 
       public Builder mergeFrom(com.proto.ServerMessage.ServerInfo other) {
-        if (other == getDefaultInstance()) return this;
+        if (other == com.proto.ServerMessage.ServerInfo.getDefaultInstance()) return this;
         if (other.hasId()) {
           setId(other.getId());
         }
@@ -4858,13 +4858,13 @@ public final class ServerMessage {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return internal_static_ProtoMessage_ServerRegisterUpdateRequest_descriptor;
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerRegisterUpdateRequest_descriptor;
     }
 
     @Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return internal_static_ProtoMessage_ServerRegisterUpdateRequest_fieldAccessorTable
+      return com.proto.ServerMessage.internal_static_ProtoMessage_ServerRegisterUpdateRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.proto.ServerMessage.ServerRegisterUpdateRequest.class, com.proto.ServerMessage.ServerRegisterUpdateRequest.Builder.class);
     }
@@ -5083,7 +5083,7 @@ public final class ServerMessage {
 
     @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -5100,13 +5100,13 @@ public final class ServerMessage {
         com.proto.ServerMessage.ServerRegisterUpdateRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return internal_static_ProtoMessage_ServerRegisterUpdateRequest_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerRegisterUpdateRequest_descriptor;
       }
 
       @Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return internal_static_ProtoMessage_ServerRegisterUpdateRequest_fieldAccessorTable
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerRegisterUpdateRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.proto.ServerMessage.ServerRegisterUpdateRequest.class, com.proto.ServerMessage.ServerRegisterUpdateRequest.Builder.class);
       }
@@ -5117,7 +5117,7 @@ public final class ServerMessage {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -5144,12 +5144,12 @@ public final class ServerMessage {
       @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return internal_static_ProtoMessage_ServerRegisterUpdateRequest_descriptor;
+        return com.proto.ServerMessage.internal_static_ProtoMessage_ServerRegisterUpdateRequest_descriptor;
       }
 
       @Override
       public com.proto.ServerMessage.ServerRegisterUpdateRequest getDefaultInstanceForType() {
-        return getDefaultInstance();
+        return com.proto.ServerMessage.ServerRegisterUpdateRequest.getDefaultInstance();
       }
 
       @Override
@@ -5226,7 +5226,7 @@ public final class ServerMessage {
       }
 
       public Builder mergeFrom(com.proto.ServerMessage.ServerRegisterUpdateRequest other) {
-        if (other == getDefaultInstance()) return this;
+        if (other == com.proto.ServerMessage.ServerRegisterUpdateRequest.getDefaultInstance()) return this;
         if (other.hasMsgID()) {
           setMsgID(other.getMsgID());
         }
@@ -5307,7 +5307,7 @@ public final class ServerMessage {
 
       private com.proto.ServerMessage.ServerInfo serverInfo_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.proto.ServerMessage.ServerInfo, com.proto.ServerMessage.ServerInfo.Builder, com.proto.ServerMessage.ServerInfoOrBuilder> serverInfoBuilder_;
+          ServerInfo, ServerInfo.Builder, ServerInfoOrBuilder> serverInfoBuilder_;
       /**
        * <code>optional .ProtoMessage.ServerInfo serverInfo = 2;</code>
        * @return Whether the serverInfo field is set.
@@ -5412,11 +5412,11 @@ public final class ServerMessage {
        * <code>optional .ProtoMessage.ServerInfo serverInfo = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.proto.ServerMessage.ServerInfo, com.proto.ServerMessage.ServerInfo.Builder, com.proto.ServerMessage.ServerInfoOrBuilder>
+          ServerInfo, ServerInfo.Builder, ServerInfoOrBuilder>
           getServerInfoFieldBuilder() {
         if (serverInfoBuilder_ == null) {
           serverInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.proto.ServerMessage.ServerInfo, com.proto.ServerMessage.ServerInfo.Builder, com.proto.ServerMessage.ServerInfoOrBuilder>(
+              ServerInfo, ServerInfo.Builder, ServerInfoOrBuilder>(
                   getServerInfo(),
                   getParentForChildren(),
                   isClean());

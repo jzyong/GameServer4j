@@ -26,9 +26,9 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.mmo</groupId>
 			<artifactId>mmo-message</artifactId>
-			<version>${project.version}</version>
+			<version>releases</version>
 		</dependency>
 	</dependencies>
 
@@ -52,7 +52,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>org.mmo.gate.ClusterApp</mainClass>
+							<mainClass>org.mmo.gate.GateApp</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

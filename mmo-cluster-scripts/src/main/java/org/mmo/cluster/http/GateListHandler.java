@@ -1,4 +1,4 @@
-package org.game.cluster.http;
+package org.mmo.cluster.http;
 
 
 import org.mmo.cluster.service.ClusterManager;
