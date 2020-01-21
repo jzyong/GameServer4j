@@ -32,7 +32,6 @@
 		<module>mmo-db</module>
 		<module>mmo-scene</module>
 		<module>mmo-message</module>
-        <module>mmo-cluster-scripts</module>
     </modules>
 
 	<dependencyManagement>
