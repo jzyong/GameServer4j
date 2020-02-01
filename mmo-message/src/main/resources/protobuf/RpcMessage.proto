@@ -1,0 +1,17 @@
+syntax = "proto3";
+package ProtoMessage;
+option java_package = "org.mmo.message";
+//option go_package="github.com/jzy/go-game-server/protobuf";
+option go_package="message";
+
+
+message String {
+    string value=1;
+}
+
+//rpc 测试
+service HelloService{
+    rpc Hello (String) returns (String);
+    rpc Close (String) returns (String);
+}
+
