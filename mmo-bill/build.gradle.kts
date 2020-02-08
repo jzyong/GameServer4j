@@ -13,10 +13,12 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
+
 	maven {
 		setUrl("http://maven.aliyun.com/nexus/content/groups/public/")
 	}
 	mavenCentral()
+	flatDir{dirs("libs")}
 }
 
 dependencies {
@@ -27,7 +29,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	//implementation("org.mmo:mmo-engine:releases")
+	implementation("org.mmo:mmo-engine:releases")
+	implementation("org.mmo:mmo-message:releases")
+	implementation("io.netty:netty-all:4.1.44.Final")
+	implementation("com.google.protobuf:protobuf-java:3.11.0")
+	implementation("com.typesafe.akka:akka-actor_2.12:2.5.17")
+	implementation("com.typesafe.akka:akka-remote_2.12:2.5.17")
+
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

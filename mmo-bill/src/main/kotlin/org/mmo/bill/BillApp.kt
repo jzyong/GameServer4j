@@ -2,6 +2,7 @@ package org.mmo.bill
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.ComponentScan
 
 /**
  * 参考
@@ -10,6 +11,7 @@ import org.springframework.boot.runApplication
  * 启动
  */
 @SpringBootApplication
+@ComponentScan("org.mmo")
 class BillApp
 
 fun main(args: Array<String>) {
