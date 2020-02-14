@@ -1,6 +1,8 @@
 syntax = "proto3";
 package ProtoMessage;
 option java_package = "org.mmo.message";
+option java_multiple_files = true;
+option java_outer_classname = "ServerMessage";
 import "MIDMessage.proto";
 option go_package="message";
 
@@ -47,3 +49,14 @@ message ServerRegisterUpdateRequest {
     ServerInfo serverInfo                   = 2;
 }
 
+
+//rpc
+service ServerService{
+    //服务器注册
+    rpc ServerRegister (ServerInfo) returns (ServerInfo);
+    //服务器更新
+    rpc ServerUpdate (ServerInfo) returns (ServerInfo);
+//    //获取服务器列表
+//    rpc ServerList (int32) returns (ServerInfo);
+
+}

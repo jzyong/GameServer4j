@@ -30,7 +30,7 @@ public class GateManager {
     @Autowired
     ServerProperties serverProperties;
     
-    @Autowired
+//    @Autowired
     GateToClusterService gateToClusterService;
     
 

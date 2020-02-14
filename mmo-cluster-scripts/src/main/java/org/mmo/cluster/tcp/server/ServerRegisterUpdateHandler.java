@@ -10,20 +10,21 @@ import org.mmo.engine.io.message.MsgUtil;
 import org.mmo.engine.server.ServerInfo;
 import org.mmo.message.MIDMessage;
 import org.mmo.message.ServerMessage;
+import org.mmo.message.ServerRegisterUpdateRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 服务器内部请求注册更新服务器信息
  */
-@Handler(mid = MIDMessage.MID.ServerRegisterUpdateReq_VALUE, msg = ServerMessage.ServerRegisterUpdateRequest.class)
+@Handler(mid = MIDMessage.MID.ServerRegisterUpdateReq_VALUE, msg = ServerRegisterUpdateRequest.class)
 public final class ServerRegisterUpdateHandler extends TcpHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerRegisterUpdateHandler.class);
 
     @Override
     public void run() {
-        ServerMessage.ServerRegisterUpdateRequest reqMessage = getMsg();
-        ServerMessage.ServerInfo serverInfo= reqMessage.getServerInfo();
+        ServerRegisterUpdateRequest reqMessage = getMsg();
+        org.mmo.message.ServerInfo serverInfo= reqMessage.getServerInfo();
        LOGGER.debug("{}",serverInfo.toString());
 
         String ip = serverInfo.getIp()!=null && serverInfo.getIp().length()>0 ?serverInfo.getIp() : MsgUtil.getIp(channel);

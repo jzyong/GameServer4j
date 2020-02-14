@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
+ * 网关连接cluster，使用rpc替换
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */

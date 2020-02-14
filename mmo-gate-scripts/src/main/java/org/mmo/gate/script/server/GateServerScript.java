@@ -6,7 +6,9 @@ import org.mmo.common.scripts.IServerScript;
 import org.mmo.engine.server.ServerProperties;
 import org.mmo.gate.service.GateManager;
 import org.mmo.message.MIDMessage;
+import org.mmo.message.ServerInfo;
 import org.mmo.message.ServerMessage;
+import org.mmo.message.ServerRegisterUpdateRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,8 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class GateServerScript implements IServerScript {
     private static final Logger LOGGER= LoggerFactory.getLogger(GateServerScript.class);
-    ServerMessage.ServerRegisterUpdateRequest.Builder register= ServerMessage.ServerRegisterUpdateRequest.newBuilder();
-    ServerMessage.ServerInfo.Builder serverInfo= ServerMessage.ServerInfo.newBuilder();
+    ServerRegisterUpdateRequest.Builder register= ServerRegisterUpdateRequest.newBuilder();
+    ServerInfo.Builder serverInfo= ServerInfo.newBuilder();
 
     @Override
     public void updateServerInfo() {
@@ -37,8 +39,8 @@ public class GateServerScript implements IServerScript {
             serverInfo.clear();
             //TODO 添加属性
 
-            register.setMsgID(MIDMessage.MID.ServerRegisterUpdateReq);
-            GateManager.getInstance().getGateToClusterService().sendMsg(register.build());
+//            register.setMsgID(MIDMessage.MID.ServerRegisterUpdateReq);
+//            GateManager.getInstance().getGateToClusterService().sendMsg(register.build());
 
         }catch (Exception e){
             LOGGER.error("定时注册",e);

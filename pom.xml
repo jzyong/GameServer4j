@@ -20,9 +20,9 @@
 	</properties>
 
 	<modules>
+		<module>mmo-message</module>
 		<module>mmo-engine</module>
 		<module>mmo-manage</module>
-		<module>mmo-cluster</module>
 		<module>mmo-gate</module>
 		<module>mmo-login</module>
 		<module>mmo-game</module>
@@ -31,7 +31,8 @@
 		<module>mmo-log</module>
 		<module>mmo-db</module>
 		<module>mmo-scene</module>
-		<module>mmo-message</module>
+		<module>mmo-cluster</module>
+
     </modules>
 
 	<dependencyManagement>

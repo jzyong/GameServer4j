@@ -33,8 +33,8 @@ dependencies {
 	implementation("org.mmo:mmo-message:releases")
 	implementation("io.netty:netty-all:4.1.44.Final")
 	implementation("com.google.protobuf:protobuf-java:3.11.0")
-	implementation("com.typesafe.akka:akka-actor_2.12:2.5.17")
-	implementation("com.typesafe.akka:akka-remote_2.12:2.5.17")
+	implementation("com.typesafe.akka:akka-actor_2.13:2.6.3")
+	implementation("com.typesafe.akka:akka-remote_2.13:2.6.3")
 
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.springframework.boot:spring-boot-devtools")

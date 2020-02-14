@@ -27,10 +27,11 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.mmo</groupId>
 			<artifactId>mmo-message</artifactId>
-			<version>${project.version}</version>
+			<version>releases</version>
 		</dependency>
+
 
 	</dependencies>
 
@@ -78,6 +79,9 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
 		</plugins>
+
 	</build>
 </project>
