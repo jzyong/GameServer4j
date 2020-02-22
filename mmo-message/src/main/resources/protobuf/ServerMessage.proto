@@ -48,15 +48,20 @@ message ServerRegisterUpdateRequest {
     MID msgID                               = 1; //[default = ServerRegisterUpdateReq];
     ServerInfo serverInfo                   = 2;
 }
+// 注册更新服务器
+message ServerRegisterUpdateResponse {
+    MID msgID                               = 1; //[default = ServerRegisterUpdateRes];
+    int32 status                            = 2; //0成功
+}
 
 
 //rpc
 service ServerService{
     //服务器注册
-    rpc ServerRegister (ServerInfo) returns (ServerInfo);
+    rpc ServerRegister (ServerRegisterUpdateRequest) returns (ServerRegisterUpdateResponse);
     //服务器更新
-    rpc ServerUpdate (ServerInfo) returns (ServerInfo);
-//    //获取服务器列表
-//    rpc ServerList (int32) returns (ServerInfo);
+    rpc ServerUpdate (ServerRegisterUpdateRequest) returns (ServerRegisterUpdateResponse);
+    //获取服务器列表
+    rpc ServerList (ServerListRequest) returns (stream ServerListResponse);
 
 }

@@ -6,6 +6,7 @@ import org.mmo.cluster.server.http.ClusterHttpService;
 import org.mmo.common.constant.ServerType;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.server.ServerInfo;
+import org.mmo.message.ServerRegisterUpdateResponse;
 import org.mmo.message.ServerServiceGrpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,26 +144,26 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
 
 
     @Override
-    public void serverRegister(org.mmo.message.ServerInfo request, StreamObserver<org.mmo.message.ServerInfo> responseObserver) {
+    public void serverRegister(org.mmo.message.ServerRegisterUpdateRequest request, StreamObserver<org.mmo.message.ServerRegisterUpdateResponse> responseObserver) {
         LOGGER.info("请求信息：{}",request.toString());
-        var response= org.mmo.message.ServerInfo.newBuilder().setId(100).build();
-
-        ServerType serverType = ServerType.valueof(request.getType());
+        var response= ServerRegisterUpdateResponse.newBuilder().setStatus(0).build();
+        var serverInfo=request.getServerInfo();
+        ServerType serverType = ServerType.valueof(serverInfo.getType());
 
         var info = new ServerInfo();
-        info.setId(request.getId());
-        info.setWwwip(request.getWwwip());
-        info.setIp(request.getIp());
-        info.setPort(request.getPort());
-        info.setOnline(request.getOnline());
-        info.setServerState(request.getState());
-        info.setName(request.getName());
-        info.setBelongId(request.getBelongID());
-        info.setContent(request.getContent());
-        info.setHttpPort(request.getHttpPort());
-        info.setMaintainTime(request.getMaintainTime());
-        info.setMaxUserCount(request.getMaxUserCount());
-        info.setOpenTime(request.getOpenTime());
+        info.setId(serverInfo.getId());
+        info.setWwwip(serverInfo.getWwwip());
+        info.setIp(serverInfo.getIp());
+        info.setPort(serverInfo.getPort());
+        info.setOnline(serverInfo.getOnline());
+        info.setServerState(serverInfo.getState());
+        info.setName(serverInfo.getName());
+        info.setBelongId(serverInfo.getBelongID());
+        info.setContent(serverInfo.getContent());
+        info.setHttpPort(serverInfo.getHttpPort());
+        info.setMaintainTime(serverInfo.getMaintainTime());
+        info.setMaxUserCount(serverInfo.getMaxUserCount());
+        info.setOpenTime(serverInfo.getOpenTime());
         addServerInfo(serverType, info);
 
 
@@ -173,33 +174,32 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
     }
 
     @Override
-    public void serverUpdate(org.mmo.message.ServerInfo request, StreamObserver<org.mmo.message.ServerInfo> responseObserver) {
-
-        ServerType serverType = ServerType.valueof(request.getType());
-	    ServerInfo info = getServerInfo(serverType, request.getId());
+    public void serverUpdate(org.mmo.message.ServerRegisterUpdateRequest request, StreamObserver<org.mmo.message.ServerRegisterUpdateResponse> responseObserver) {
+        var serverInfo=request.getServerInfo();
+        ServerType serverType = ServerType.valueof(serverInfo.getType());
+	    ServerInfo info = getServerInfo(serverType, serverInfo.getId());
         if (info == null) {//非游戏服务器注册信息为空
            LOGGER.warn("服务器未注册： {}",request.toString());
             return;
         }
-        info.setId(request.getId());
-        info.setWwwip(request.getWwwip());
-        info.setIp(request.getIp());
-        info.setPort(request.getPort());
-        info.setOnline(request.getOnline());
-        info.setServerState(request.getState());
-        info.setName(request.getName());
-        info.setBelongId(request.getBelongID());
-        info.setContent(request.getContent());
-        info.setHttpPort(request.getHttpPort());
-        info.setMaintainTime(request.getMaintainTime());
-        info.setMaxUserCount(request.getMaxUserCount());
-        info.setOpenTime(request.getOpenTime());
+        info.setId(serverInfo.getId());
+        info.setWwwip(serverInfo.getWwwip());
+        info.setIp(serverInfo.getIp());
+        info.setPort(serverInfo.getPort());
+        info.setOnline(serverInfo.getOnline());
+        info.setServerState(serverInfo.getState());
+        info.setName(serverInfo.getName());
+        info.setBelongId(serverInfo.getBelongID());
+        info.setContent(serverInfo.getContent());
+        info.setHttpPort(serverInfo.getHttpPort());
+        info.setMaintainTime(serverInfo.getMaintainTime());
+        info.setMaxUserCount(serverInfo.getMaxUserCount());
+        info.setOpenTime(serverInfo.getOpenTime());
         if (serverType == ServerType.GATE) {
             updateGateServer();
         }
 
-        //TODO 修改返回类型
-        var response= org.mmo.message.ServerInfo.newBuilder().setId(100).build();
+        var response= ServerRegisterUpdateResponse.newBuilder().setStatus(0).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

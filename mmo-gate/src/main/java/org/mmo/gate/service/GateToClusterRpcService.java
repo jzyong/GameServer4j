@@ -4,6 +4,7 @@ import org.mmo.common.constant.ServerType;
 import org.mmo.engine.io.grpc.RpcClientService;
 import org.mmo.engine.server.ServerProperties;
 import org.mmo.message.ServerInfo;
+import org.mmo.message.ServerRegisterUpdateRequest;
 import org.mmo.message.ServerServiceGrpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +34,13 @@ public class GateToClusterRpcService extends RpcClientService {
         stub=ServerServiceGrpc.newStub(getChannel());
 
 
-        var response= blockingStub.serverRegister(ServerInfo.newBuilder()
+        var serverInfo= ServerInfo.newBuilder()
                 .setId(serverProperties.getId())
                 .setType(ServerType.GATE.ordinal())
                 .setState(1)
                 .setVersion(String.valueOf(serverProperties.getVersion()))
-                .build());
+                .build();
+        var response= blockingStub.serverRegister(ServerRegisterUpdateRequest.newBuilder().setServerInfo(serverInfo).build());
         LOGGER.info("gate success register to cluster {}",response.toString());
     }
 
