@@ -62,6 +62,6 @@ service ServerService{
     //服务器更新
     rpc ServerUpdate (ServerRegisterUpdateRequest) returns (ServerRegisterUpdateResponse);
     //获取服务器列表
-    rpc ServerList (ServerListRequest) returns (stream ServerListResponse);
+    rpc ServerList (ServerListRequest) returns (ServerListResponse);
 
 }

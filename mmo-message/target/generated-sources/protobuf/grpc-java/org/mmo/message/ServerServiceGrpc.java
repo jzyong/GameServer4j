@@ -99,7 +99,7 @@ public final class ServerServiceGrpc {
       fullMethodName = SERVICE_NAME + '/' + "ServerList",
       requestType = org.mmo.message.ServerListRequest.class,
       responseType = org.mmo.message.ServerListResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<org.mmo.message.ServerListRequest,
       org.mmo.message.ServerListResponse> getServerListMethod() {
     io.grpc.MethodDescriptor<org.mmo.message.ServerListRequest, org.mmo.message.ServerListResponse> getServerListMethod;
@@ -108,7 +108,7 @@ public final class ServerServiceGrpc {
         if ((getServerListMethod = ServerServiceGrpc.getServerListMethod) == null) {
           ServerServiceGrpc.getServerListMethod = getServerListMethod =
               io.grpc.MethodDescriptor.<org.mmo.message.ServerListRequest, org.mmo.message.ServerListResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ServerList"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -222,7 +222,7 @@ public final class ServerServiceGrpc {
                   this, METHODID_SERVER_UPDATE)))
           .addMethod(
             getServerListMethod(),
-            asyncServerStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 org.mmo.message.ServerListRequest,
                 org.mmo.message.ServerListResponse>(
@@ -277,7 +277,7 @@ public final class ServerServiceGrpc {
      */
     public void serverList(org.mmo.message.ServerListRequest request,
         io.grpc.stub.StreamObserver<org.mmo.message.ServerListResponse> responseObserver) {
-      asyncServerStreamingCall(
+      asyncUnaryCall(
           getChannel().newCall(getServerListMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -324,9 +324,8 @@ public final class ServerServiceGrpc {
      *获取服务器列表
      * </pre>
      */
-    public java.util.Iterator<org.mmo.message.ServerListResponse> serverList(
-        org.mmo.message.ServerListRequest request) {
-      return blockingServerStreamingCall(
+    public org.mmo.message.ServerListResponse serverList(org.mmo.message.ServerListRequest request) {
+      return blockingUnaryCall(
           getChannel(), getServerListMethod(), getCallOptions(), request);
     }
   }
@@ -368,6 +367,17 @@ public final class ServerServiceGrpc {
         org.mmo.message.ServerRegisterUpdateRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getServerUpdateMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     *获取服务器列表
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<org.mmo.message.ServerListResponse> serverList(
+        org.mmo.message.ServerListRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getServerListMethod(), getCallOptions()), request);
     }
   }
 

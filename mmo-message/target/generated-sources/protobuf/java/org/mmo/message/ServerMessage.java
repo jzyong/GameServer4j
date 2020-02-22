@@ -64,16 +64,16 @@ public final class ServerMessage {
       "\001 \001(\0162\021.ProtoMessage.MID\022,\n\nserverInfo\030\002" +
       " \001(\0132\030.ProtoMessage.ServerInfo\"P\n\034Server" +
       "RegisterUpdateResponse\022 \n\005msgID\030\001 \001(\0162\021." +
-      "ProtoMessage.MID\022\016\n\006status\030\002 \001(\0052\262\002\n\rSer" +
+      "ProtoMessage.MID\022\016\n\006status\030\002 \001(\0052\260\002\n\rSer" +
       "verService\022g\n\016ServerRegister\022).ProtoMess" +
       "age.ServerRegisterUpdateRequest\032*.ProtoM" +
       "essage.ServerRegisterUpdateResponse\022e\n\014S" +
       "erverUpdate\022).ProtoMessage.ServerRegiste" +
       "rUpdateRequest\032*.ProtoMessage.ServerRegi" +
-      "sterUpdateResponse\022Q\n\nServerList\022\037.Proto" +
+      "sterUpdateResponse\022O\n\nServerList\022\037.Proto" +
       "Message.ServerListRequest\032 .ProtoMessage" +
-      ".ServerListResponse0\001B+\n\017org.mmo.message" +
-      "B\rServerMessageP\001Z\007messageb\006proto3"
+      ".ServerListResponseB+\n\017org.mmo.messageB\r" +
+      "ServerMessageP\001Z\007messageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

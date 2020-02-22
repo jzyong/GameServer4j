@@ -56,6 +56,7 @@
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.27.0:exe:${os.detected.classifier}</pluginArtifact>
                     <!--要编译的.proto文件的路径-->
                     <protoSourceRoot>src/main/resources/protobuf</protoSourceRoot>
+<!--                    <outputDirectory>src/main/java/</outputDirectory>-->
                 </configuration>
                 <executions>
                     <execution>
