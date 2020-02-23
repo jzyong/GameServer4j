@@ -11,6 +11,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * akka 配置
+ * @author jiangzhiyong
+ */
 @Configuration
 class MemoryCacheConfiguration {
 
