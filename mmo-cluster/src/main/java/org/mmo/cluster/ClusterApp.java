@@ -1,12 +1,14 @@
 package org.mmo.cluster;
 
-import org.mmo.cluster.service.TestService;
+import org.mmo.engine.server.ServerProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -15,27 +17,19 @@ import org.springframework.context.annotation.ComponentScan;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @ComponentScan("org.mmo")
 public class ClusterApp implements CommandLineRunner{
 	private static final Logger LOGGER=LoggerFactory.getLogger(ClusterApp.class);
 	
-	@Autowired
-	private TestService testService;
-	
 	public static void main(String[] args) {
+
 		SpringApplication.run(ClusterApp.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (args.length > 0) {
-            System.out.println(testService.getMessage(args[0].toString()));
-        } else {
-        	LOGGER.debug(testService.getMessage());
-        }
 
-//       System.exit(0);
 	}
 	
 	

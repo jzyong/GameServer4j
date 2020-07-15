@@ -1,9 +1,8 @@
-package org.mmo.common.db.repository;
+package org.mmo.game.db.repository;
 
-import org.mmo.common.struct.object.Player;
+import org.mmo.game.db.struct.Player;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 /**
  * 玩家数据操作

@@ -6,6 +6,7 @@ import org.mmo.cluster.server.http.ClusterHttpService;
 import org.mmo.common.constant.ServerType;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.server.ServerInfo;
+import org.mmo.engine.server.ServerProperties;
 import org.mmo.message.ServerRegisterUpdateResponse;
 import org.mmo.message.ServerServiceGrpc;
 import org.slf4j.Logger;
@@ -31,17 +32,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBase {
 	private static final Logger LOGGER= LoggerFactory.getLogger(ClusterServerService.class);
 
-	@Autowired
-	private ClusterHttpService httpService;
 
-	//使用grpc替代
-//	@Autowired
-//	private ClusterTcpService tcpService;
+
 
 	@Autowired
 	private ScriptService scriptService;
+	@Autowired
+    private ServerProperties serverProperties;
 	
-	   /**
+	/**
      * 游戏服务器信息 serverId
      */
     private final Map<ServerType, Map<Integer, ServerInfo>> servers = new ConcurrentHashMap<>();
@@ -55,7 +54,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
 	 */
 	@PostConstruct
 	public void init() {
-		LOGGER.info("-------------服务器初始化 begin-------------");
+		LOGGER.info("服务器：{}-{} 启动...",serverProperties.getId(),serverProperties.getName());
 
 		scriptService.init((str) -> {
             LOGGER.error("脚本加载错误:{}",str);
@@ -137,7 +136,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
 	 */
 	@PreDestroy
 	public void destroy() {
-		LOGGER.info("-------------服务器销毁 begin-------------");
+        LOGGER.info("服务器：{}-{} 关闭...",serverProperties.getId(),serverProperties.getName());
 
 	}
 

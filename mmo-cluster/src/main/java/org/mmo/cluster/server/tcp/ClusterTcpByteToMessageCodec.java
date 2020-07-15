@@ -17,6 +17,7 @@ import java.util.List;
  * 
  * @author JiangZhiYong
  */
+@Deprecated
 public class ClusterTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClusterTcpByteToMessageCodec.class);
     /** 消息头长度，除去消息长度 消息类型2+消息id4+唯一ID8 */

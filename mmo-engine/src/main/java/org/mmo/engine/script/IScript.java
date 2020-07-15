@@ -5,6 +5,6 @@ package org.mmo.engine.script;
  * @author JiangZhiYong
  * @date 2018/12/19
  */
-public interface IBaseScript {
+public interface IScript {
 
 }

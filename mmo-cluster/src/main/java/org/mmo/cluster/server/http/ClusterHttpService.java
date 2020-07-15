@@ -12,6 +12,8 @@ import javax.annotation.PreDestroy;
 
 /**
  * http服务器
+ * <p>
+ * </p>
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
@@ -27,7 +29,7 @@ public class ClusterHttpService extends HttpService {
 
     @PostConstruct
     public void init(){
-        httpServer.setNettyServerConfig(nettyProperties.getServerConfigs().get(1));
+        httpServer.setNettyServerConfig(nettyProperties.getServerConfigs().get(0));
         httpServer.setChannelInitializer(clusterHttpChannelInititialier);
         httpServer.start();
     }

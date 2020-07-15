@@ -3,8 +3,8 @@
  import io.netty.buffer.ByteBuf;
  import io.netty.channel.ChannelHandlerContext;
  import io.netty.channel.socket.SocketChannel;
- import org.mmo.engine.script.IBaseScript;
- import org.mmo.engine.script.IInitBaseScript;
+ import org.mmo.engine.script.IScript;
+ import org.mmo.engine.script.IInitScript;
 
 
  /**
@@ -12,7 +12,7 @@
   * @author JiangZhiYong
   * @date 2018/12/11
   */
- public interface IChannelHandlerScript extends IBaseScript, IInitBaseScript {
+ public interface IChannelHandlerScript extends IScript, IInitScript {
 
      /**
       * 连接是否为黑名单

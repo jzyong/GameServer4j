@@ -1,7 +1,7 @@
 package org.mmo.game;
 
-import org.mmo.common.db.repository.IPlayerRepository;
-import org.mmo.common.struct.object.Player;
+import org.mmo.game.db.repository.IPlayerRepository;
+import org.mmo.game.db.struct.Player;
 import org.mmo.db.memory.service.CacheClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

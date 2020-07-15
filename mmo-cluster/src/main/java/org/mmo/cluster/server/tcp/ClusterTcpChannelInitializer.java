@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
  *
  * @author JiangZhiYong
  */
+@Deprecated
 @Component
 @Scope("prototype")
 public class ClusterTcpChannelInitializer extends ChannelInitializer<SocketChannel> {

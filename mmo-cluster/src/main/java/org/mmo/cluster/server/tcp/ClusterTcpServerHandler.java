@@ -24,6 +24,7 @@ import java.util.concurrent.Executor;
  * @author JiangZhiYong
  * @date 2018/12/11
  */
+@Deprecated
 public class ClusterTcpServerHandler extends ChannelInboundHandlerAdapter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterTcpServerHandler.class);
 

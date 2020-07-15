@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSON;
 /**
  * 跨服消息
  * <br>
- *
- *  TODO
+ * 内部使用grpc通信
  * @note 暂时不实用，无跨服消息，跨服待实现
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  *
  */
+@Deprecated
 public final class CrossMessage {
 
 	/**消息来源服务器*/

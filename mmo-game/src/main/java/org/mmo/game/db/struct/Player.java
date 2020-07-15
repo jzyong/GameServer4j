@@ -1,5 +1,6 @@
-package org.mmo.common.struct.object;
+package org.mmo.game.db.struct;
 
+import org.mmo.common.struct.object.MapObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.alibaba.fastjson.JSON;

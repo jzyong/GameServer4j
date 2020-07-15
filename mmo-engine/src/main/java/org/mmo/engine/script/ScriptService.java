@@ -50,13 +50,13 @@ public final class ScriptService {
     /**
      * 脚本{"接口名"：{"类名":"类对象"}}
      */
-    Map<String, Map<String, IBaseScript>> tmpScriptInstances = new ConcurrentHashMap<>();
-    Map<String, Map<String, IBaseScript>> scriptInstances = new ConcurrentHashMap<>();
+    Map<String, Map<String, IScript>> tmpScriptInstances = new ConcurrentHashMap<>();
+    Map<String, Map<String, IScript>> scriptInstances = new ConcurrentHashMap<>();
     /**
      * 脚本{"类名":"类对象"}
      */
-    Map<String, IBaseScript> tmpNameScriptMap = new ConcurrentHashMap<>();
-    Map<String, IBaseScript> nameScriptMap = new ConcurrentHashMap<>();
+    Map<String, IScript> tmpNameScriptMap = new ConcurrentHashMap<>();
+    Map<String, IScript> nameScriptMap = new ConcurrentHashMap<>();
     /**
      * TCP:{MID:消息处理Bean}
      */
@@ -107,8 +107,8 @@ public final class ScriptService {
      * @param name
      * @return
      */
-    public Collection<IBaseScript> getScripts(String name) {
-        Map<String, IBaseScript> scripts = ScriptService.this.scriptInstances.get(name);
+    public Collection<IScript> getScripts(String name) {
+        Map<String, IScript> scripts = ScriptService.this.scriptInstances.get(name);
         if (scripts != null) {
             return scripts.values();
         }
@@ -123,7 +123,7 @@ public final class ScriptService {
      * @return
      */
     public <E> Collection<E> getScripts(Class<E> clazz) {
-        Map<String, IBaseScript> scripts = ScriptService.this.scriptInstances.get(clazz.getName());
+        Map<String, IScript> scripts = ScriptService.this.scriptInstances.get(clazz.getName());
         if (scripts != null) {
             return (Collection<E>) scripts.values();
         }
@@ -137,7 +137,7 @@ public final class ScriptService {
      * @param scriptName
      * @return
      */
-    public <T extends IBaseScript> T getScript(String scriptName) {
+    public <T extends IScript> T getScript(String scriptName) {
         if (this.nameScriptMap.containsKey(scriptName)) {
             return (T) this.nameScriptMap.get(scriptName);
         }
@@ -151,7 +151,7 @@ public final class ScriptService {
      * @param scriptName
      * @param action
      */
-    public <T extends IBaseScript> void consumerScript(String scriptName, Consumer<T> action) {
+    public <T extends IScript> void consumerScript(String scriptName, Consumer<T> action) {
         T s = getScript(scriptName);
         if (s != null && action != null) {
             try {
@@ -171,8 +171,8 @@ public final class ScriptService {
      * @param scriptClass
      * @param action
      */
-    public <T extends IBaseScript> void consumerScripts(Class<T> scriptClass, Consumer<T> action) {
-        Collection<IBaseScript> evts = getScripts(scriptClass.getName());
+    public <T extends IScript> void consumerScripts(Class<T> scriptClass, Consumer<T> action) {
+        Collection<IScript> evts = getScripts(scriptClass.getName());
         if (evts != null && !evts.isEmpty() && action != null) {
             evts.forEach(scrpit -> {
                 try {
@@ -192,7 +192,7 @@ public final class ScriptService {
      * @param condition
      * @return
      */
-    public <T extends IBaseScript> boolean predicateScript(String scriptName, Predicate<T> condition) {
+    public <T extends IScript> boolean predicateScript(String scriptName, Predicate<T> condition) {
         T s = getScript(scriptName);
         if (s != null && condition != null) {
             try {
@@ -214,11 +214,11 @@ public final class ScriptService {
      * @param condition
      * @return
      */
-    public <T extends IBaseScript> boolean predicateScripts(Class<? extends IBaseScript> scriptClass,
-            Predicate<T> condition) {
-        Collection<IBaseScript> evts = getScripts(scriptClass.getName());
+    public <T extends IScript> boolean predicateScripts(Class<? extends IScript> scriptClass,
+                                                        Predicate<T> condition) {
+        Collection<IScript> evts = getScripts(scriptClass.getName());
         if (evts != null && !evts.isEmpty() && condition != null) {
-            Iterator<IBaseScript> iterator = evts.iterator();
+            Iterator<IScript> iterator = evts.iterator();
             while (iterator.hasNext()) {
                 try {
                     if (condition.test((T) iterator.next())) {
@@ -241,7 +241,7 @@ public final class ScriptService {
      * @param function
      * @return
      */
-    public <T extends IBaseScript, R> R functionScript(String scriptName, Function<T, R> function) {
+    public <T extends IScript, R> R functionScript(String scriptName, Function<T, R> function) {
         T s = getScript(scriptName);
         if (s != null && function != null) {
             try {
@@ -256,11 +256,11 @@ public final class ScriptService {
         return null;
     }
 
-    public <T extends IBaseScript, R> R functionScripts(Class<? extends IBaseScript> scriptClass,
-            Function<T, R> function) {
-        Collection<IBaseScript> evts = getScripts(scriptClass.getName());
+    public <T extends IScript, R> R functionScripts(Class<? extends IScript> scriptClass,
+                                                    Function<T, R> function) {
+        Collection<IScript> evts = getScripts(scriptClass.getName());
         if (evts != null && !evts.isEmpty() && function != null) {
-            Iterator<IBaseScript> iterator = evts.iterator();
+            Iterator<IScript> iterator = evts.iterator();
             while (iterator.hasNext()) {
                 try {
                     R r = function.apply((T) iterator.next());
@@ -464,13 +464,13 @@ public final class ScriptService {
             tmpNameScriptMap = new ConcurrentHashMap<>();
             loadClass(fileNames);
             if (tmpScriptInstances.size() > 0) {
-                for (Iterator<Map.Entry<String, Map<String, IBaseScript>>> iterator = tmpScriptInstances.entrySet()
+                for (Iterator<Map.Entry<String, Map<String, IScript>>> iterator = tmpScriptInstances.entrySet()
                         .iterator(); iterator.hasNext();) {
-                    Map.Entry<String, Map<String, IBaseScript>> next = iterator.next();
+                    Map.Entry<String, Map<String, IScript>> next = iterator.next();
                     String key = next.getKey();
-                    Map<String, IBaseScript> value = next.getValue();
+                    Map<String, IScript> value = next.getValue();
                     if(scriptInstances.containsKey(key)){
-                        Map<String, IBaseScript> map = scriptInstances.get(key);
+                        Map<String, IScript> map = scriptInstances.get(key);
                         value.forEach((k,v)->{
                             map.put(k,v);
                         });
@@ -538,15 +538,15 @@ public final class ScriptService {
                             && !Modifier.isStatic(defineClass.getModifiers()) && !nameString.contains("$")) {
                         Object newInstance = defineClass.newInstance();
                         List<Class<?>> interfaces = new ArrayList<>();
-                        if (IInitBaseScript.class.isAssignableFrom(defineClass)
-                                || IBaseScript.class.isAssignableFrom(defineClass)) {
+                        if (IInitScript.class.isAssignableFrom(defineClass)
+                                || IScript.class.isAssignableFrom(defineClass)) {
                             Class<?> cls = defineClass;
                             while (cls != null && !cls.isInterface() && !cls.isPrimitive()) {
                                 interfaces.addAll(Arrays.asList(cls.getInterfaces()));
                                 cls = cls.getSuperclass();
                             }
-                            if (newInstance instanceof IInitBaseScript) {
-                                ((IInitBaseScript) newInstance).init();
+                            if (newInstance instanceof IInitScript) {
+                                ((IInitScript) newInstance).init();
                             }
                         }
 
@@ -574,16 +574,16 @@ public final class ScriptService {
                         if (newInstance != null && !interfaces.isEmpty()) {
 //                            LOGGER.warn("已实例化脚本：" + nameString);
                             for (Class<?> aInterface : interfaces) {
-                                if (IBaseScript.class.isAssignableFrom(aInterface)) {
+                                if (IScript.class.isAssignableFrom(aInterface)) {
                                     if (!tmpScriptInstances.containsKey(aInterface.getName())) {
                                         tmpScriptInstances.put(aInterface.getName(), new ConcurrentHashMap<>());
                                     }
                                     LOGGER.warn("成功加载脚本到IBaseScript管理器：" + nameString);
                                   //[接口名 [类名,类对象]]
                                     tmpScriptInstances.get(aInterface.getName()).put(defineClass.getSimpleName(),
-                                            (IBaseScript) newInstance);
+                                            (IScript) newInstance);
                                   //[类名,类对象]
-                                    tmpNameScriptMap.put(defineClass.getSimpleName(), (IBaseScript) newInstance);
+                                    tmpNameScriptMap.put(defineClass.getSimpleName(), (IScript) newInstance);
                                 }
                             }
                         } else {

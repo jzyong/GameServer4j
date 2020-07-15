@@ -1,9 +1,9 @@
-package org.mmo.common.db.repository;
+package org.mmo.game.db.repository;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.mmo.common.struct.object.Player;
+import org.mmo.game.db.struct.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;

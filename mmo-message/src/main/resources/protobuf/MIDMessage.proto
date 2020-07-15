@@ -19,13 +19,5 @@ option go_package="message";
 enum MID{
 	None								=0;
 
-	//服务器内部消息
-
-	// 服务器注册更新
-	ServerRegisterUpdateReq				= 110001;
-	// 服务器间请求游戏服务器列表
-	ServerListReq				        = 110003;
-	// 服务器间响应游戏服务器列表
-	ServerListRes   				    = 110004;
 
 }

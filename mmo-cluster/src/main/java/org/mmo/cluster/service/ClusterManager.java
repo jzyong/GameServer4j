@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * 获取Service对象，脚本不能通过spring获取service对象
+ */
 @Service
 public class ClusterManager {
 	private static ClusterManager instance;

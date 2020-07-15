@@ -6,7 +6,7 @@ package org.mmo.engine.script;
  * @author JiangZhiYong
  * @date 2018/12/19
  */
-public interface IInitBaseScript extends IBaseScript {
+public interface IInitScript extends IScript {
     /**
      * 初始化
      */

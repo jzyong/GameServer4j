@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+/**
+ * tcp 通信
+ * <p>使用grpc替换</p>
+ */
+@Deprecated
 @Service
 public class ClusterTcpService extends TcpService {
     private static final Logger LOG = LoggerFactory.getLogger(ClusterTcpService.class);
@@ -29,7 +34,7 @@ public class ClusterTcpService extends TcpService {
     }
 
 
-    @PostConstruct
+   // @PostConstruct
     public void start() {
         LOG.debug(" run cluster tcp ... ");
         NettyServerConfig nettyServerConfig = nettyProperties.getServerConfigs().get(0);
