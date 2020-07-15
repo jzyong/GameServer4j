@@ -87,4 +87,18 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>User Project RELEASES</name>
+			<url>http://192.168.110.16:9091/repository/maven-releases/</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>User Project SNAPSHOTS</name>
+			<url>http://192.168.110.16:9091/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
