@@ -17,7 +17,7 @@
 **mmo-game:** 具体游戏逻辑demo  
 **mmo-gate：** 网关  
 **mmo-log：** 日志存储操作  
-**mmo-login：** 登录服务器demo    
+**mmo-login：** 登录服务器demo,多开，无状态     
 **mmo-manage:** 服务器后台管理、gm等demo  
 **mmo-message：** protobuf消息定义  
 **mmo-res：** 服务器资源文件，docker脚本，文档等  

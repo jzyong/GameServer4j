@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("rpc")
 public class RpcProperties {
 
-    /**服务器启动端口号*/
+    /**服务器本地启动端口号*/
     private int serverPort=1234;
-    /**服务器地址*/
+    /**连接远端服务器地址*/
     private String serverURL="localhost:1234";
 
 

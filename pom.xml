@@ -31,7 +31,6 @@
 		<module>mmo-log</module>
 		<module>mmo-scene</module>
 		<module>mmo-cluster</module>
-
     </modules>
 
 	<dependencyManagement>
