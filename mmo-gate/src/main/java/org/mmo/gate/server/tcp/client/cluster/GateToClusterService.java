@@ -18,6 +18,7 @@ import javax.annotation.PreDestroy;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
+@Deprecated
 @Service
 public class GateToClusterService extends TcpService {
     private static final Logger LOGGER= LoggerFactory.getLogger(GateToClusterService.class);
@@ -32,7 +33,7 @@ public class GateToClusterService extends TcpService {
     private NettyProperties nettyProperties;
 
 
-    @PostConstruct
+    //@PostConstruct
     public void start(){
         LOGGER.debug("连接cluster...");
         NettyClientConfig nettyClientConfig = nettyProperties.getClientConfigs().get(0);

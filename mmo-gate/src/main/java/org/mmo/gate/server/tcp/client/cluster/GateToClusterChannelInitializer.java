@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
  * @author JiangZhiYong
  * @date 2018/12/11
  */
+@Deprecated
 @Component
 @Scope("prototype")
 public class GateToClusterChannelInitializer extends ChannelInitializer<SocketChannel> {

@@ -24,6 +24,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * 
  * @author JiangZhiYong
  */
+@Deprecated
 public class GateToClusterClientHandler extends ChannelInboundHandlerAdapter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GateToClusterClientHandler.class);
 

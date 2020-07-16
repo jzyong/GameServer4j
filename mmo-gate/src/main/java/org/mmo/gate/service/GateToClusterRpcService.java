@@ -41,7 +41,14 @@ public class GateToClusterRpcService extends RpcClientService {
                 .setVersion(String.valueOf(serverProperties.getVersion()))
                 .build();
         var response= blockingStub.serverRegister(ServerRegisterUpdateRequest.newBuilder().setServerInfo(serverInfo).build());
-        LOGGER.info("gate success register to cluster {}",response.toString());
+        LOGGER.info("gate 成功注册到 cluster {}",response.toString());
     }
 
+    public ServerServiceGrpc.ServerServiceBlockingStub getBlockingStub() {
+        return blockingStub;
+    }
+
+    public ServerServiceGrpc.ServerServiceStub getStub() {
+        return stub;
+    }
 }

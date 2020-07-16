@@ -3,6 +3,7 @@ package org.mmo.gate.service;
 import org.mmo.common.constant.ThreadType;
 import org.mmo.common.scripts.IServerScript;
 import org.mmo.engine.script.ScriptService;
+import org.mmo.engine.server.ServerProperties;
 import org.mmo.engine.thread.Scene.AbstractScene;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import javax.annotation.PreDestroy;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 网关服务器管理
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
@@ -26,10 +28,12 @@ public class GateServerService extends AbstractScene {
 
     @Autowired
     private ScriptService scriptService;
+    @Autowired
+    private ServerProperties serverProperties;
 
     @PostConstruct
     public void init(){
-        LOGGER.debug("服务器启动...");
+        LOGGER.debug("服务器启动：{}-{}...",serverProperties.getId(),serverProperties.getName());
         scriptService.init((str) -> {
             LOGGER.error("脚本加载错误：{}",str);
             System.exit(0);

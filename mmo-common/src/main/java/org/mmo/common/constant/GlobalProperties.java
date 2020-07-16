@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @mail 359135103@qq.com
  */
 @Component
-@ConfigurationProperties // no prefix, find root level values.
+@ConfigurationProperties(prefix = "global") // no prefix, find root level values.
 public class GlobalProperties {
 
 	/**描述信息*/

@@ -19,7 +19,7 @@ public class GateListHandler extends HttpHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GateListHandler.class);
     @Override
     public void run() {
-        // http://127.0.0.1:8102/gatelist
+        // http://127.0.0.1:10000/gatelist
         try {
             String list= ClusterManager.getInstance().getClusterServerService().getGateList();
             LOGGER.debug("{} 获取{}", MsgUtil.getIp(channel),list);

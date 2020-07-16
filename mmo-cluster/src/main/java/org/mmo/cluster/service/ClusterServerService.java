@@ -25,22 +25,21 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 服务器管理
+ *
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
 @Service
 public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBase {
-	private static final Logger LOGGER= LoggerFactory.getLogger(ClusterServerService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClusterServerService.class);
 
 
-
-
-	@Autowired
-	private ScriptService scriptService;
-	@Autowired
+    @Autowired
+    private ScriptService scriptService;
+    @Autowired
     private ServerProperties serverProperties;
-	
-	/**
+
+    /**
      * 游戏服务器信息 serverId
      */
     private final Map<ServerType, Map<Integer, ServerInfo>> servers = new ConcurrentHashMap<>();
@@ -48,21 +47,21 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
      * 网关服务器列表
      */
     private final Vector<ServerInfo> gateServerInfos = new Vector<>();
-	
-	/**
-	 * 初始化
-	 */
-	@PostConstruct
-	public void init() {
-		LOGGER.info("服务器：{}-{} 启动...",serverProperties.getId(),serverProperties.getName());
 
-		scriptService.init((str) -> {
-            LOGGER.error("脚本加载错误:{}",str);
-			System.exit(0);
-		});
+    /**
+     * 初始化
+     */
+    @PostConstruct
+    public void init() {
+        LOGGER.info("服务器：{}-{} 启动...", serverProperties.getId(), serverProperties.getName());
 
-	}
-	
+        scriptService.init((str) -> {
+            LOGGER.error("脚本加载错误:{}", str);
+            System.exit(0);
+        });
+
+    }
+
     /**
      * 获取服务器信息
      *
@@ -77,7 +76,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
         }
         return null;
     }
-    
+
     /**
      * 更新添加服务器信息
      *
@@ -104,7 +103,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
             updateGateServer();
         }
     }
-    
+
     /**
      * 更新gate顺序
      */
@@ -113,7 +112,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
             return (s0.getOnline()) - (s1.getOnline());
         });
     }
-    
+
     public String getGateList() {
         if (gateServerInfos.isEmpty()) {
             return "";
@@ -122,31 +121,30 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
         StringBuilder sb = new StringBuilder();
         gateServerInfos.forEach(s -> {
             if (s.getServerState() >= 0) {
-                sb.append(s.getWwwip()).append(";");
+                sb.append(s.getWwwip()).append(":").append(s.getPort()).append(";");
                 LOGGER.debug("网关{} 人数{}", s.getId(), s.getOnline());
             }
         });
         String url = sb.toString();
         return url.substring(0, url.length() - 1);
     }
-	
-	
-	/**
-	 * 销毁
-	 */
-	@PreDestroy
-	public void destroy() {
-        LOGGER.info("服务器：{}-{} 关闭...",serverProperties.getId(),serverProperties.getName());
 
-	}
 
+    /**
+     * 销毁
+     */
+    @PreDestroy
+    public void destroy() {
+        LOGGER.info("服务器：{}-{} 关闭...", serverProperties.getId(), serverProperties.getName());
+
+    }
 
 
     @Override
     public void serverRegister(org.mmo.message.ServerRegisterUpdateRequest request, StreamObserver<org.mmo.message.ServerRegisterUpdateResponse> responseObserver) {
-        LOGGER.info("请求信息：{}",request.toString());
-        var response= ServerRegisterUpdateResponse.newBuilder().setStatus(0).build();
-        var serverInfo=request.getServerInfo();
+        LOGGER.info("请求信息：{}", request.toString());
+        var response = ServerRegisterUpdateResponse.newBuilder().setStatus(0).build();
+        var serverInfo = request.getServerInfo();
         ServerType serverType = ServerType.valueof(serverInfo.getType());
 
         var info = new ServerInfo();
@@ -174,11 +172,11 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
 
     @Override
     public void serverUpdate(org.mmo.message.ServerRegisterUpdateRequest request, StreamObserver<org.mmo.message.ServerRegisterUpdateResponse> responseObserver) {
-        var serverInfo=request.getServerInfo();
+        var serverInfo = request.getServerInfo();
         ServerType serverType = ServerType.valueof(serverInfo.getType());
-	    ServerInfo info = getServerInfo(serverType, serverInfo.getId());
+        ServerInfo info = getServerInfo(serverType, serverInfo.getId());
         if (info == null) {//非游戏服务器注册信息为空
-           LOGGER.warn("服务器未注册： {}",request.toString());
+            serverRegister(request, responseObserver);
             return;
         }
         info.setId(serverInfo.getId());
@@ -198,7 +196,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
             updateGateServer();
         }
 
-        var response= ServerRegisterUpdateResponse.newBuilder().setStatus(0).build();
+        var response = ServerRegisterUpdateResponse.newBuilder().setStatus(0).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

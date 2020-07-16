@@ -1,49 +1,61 @@
 package org.mmo.gate.script.server;
 
 
+import io.grpc.stub.StreamObserver;
 import org.mmo.common.constant.ServerType;
 import org.mmo.common.scripts.IServerScript;
+import org.mmo.engine.io.netty.config.NettyProperties;
 import org.mmo.engine.server.ServerProperties;
 import org.mmo.gate.service.GateManager;
-import org.mmo.message.MIDMessage;
-import org.mmo.message.ServerInfo;
-import org.mmo.message.ServerMessage;
-import org.mmo.message.ServerRegisterUpdateRequest;
+import org.mmo.message.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 /**
  * 服務器脚本
+ *
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
 public class GateServerScript implements IServerScript {
-    private static final Logger LOGGER= LoggerFactory.getLogger(GateServerScript.class);
-    ServerRegisterUpdateRequest.Builder register= ServerRegisterUpdateRequest.newBuilder();
-    ServerInfo.Builder serverInfo= ServerInfo.newBuilder();
+    private static final Logger LOGGER = LoggerFactory.getLogger(GateServerScript.class);
+    ServerRegisterUpdateRequest.Builder register = ServerRegisterUpdateRequest.newBuilder();
+    ServerInfo.Builder serverInfo = ServerInfo.newBuilder();
 
     @Override
     public void updateServerInfo() {
-//    	NettyProperties nettyProperties = GateManager.getInstance().getNettyProperties();
 
         try {
             ServerProperties serverProperties = GateManager.getInstance().getServerProperties();
+            NettyProperties nettyProperties = GateManager.getInstance().getNettyProperties();
             serverInfo.setId(serverProperties.getId());
             serverInfo.setType(ServerType.GATE.ordinal());
             serverInfo.setState(1);
             serverInfo.setVersion(String.valueOf(serverProperties.getVersion()));
+            serverInfo.setIp(serverProperties.getIp());
+            serverInfo.setName(serverProperties.getName());
+            serverInfo.setPort(nettyProperties.getServerConfigs().get(0).getPort());
+            serverInfo.setWwwip(serverProperties.getWwwip());
 
             register.setServerInfo(serverInfo.build());
-
             serverInfo.clear();
-            //TODO 添加属性
+            GateManager.getInstance().getGateToClusterRpcService().getStub().serverUpdate(register.build(), new StreamObserver<ServerRegisterUpdateResponse>() {
+                @Override
+                public void onNext(ServerRegisterUpdateResponse value) {
+                    LOGGER.debug("cluster 状态：{}", value.getStatus());
+                }
+                @Override
+                public void onError(Throwable t) {
+                    LOGGER.warn("注册中心移除");
+                }
+                @Override
+                public void onCompleted() {
 
-//            register.setMsgID(MIDMessage.MID.ServerRegisterUpdateReq);
-//            GateManager.getInstance().getGateToClusterService().sendMsg(register.build());
-
-        }catch (Exception e){
-            LOGGER.error("定时注册",e);
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.error("定时注册", e);
         }
 
 

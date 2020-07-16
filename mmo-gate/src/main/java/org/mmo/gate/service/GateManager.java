@@ -29,10 +29,10 @@ public class GateManager {
     
     @Autowired
     ServerProperties serverProperties;
-    
-//    @Autowired
-    GateToClusterService gateToClusterService;
-    
+
+    @Autowired
+    GateToClusterRpcService gateToClusterRpcService;
+
 
     @PostConstruct
     public void init(){
@@ -55,11 +55,8 @@ public class GateManager {
 		return serverProperties;
 	}
 
-	public GateToClusterService getGateToClusterService() {
-		return gateToClusterService;
-	}
-	
-	
-    
-    
+
+    public GateToClusterRpcService getGateToClusterRpcService() {
+        return gateToClusterRpcService;
+    }
 }

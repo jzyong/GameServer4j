@@ -20,6 +20,7 @@ import io.netty.handler.codec.ByteToMessageCodec;
  * 
  * @author JiangZhiYong
  */
+@Deprecated
 public class GateToClusterMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GateToClusterMessageCodec.class);
     /** 消息头长度，除去消息长度 消息类型2+玩家ID8 +消息ID4 */

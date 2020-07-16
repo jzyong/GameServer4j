@@ -3,6 +3,8 @@ package org.mmo.gate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -10,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
-@SpringBootApplication()
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @ComponentScan("org.mmo")
 public class GateApp implements CommandLineRunner {
 

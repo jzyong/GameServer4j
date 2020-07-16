@@ -33,6 +33,15 @@ public class ServerProperties {
 	/**服务器名字*/
 	private String name;
 
+	/**
+	 * 本地ip地址
+	 */
+	private String ip;
+	/**
+	 * 外网ip地址
+	 */
+	private String wwwip;
+
 
 	public int getId() {
 		return id;
@@ -67,4 +76,19 @@ public class ServerProperties {
 	}
 
 
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getWwwip() {
+		return wwwip;
+	}
+
+	public void setWwwip(String wwwip) {
+		this.wwwip = wwwip;
+	}
 }
