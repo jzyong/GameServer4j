@@ -29,7 +29,7 @@ public class ClusterHttpService extends HttpService {
 
     @PostConstruct
     public void init(){
-        httpServer.setNettyServerConfig(nettyProperties.getServerConfigs().get(0));
+        httpServer.setNettyServerConfig(nettyProperties.getServerConfigs().get(1));
         httpServer.setChannelInitializer(clusterHttpChannelInititialier);
         httpServer.start();
     }
