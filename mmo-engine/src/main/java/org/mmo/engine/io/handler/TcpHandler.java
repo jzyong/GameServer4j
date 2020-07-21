@@ -12,12 +12,12 @@ public abstract class TcpHandler implements IHandler{
     private byte[] msgBytes;       //去除本消息长度后剩下的数据，可能有id等，根据协议确定
 
     /**
-     * 发送带pid的消息
+     * 返回消息
      * @param msg
      */
-    public void responseWithID(Message msg) {
+    public void sendInnerMsg(int mid, Message msg) {
         try {
-            MsgUtil.sendInnerMsg(channel, msg, pid);
+            MsgUtil.sendInnerMsg(channel, msg, pid,mid);
         } catch (Exception e) {
            e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public abstract class TcpHandler implements IHandler{
     /**直接返回消息
      * @param msg
      */
-    public void response(Message msg) {
+    public void sendMsg(Message msg) {
         if (getChannel() == null || !getChannel().isActive()) {
             return;
         }

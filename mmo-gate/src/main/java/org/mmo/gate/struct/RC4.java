@@ -69,13 +69,10 @@ public class RC4 {
 		byte[] randomKey = RC4.getRandomKey();
 		RC4 rc4=new RC4(randomKey);
 		long start=System.currentTimeMillis();
-		byte[] bytes = "阴阳界、游戏，金木水火土科技有限公司，深圳，成都。".getBytes("UTF-8");
+		byte[] bytes = "gswdsfsdf".getBytes("UTF-8");
 		for(int i=0;i<1000000;i++){
-			//System.out.println(bytes.toString()+" "+new String(bytes,"UTF-8"));
 			rc4.crypt(bytes,0,-1);
-			//System.out.println(bytes.toString()+" "+new String(bytes,"UTF-8"));
 			rc4.crypt(bytes,0,-1);
-			//System.out.println(bytes.toString()+" "+new String(bytes,"UTF-8"));
 		}
 		System.out.println(String.format("时间 %dms",System.currentTimeMillis()-start));
 	}

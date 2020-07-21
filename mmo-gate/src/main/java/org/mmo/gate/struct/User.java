@@ -1,6 +1,11 @@
 package org.mmo.gate.struct;
 
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import org.mmo.engine.io.message.IDMessage;
+import org.mmo.engine.io.message.MsgUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +13,16 @@ import java.util.concurrent.ScheduledFuture;
 
 /**
  * 用户连接信息
+ *
  * @author jzy
  */
 public class User {
+    public static final Logger LOGGER = LoggerFactory.getLogger(User.class);
 
     /**
      * 所在服务器
      */
-    private int gameId ;
+    private int gameId;
     /**
      * 用户id
      */
@@ -43,18 +50,30 @@ public class User {
     // ip
     private String ip;
 
-    /** 缓存发送消息包 */
+    /**
+     * 缓存发送消息包
+     */
     private List<byte[]> packMessages = new ArrayList<>(50);
 
-    /** 缓存消息长度 */
+    /**
+     * 缓存消息长度
+     */
     private int packMessageLength;
 
-    /** 调度返回 */
+    /**
+     * 调度返回
+     */
     private ScheduledFuture<?> packMessageFuture;
 
-    /**消息加密*/
+    /**
+     * 消息加密
+     */
     private RC4 rc4;
 
+
+    public User(Channel clientChannel) {
+        this.clientChannel = clientChannel;
+    }
 
     public int getGameId() {
         return gameId;
@@ -151,4 +170,36 @@ public class User {
     public void setRc4(RC4 rc4) {
         this.rc4 = rc4;
     }
+
+    /**
+     * 发送缓存的消息
+     */
+    public void sendToUser() {
+        if (!clientChannel.isActive()) {
+            LOGGER.warn("客户端连接会话未空");
+            return;
+        }
+        byte[][] sendBytes = packMessages.toArray(new byte[packMessages.size()][]);
+        clientChannel.writeAndFlush(Unpooled.wrappedBuffer(sendBytes));
+        packMessages.clear();
+        setPackMessageLength(0);
+    }
+
+    /**
+     * 发往游戏服
+     *
+     * @param data
+     * @param msgId
+     */
+    public void sendToGame(byte[] data, int msgId) {
+        if (userId < 1 || gameChannel == null) {
+            LOGGER.warn("连接{}未登录，消息{}转发失败", MsgUtil.getIp(clientChannel), msgId);
+            return;
+        }
+        IDMessage idMessage = IDMessage.newIDMessage(gameChannel, data, playerId < 1 ? userId : playerId, msgId);
+        gameChannel.writeAndFlush(idMessage);
+
+    }
+
+
 }

@@ -42,13 +42,13 @@ public class MsgUtil {
      * @param playerId
      * @return
      */
-    public final static boolean sendInnerMsg(Channel channel, Message message, long playerId) {
+    public final static boolean sendInnerMsg(Channel channel, Message message, long playerId,int messageId) {
         if (message == null) {
             return false;
         }
         try {
             if (channel != null && channel.isActive()) {
-                channel.writeAndFlush(IDMessage.newIDMessage(channel, message, playerId, getMessageID(message)));
+                channel.writeAndFlush(IDMessage.newIDMessage(channel, message, playerId, messageId));
                 return true;
             } else {
                 LOGGER.warn("发送消息失败{}，连接异常", message.getClass().getName());
@@ -151,21 +151,6 @@ public class MsgUtil {
         return "0.0.0.0:0000";
     }
 
-    /**
-     * 获取消息ID<br>
-     *     第一个属性必须为消息id枚举
-     * @param message
-     * @return
-     * @throws Exception
-     */
-    public final static int getMessageID(final Message message) throws Exception {
-        Descriptors.EnumValueDescriptor field = (Descriptors.EnumValueDescriptor) message.getField(message.getDescriptorForType().findFieldByNumber(1));
-        if (field != null && (field.getFullName().contains("MID") || field.getFullName().contains("Proto"))) {
-            int msgID = field.getNumber();
-            return msgID;
-        }
-        throw new Exception(String.format("消息:%s不是定义的消息结构体", message.getClass().getName()));
-    }
 
     public final static int getMessageID(final byte[] bytes, final int offset)  {
         byte[] data = Arrays.copyOfRange(bytes, offset, offset + MSG_ID_LENGTH);

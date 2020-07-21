@@ -33,6 +33,9 @@ public class GateManager {
     @Autowired
     GateToClusterRpcService gateToClusterRpcService;
 
+    @Autowired
+    UserService userService;
+
 
     @PostConstruct
     public void init(){
@@ -58,5 +61,9 @@ public class GateManager {
 
     public GateToClusterRpcService getGateToClusterRpcService() {
         return gateToClusterRpcService;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }

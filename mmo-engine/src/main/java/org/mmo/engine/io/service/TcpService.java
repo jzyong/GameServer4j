@@ -51,7 +51,8 @@ public abstract class TcpService implements INettyService<Integer> {
     public void broadcastMsgAllChannel(Object obj) {
         allChannels.forEach(s -> {
             if(obj instanceof Message) {
-                MsgUtil.sendInnerMsg(s, (Message)obj, serverProperties.getId());
+                //TODO 修改
+                MsgUtil.sendInnerMsg(s, (Message)obj, serverProperties.getId(),-1);
             }else {
                 throw new UnsupportedOperationException(String.format("消息 %s 类型不支持", obj.getClass().getSimpleName()));
             }
@@ -74,7 +75,8 @@ public abstract class TcpService implements INettyService<Integer> {
     public boolean sendMsg(Object msg) {
         Channel channel = nextChannel();
         if (msg instanceof Message) {
-            return MsgUtil.sendInnerMsg(channel, (Message)msg, serverProperties.getId());
+            //TODO 获取消息id
+               return MsgUtil.sendInnerMsg(channel, (Message)msg, serverProperties.getId(),-1);
         }else {
             return MsgUtil.sendInnerMsg(channel, msg);
         }
