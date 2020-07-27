@@ -29,5 +29,10 @@
 			<artifactId>mmo-engine</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>mmo-message</artifactId>
+			<version>${project.version}</version>
+		</dependency>
     </dependencies>
 </project>

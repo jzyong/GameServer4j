@@ -19,9 +19,9 @@ public class LoginRpcService extends RpcServerService {
     private BillingService billingService;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         //注册
-       //registerService(clusterServerService);
+        registerService(accountService);
 
         start();
     }

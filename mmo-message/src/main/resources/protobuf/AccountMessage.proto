@@ -1,0 +1,28 @@
+syntax = "proto3";
+package ProtoMessage;
+option java_package = "org.mmo.message";
+option java_multiple_files = true;
+option java_outer_classname = "AccountMessage";
+import "MIDMessage.proto";
+option go_package="message";
+
+
+
+//登录|注册
+message LoginRequest{
+    string account                          = 1; //账号
+    string password                         = 2; //密码
+}
+//登录|注册
+message LoginResponse{
+    int64 userId                            = 1; //用户id
+}
+
+//rpc
+service AccountService{
+    //服务器注册
+    rpc login (LoginRequest) returns (LoginResponse);
+
+}
+
+

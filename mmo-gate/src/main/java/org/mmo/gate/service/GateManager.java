@@ -36,6 +36,9 @@ public class GateManager {
     @Autowired
     UserService userService;
 
+    @Autowired
+    GateToLoginRpcService gateToLoginRpcService;
+
 
     @PostConstruct
     public void init(){
@@ -65,5 +68,9 @@ public class GateManager {
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public GateToLoginRpcService getGateToLoginRpcService() {
+        return gateToLoginRpcService;
     }
 }

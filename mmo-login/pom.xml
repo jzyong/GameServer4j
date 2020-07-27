@@ -23,11 +23,6 @@
             <artifactId>mmo-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.mmo</groupId>
-            <artifactId>mmo-message</artifactId>
-            <version>releases</version>
-        </dependency>
     </dependencies>
 
 

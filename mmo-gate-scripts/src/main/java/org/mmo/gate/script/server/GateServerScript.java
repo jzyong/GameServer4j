@@ -27,6 +27,8 @@ public class GateServerScript implements IServerScript {
     public void updateServerInfo() {
 
         try {
+
+            //更新本地信息到到注册中心
             ServerProperties serverProperties = GateManager.getInstance().getServerProperties();
             NettyProperties nettyProperties = GateManager.getInstance().getNettyProperties();
             serverInfo.setId(serverProperties.getId());
@@ -37,7 +39,6 @@ public class GateServerScript implements IServerScript {
             serverInfo.setName(serverProperties.getName());
             serverInfo.setPort(nettyProperties.getServerConfigs().get(0).getPort());
             serverInfo.setWwwip(serverProperties.getWwwip());
-
             register.setServerInfo(serverInfo.build());
             serverInfo.clear();
             GateManager.getInstance().getGateToClusterRpcService().getStub().serverUpdate(register.build(), new StreamObserver<ServerRegisterUpdateResponse>() {
@@ -45,15 +46,36 @@ public class GateServerScript implements IServerScript {
                 public void onNext(ServerRegisterUpdateResponse value) {
                     LOGGER.debug("cluster 状态：{}", value.getStatus());
                 }
+
                 @Override
                 public void onError(Throwable t) {
                     LOGGER.warn("注册中心移除");
                 }
+
                 @Override
                 public void onCompleted() {
 
                 }
             });
+
+            //拉取登陆服列表
+            GateManager.getInstance().getGateToClusterRpcService().getStub().serverList(ServerListRequest.newBuilder().setType(ServerType.Login.getType()).build(), new StreamObserver<ServerListResponse>() {
+                @Override
+                public void onNext(ServerListResponse value) {
+                    GateManager.getInstance().getGateToLoginRpcService().updateLoginServer(value);
+                }
+
+                @Override
+                public void onError(Throwable t) {
+                    LOGGER.warn("连接cluster失败,{}",t.getMessage());
+                }
+
+                @Override
+                public void onCompleted() {
+
+                }
+            });
+
         } catch (Exception e) {
             LOGGER.error("定时注册", e);
         }

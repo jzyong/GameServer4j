@@ -6,6 +6,8 @@ import org.mmo.common.constant.ServerType;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.server.ServerInfo;
 import org.mmo.engine.server.ServerProperties;
+import org.mmo.message.ServerListRequest;
+import org.mmo.message.ServerListResponse;
 import org.mmo.message.ServerRegisterUpdateResponse;
 import org.mmo.message.ServerServiceGrpc;
 import org.slf4j.Logger;
@@ -162,9 +164,6 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
         info.setOpenTime(serverInfo.getOpenTime());
         addServerInfo(serverType, info);
 
-
-        //TODO 修改返回类型
-
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
@@ -197,6 +196,45 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
 
         var response = ServerRegisterUpdateResponse.newBuilder().setStatus(0).build();
         responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void serverList(ServerListRequest request, StreamObserver<ServerListResponse> responseObserver) {
+        ServerType serverType = ServerType.valueof(request.getType());
+        if (serverType == ServerType.NONE) {
+            LOGGER.warn("请求服务器类型：{}不存在", request.getType());
+            return;
+        }
+        Map<Integer, ServerInfo> map = servers.get(serverType);
+        if (map == null) {
+            LOGGER.warn("服务器：{} 无实例启动", serverType.toString());
+            return;
+        }
+
+        ServerListResponse.Builder builder = ServerListResponse.newBuilder();
+        org.mmo.message.ServerInfo.Builder info = org.mmo.message.ServerInfo.newBuilder();
+        map.forEach(((k, it) -> {
+            info.setId(it.getId());
+            info.setBelongID(it.getBelongId());
+            info.setContent(it.getContent());
+            info.setHttpPort(it.getHttpPort());
+            info.setIp(it.getIp());
+            info.setMaintainTime(it.getMaintainTime());
+            info.setMaxUserCount(it.getMaxUserCount());
+            info.setName(it.getName());
+            info.setOnline(it.getOnline());
+            info.setOpenTime(it.getOpenTime());
+            info.setPort(it.getPort());
+            info.setState(it.getServerState());
+            if(it.getVersion()!=null){
+                info.setVersion(it.getVersion());
+            }
+            info.setWwwip(it.getWwwip());
+            builder.addServer(info.build());
+            info.clear();
+        }));
+        responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }
 }
