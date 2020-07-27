@@ -1,6 +1,5 @@
 package org.mmo.engine.io.grpc;
 
-import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.slf4j.Logger;

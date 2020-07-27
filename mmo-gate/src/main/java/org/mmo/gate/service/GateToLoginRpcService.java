@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class GateToLoginRpcService {
     public static final Logger LOGGER= LoggerFactory.getLogger(GateToLoginRpcService.class);
-    //TODO
+    //登陆服列表
     private Map<Integer, LoginServerInfo> loginServerInfoMap=new ConcurrentHashMap<>();
 
 
@@ -41,9 +41,8 @@ public class GateToLoginRpcService {
                 loginServerInfoMap.put(it.getId(),loginServerInfo);
                 ServerInfo serverInfo=new ServerInfo();
                 loginServerInfo.setServerInfo(serverInfo);
-
-                //TODO rpc连接
-
+                serverInfo.setWwwip(it.getWwwip());
+                loginServerInfo.connectLogin();
             }
             ServerInfo serverInfo = loginServerInfo.getServerInfo();
             serverInfo.setId(it.getId());
