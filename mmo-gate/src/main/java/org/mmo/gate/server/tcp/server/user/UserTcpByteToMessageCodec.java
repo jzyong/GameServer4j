@@ -1,5 +1,6 @@
 package org.mmo.gate.server.tcp.server.user;
 
+import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
@@ -36,17 +37,34 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
             // 消息id+消息内容
             out.writeBytes(bytes);
         }else if (msg instanceof ByteBuf) {
-            ByteBuf byteBuf= (ByteBuf) msg;
-            if(byteBuf.readableBytes()>  MsgUtil.MESSAGE_MAX_SIZE){
-                LOGGER.warn("向{} 一次性发送 {} 字节",MsgUtil.getLocalIpPort(ctx.channel()), byteBuf.readableBytes());
+            ByteBuf byteBuf = (ByteBuf) msg;
+            if (byteBuf.readableBytes() > MsgUtil.MESSAGE_MAX_SIZE) {
+                LOGGER.warn("向{} 一次性发送 {} 字节", MsgUtil.getLocalIpPort(ctx.channel()), byteBuf.readableBytes());
             }
             out.writeBytes(byteBuf);
+        }else if(msg instanceof Message){
+            Message message = (Message) msg;
+            String className=message.getClass().getSimpleName();
+            try {
+                int messageID = MIDMessage.MID.valueOf(className.substring(0,className.length()-5)).getNumber();
+
+                byte[] bytes = message.toByteArray();
+                if (bytes.length > MsgUtil.MESSAGE_MAX_SIZE) {
+                    LOGGER.warn("消息：{} 拥有{}字节，将拆包发送", MIDMessage.MID.forNumber(messageID), bytes.length);
+                }
+                out.writeInt(bytes.length + 4); // 消息id+消息内容长度
+                out.writeInt(messageID);
+                out.writeBytes(bytes);
+            }catch (Exception e){
+                LOGGER.error(String.format("获取消息id异常:%s ,请按标准定义协议id，协议ID未消息类目去掉最后五个字符",className),e);
+            }
         } else {
             LOGGER.warn("加密类型{}未实现", msg.getClass().getSimpleName());
         }
 
     }
 
+    //消息长度（4）+消息id（4）+消息体
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         if (in.readableBytes() < 4) {

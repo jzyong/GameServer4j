@@ -18,6 +18,17 @@ message LoginResponse{
     int64 userId                            = 1; //用户id
 }
 
+//心跳消息
+message HeartRequest{
+
+}
+//心跳消息
+message HeartResponse{
+    int64 time                               = 1; //服务器时间
+}
+
+
+
 //rpc
 service AccountService{
     //服务器注册

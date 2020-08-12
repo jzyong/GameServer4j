@@ -44,7 +44,7 @@ public class GateServerScript implements IServerScript {
             GateManager.getInstance().getGateToClusterRpcService().getStub().serverUpdate(register.build(), new StreamObserver<ServerRegisterUpdateResponse>() {
                 @Override
                 public void onNext(ServerRegisterUpdateResponse value) {
-                    LOGGER.debug("cluster 状态：{}", value.getStatus());
+//                    LOGGER.debug("cluster 状态：{}", value.getStatus());
                 }
 
                 @Override
