@@ -76,6 +76,7 @@ public class GateToLoginRpcService {
         AccountServiceGrpc.AccountServiceStub accountStub = login.getAccountStub();
         if(accountStub==null){
             login.connectLogin();
+            accountStub=login.getAccountStub();
         }
         return accountStub;
     }

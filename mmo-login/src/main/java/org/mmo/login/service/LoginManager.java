@@ -2,6 +2,8 @@ package org.mmo.login.service;
 
 import org.mmo.engine.io.grpc.RpcProperties;
 import org.mmo.engine.server.ServerProperties;
+import org.mmo.login.db.repository.AccountRepository;
+import org.mmo.login.db.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,9 @@ public class LoginManager {
 
 	@Autowired
 	LoginToClusterRpcService loginToClusterRpcService;
+
+	@Autowired
+	IAccountRepository accountRepository;
 	
 	@PostConstruct()
 	public void Init() {
@@ -63,5 +68,9 @@ public class LoginManager {
 
 	public RpcProperties getRpcProperties() {
 		return rpcProperties;
+	}
+
+	public IAccountRepository getAccountRepository() {
+		return accountRepository;
 	}
 }
