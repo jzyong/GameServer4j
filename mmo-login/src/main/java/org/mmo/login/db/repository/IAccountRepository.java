@@ -11,12 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface IAccountRepository extends MongoRepository<Account,Long> {
 
-    /**
-     * 通过id查询
-     * @param id
-     * @return
-     */
-    Account findById(long id);
 
     /**
      * 通过账号查询

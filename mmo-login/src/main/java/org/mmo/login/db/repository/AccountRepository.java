@@ -17,8 +17,9 @@ import java.util.Optional;
 /**
  * 账号
  * <br>
- * 参考文档
- * https://docs.spring.io/spring-data/mongodb/docs/2.2.9.RELEASE/reference/html/#reference
+ * API使用文档
+ * https://docs.spring.io/spring-data/mongodb/docs/3.0.3.RELEASE/reference/html/#reference
+ * <li>1 排序和分页：https://docs.spring.io/spring-data/mongodb/docs/3.0.3.RELEASE/reference/html/#repositories.paging-and-sorting</li>
  *
  * @author jzy
  */
@@ -41,7 +42,11 @@ public class AccountRepository implements IAccountRepository {
 
     @Override
     public Optional<Account> findById(Long aLong) {
-        return Optional.empty();
+        Account account = mongoTemplate.findById(aLong, Account.class);
+        if (account == null) {
+            return Optional.empty();
+        }
+        return Optional.of(account);
     }
 
     @Override
@@ -134,11 +139,6 @@ public class AccountRepository implements IAccountRepository {
         return false;
     }
 
-    @Override
-    public Account findById(long id) {
-        Account account = mongoTemplate.findOne(Query.query(Criteria.where("id").is(id)), Account.class);
-        return account;
-    }
 
     @Override
     public Account findByAccount(String account) {
