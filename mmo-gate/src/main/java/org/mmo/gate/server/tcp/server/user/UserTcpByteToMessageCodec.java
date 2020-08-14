@@ -29,6 +29,7 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
         if (msg instanceof byte[]) {
+            //包含了消息id
             byte[] bytes = (byte[]) msg;
             out.writeInt(bytes.length);
             if (bytes.length > MsgUtil.MESSAGE_MAX_SIZE) {

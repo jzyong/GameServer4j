@@ -5,9 +5,9 @@ package org.mmo.engine.io.message;
  * 消息类型
  */
 public enum MsgType {
-    IDMESSAGE((short) 0, IDMessage.class),
+    IDMESSAGE((short) 0, IdMessage.class),
     /**跨服消息*/
-    CROSSMESSAGE((short)4, CrossMessage.class),
+    CROSSMESSAGE((short)1, CrossMessage.class),
     ;
     private final short type;
     private final Class<?> msgClass;

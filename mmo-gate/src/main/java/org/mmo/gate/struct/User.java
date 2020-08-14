@@ -2,7 +2,7 @@ package org.mmo.gate.struct;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
-import org.mmo.engine.io.message.IDMessage;
+import org.mmo.engine.io.message.IdMessage;
 import org.mmo.engine.io.message.MsgUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,6 +186,22 @@ public class User {
     }
 
     /**
+     * 给前端发送消息
+     *
+     * @note 发送byte[]和Message类型
+     * @param msg
+     * @return
+     */
+    public boolean sendToUser(Object msg) {
+        try {
+            return MsgUtil.sendClientMsg(clientChannel, msg);
+        } catch (Exception e) {
+            LOGGER.error("sendToUser:", e);
+        }
+        return false;
+    }
+
+    /**
      * 发往游戏服
      *
      * @param data
@@ -196,7 +212,7 @@ public class User {
             LOGGER.warn("连接{}未登录，消息{}转发失败", MsgUtil.getIp(clientChannel), msgId);
             return;
         }
-        IDMessage idMessage = IDMessage.newIDMessage(gameChannel, data, playerId < 1 ? userId : playerId, msgId);
+        IdMessage idMessage = IdMessage.newIDMessage(gameChannel, data, playerId < 1 ? userId : playerId, msgId);
         gameChannel.writeAndFlush(idMessage);
 
     }

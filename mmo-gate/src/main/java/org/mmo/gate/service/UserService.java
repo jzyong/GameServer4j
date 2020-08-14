@@ -32,6 +32,11 @@ public class UserService {
      */
     private Map<Long, User> channelIds = new ConcurrentHashMap<>();
 
+    /**
+     * 玩家id id map
+     */
+    private Map<Long, User> playerIds = new ConcurrentHashMap<>();
+
     @PostConstruct
     public void init() {
 
@@ -43,6 +48,10 @@ public class UserService {
 
     public User getUserByUserId(Long userId) {
         return userIds.get(userId);
+    }
+
+    public User getUserByPlayerId(Long playerId) {
+        return userIds.get(playerId);
     }
 
 

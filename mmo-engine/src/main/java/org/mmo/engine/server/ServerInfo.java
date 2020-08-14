@@ -42,6 +42,8 @@ public class ServerInfo implements Serializable{
     private String openTime;
     //维护时间
     private String maintainTime;
+    //网关游戏服端口
+    private int gateGamePort;
 
 
     // 在线人数
@@ -202,5 +204,11 @@ public class ServerInfo implements Serializable{
 		this.belongId = belongId;
 	}
 
+    public int getGateGamePort() {
+        return gateGamePort;
+    }
 
+    public void setGateGamePort(int gateGamePort) {
+        this.gateGamePort = gateGamePort;
+    }
 }

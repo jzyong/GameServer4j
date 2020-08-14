@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
  * 游戏客户端用户netty连接
  *
  * @author JiangZhiYong
- * @date 2018/12/11
  */
 public class UserChannelHandlerScript implements IChannelHandlerScript {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserChannelHandlerScript.class);

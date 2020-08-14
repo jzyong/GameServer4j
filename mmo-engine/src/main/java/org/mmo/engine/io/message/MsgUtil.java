@@ -1,6 +1,5 @@
 package org.mmo.engine.io.message;
 
-import com.google.protobuf.Descriptors;
 import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -48,7 +47,7 @@ public class MsgUtil {
         }
         try {
             if (channel != null && channel.isActive()) {
-                channel.writeAndFlush(IDMessage.newIDMessage(channel, message, playerId, messageId));
+                channel.writeAndFlush(IdMessage.newIDMessage(channel, message, playerId, messageId));
                 return true;
             } else {
                 LOGGER.warn("发送消息失败{}，连接异常", message.getClass().getName());
@@ -71,7 +70,7 @@ public class MsgUtil {
             return false;
         }
         if (channel != null && channel.isActive()) {
-            if (msg instanceof IDMessage || msg instanceof CrossMessage) {
+            if (msg instanceof IdMessage || msg instanceof CrossMessage) {
                 channel.writeAndFlush(msg);
             } else {
                 throw new UnsupportedOperationException(String.format("消息 %s 类型不支持", msg.getClass().getSimpleName()));
@@ -174,16 +173,7 @@ public class MsgUtil {
         return pid;
     }
 
-    public static void close(Channel channel, String reason) {
-        LOGGER.error(String.format("%s -->连接关闭原因 %s", channel.toString(), reason));
-        channel.close();
-    }
 
-    public static void close(Channel session, String fmt, Object... args) {
-        String reason = String.format(fmt, args);
-        LOGGER.error(String.format("%s -->连接关闭原因 %s", session.toString(), reason));
-        session.close();
-    }
 
     /**
      * channel id

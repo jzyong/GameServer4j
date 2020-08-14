@@ -3,22 +3,20 @@ package org.mmo.engine.io.message;
 import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
-import org.mmo.engine.server.ServerProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 客户端消息处理类,为每个消息添加一个ID标识
  */
-public final class IDMessage implements Runnable {
+public final class IdMessage implements Runnable {
 
 
-    public static IDMessage newIDMessage(Object msg) {
-        return new IDMessage(msg);
+    public static IdMessage newIDMessage(Object msg) {
+        return new IdMessage(msg);
     }
 
 
-    public static IDMessage newIDMessage(Channel channel, Object msg, long pid, int msgId) {
-        return new IDMessage(channel, msg, pid,msgId);
+    public static IdMessage newIDMessage(Channel channel, Object msg, long pid, int msgId) {
+        return new IdMessage(channel, msg, pid,msgId);
     }
 
     /**纯消息内容*/
@@ -29,7 +27,7 @@ public final class IDMessage implements Runnable {
     /**消息唯一编号*/
     private int msgId;
 
-    private IDMessage(Object msg) {
+    private IdMessage(Object msg) {
         this.msg = msg;
     }
 
@@ -39,7 +37,7 @@ public final class IDMessage implements Runnable {
      * @param msg byte[]
      * @param id
      */
-    private IDMessage(Channel channel, Object msg, long id, int msgId) {
+    private IdMessage(Channel channel, Object msg, long id, int msgId) {
         if (msg instanceof Message || msg instanceof ByteBuf || msg instanceof byte[]) {
             this.msg = msg;
             this.id = id;

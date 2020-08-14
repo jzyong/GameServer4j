@@ -1,4 +1,4 @@
-package org.mmo.gate.server.tcp.server.user;
+package org.mmo.gate.server.tcp.server.game;
 
 
 import org.mmo.engine.io.netty.config.NettyProperties;
@@ -14,36 +14,36 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
- * 用户 tcp 通信
+ * 游戏 tcp 通信
  */
 @Service
-public class UserTcpService extends TcpService {
-    private static final Logger LOG = LoggerFactory.getLogger(UserTcpService.class);
+public class GameTcpService extends TcpService {
+    private static final Logger LOG = LoggerFactory.getLogger(GameTcpService.class);
 
     @Autowired
     private TcpServer nettyServer;
 
     @Autowired
-    private UserTcpChannelInitializer userTcpChannelInitializer;
+    private GameTcpChannelInitializer tcpChannelInitializer;
     @Autowired
     private NettyProperties nettyProperties;
 
-    public UserTcpService() {
+    public GameTcpService() {
     }
 
 
     @PostConstruct
     public void start() {
-        LOG.debug(" run user tcp ... ");
-        NettyServerConfig nettyServerConfig = nettyProperties.getServerConfigs().get(0);
+        LOG.debug(" run game tcp ... ");
+        NettyServerConfig nettyServerConfig = nettyProperties.getServerConfigs().get(1);
         nettyServer.setNettyServerConfig(nettyServerConfig);
-        nettyServer.setChannelInitializer(userTcpChannelInitializer);
+        nettyServer.setChannelInitializer(tcpChannelInitializer);
         nettyServer.start();
     }
 
     @PreDestroy
     public void stop() {
-        LOG.debug(" stop user tcp ... ");
+        LOG.debug(" stop game tcp ... ");
         nettyServer.stop();
     }
 

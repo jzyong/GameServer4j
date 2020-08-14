@@ -3,7 +3,7 @@ package org.mmo.gate.server.tcp.client.cluster;
 import java.util.List;
 
 
-import org.mmo.engine.io.message.IDMessage;
+import org.mmo.engine.io.message.IdMessage;
 import org.mmo.engine.io.message.MsgType;
 import org.mmo.engine.io.message.MsgUtil;
 import org.slf4j.Logger;
@@ -37,8 +37,8 @@ public class GateToClusterMessageCodec extends ByteToMessageCodec<Object> {
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 
         // 需要组装玩家id，消息id等额外信息
-        if (msg instanceof IDMessage) {
-            IDMessage idMessage = (IDMessage)msg;
+        if (msg instanceof IdMessage) {
+            IdMessage idMessage = (IdMessage)msg;
             if (idMessage.getMsg() instanceof byte[]) {
                 byte[] bytes = (byte[])idMessage.getMsg();
                 out.writeInt(HEADER_EXCLUDE_LENGHT + bytes.length);

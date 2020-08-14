@@ -162,6 +162,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
         info.setMaintainTime(serverInfo.getMaintainTime());
         info.setMaxUserCount(serverInfo.getMaxUserCount());
         info.setOpenTime(serverInfo.getOpenTime());
+        info.setGateGamePort(serverInfo.getGamePort());
         addServerInfo(serverType, info);
 
         responseObserver.onNext(response);
@@ -190,6 +191,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
         info.setMaintainTime(serverInfo.getMaintainTime());
         info.setMaxUserCount(serverInfo.getMaxUserCount());
         info.setOpenTime(serverInfo.getOpenTime());
+        info.setGateGamePort(serverInfo.getGamePort());
         if (serverType == ServerType.GATE) {
             updateGateServer();
         }
@@ -227,6 +229,7 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
             info.setOpenTime(it.getOpenTime());
             info.setPort(it.getPort());
             info.setState(it.getServerState());
+            info.setGamePort(it.getGateGamePort());
             if(it.getVersion()!=null){
                 info.setVersion(it.getVersion());
             }

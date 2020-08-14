@@ -78,7 +78,7 @@ public class AccountRepository implements IAccountRepository {
 
     @Override
     public void delete(Account entity) {
-
+        mongoTemplate.remove(entity);
     }
 
     @Override

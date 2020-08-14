@@ -35,6 +35,7 @@ message ServerInfo {
     string maintainTime	                    = 15;//维护时间
     string name		                          = 16;//名字
     string wwwip		                        = 17;// 外网地址
+    int32 gamePort	                        = 18;// 网关游戏服端口
 }
 
 

@@ -39,6 +39,7 @@ public class GateServerScript implements IServerScript {
             serverInfo.setName(serverProperties.getName());
             serverInfo.setPort(nettyProperties.getServerConfigs().get(0).getPort());
             serverInfo.setWwwip(serverProperties.getWwwip());
+            serverInfo.setGamePort(nettyProperties.getServerConfigs().get(1).getPort());    //网关后端游戏端口
             register.setServerInfo(serverInfo.build());
             serverInfo.clear();
             GateManager.getInstance().getGateToClusterRpcService().getStub().serverUpdate(register.build(), new StreamObserver<ServerRegisterUpdateResponse>() {
