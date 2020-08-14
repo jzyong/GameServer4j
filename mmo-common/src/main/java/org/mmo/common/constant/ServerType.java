@@ -20,7 +20,11 @@ public enum ServerType {
     /**
      * 登录
      */
-    Login(3),
+    LOGIN(3),
+    /**
+     * 游戏服
+     */
+    GAME(4),
     ;
 
     private final int type;

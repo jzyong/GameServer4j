@@ -1,11 +1,11 @@
-package org.mmo.login.script;
+package org.mmo.game.script.server;
 
 
 import io.grpc.stub.StreamObserver;
 import org.mmo.common.constant.ServerType;
 import org.mmo.common.scripts.IServerScript;
 import org.mmo.engine.server.ServerProperties;
-import org.mmo.login.service.LoginManager;
+import org.mmo.game.service.GameManager;
 import org.mmo.message.ServerInfo;
 import org.mmo.message.ServerRegisterUpdateRequest;
 import org.mmo.message.ServerRegisterUpdateResponse;
@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
-public class LoginServerScript implements IServerScript {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServerScript.class);
+public class GameServerScript implements IServerScript {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameServerScript.class);
     ServerRegisterUpdateRequest.Builder register = ServerRegisterUpdateRequest.newBuilder();
     ServerInfo.Builder serverInfo = ServerInfo.newBuilder();
 
@@ -28,23 +28,21 @@ public class LoginServerScript implements IServerScript {
     public void updateServerInfo() {
 
         try {
-            ServerProperties serverProperties = LoginManager.getInstance().getServerProperties();
+            ServerProperties serverProperties = GameManager.getInstance().getServerProperties();
             serverInfo.setId(serverProperties.getId());
-            serverInfo.setType(ServerType.LOGIN.ordinal());
+            serverInfo.setType(ServerType.GAME.ordinal());
             serverInfo.setState(1);
             serverInfo.setVersion(String.valueOf(serverProperties.getVersion()));
             serverInfo.setIp(serverProperties.getIp());
             serverInfo.setName(serverProperties.getName());
-            int openRpcPort = LoginManager.getInstance().getRpcProperties().getServerPort();
-            serverInfo.setPort(openRpcPort);
-            serverInfo.setWwwip(serverProperties.getIp()+":"+openRpcPort);
+            serverInfo.setWwwip(serverProperties.getIp());
 
             register.setServerInfo(serverInfo.build());
             serverInfo.clear();
-            LoginManager.getInstance().getLoginToClusterRpcService().getStub().serverUpdate(register.build(), new StreamObserver<ServerRegisterUpdateResponse>() {
+            GameManager.getInstance().getGameToClusterRpcService().getStub().serverUpdate(register.build(), new StreamObserver<ServerRegisterUpdateResponse>() {
                 @Override
                 public void onNext(ServerRegisterUpdateResponse value) {
-                  //  LOGGER.debug("cluster 状态：{}", value.getStatus());
+                    LOGGER.debug("cluster 状态：{}", value.getStatus());
                 }
                 @Override
                 public void onError(Throwable t) {

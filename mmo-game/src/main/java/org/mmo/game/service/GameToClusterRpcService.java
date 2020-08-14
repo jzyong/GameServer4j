@@ -1,4 +1,4 @@
-package org.mmo.login.service;
+package org.mmo.game.service;
 
 import org.mmo.common.constant.ServerType;
 import org.mmo.engine.io.grpc.RpcClientService;
@@ -17,8 +17,8 @@ import javax.annotation.PostConstruct;
  * 连接cluster
  */
 @Service
-public class LoginToClusterRpcService extends RpcClientService {
-    private static final Logger LOGGER= LoggerFactory.getLogger(LoginToClusterRpcService.class);
+public class GameToClusterRpcService extends RpcClientService {
+    private static final Logger LOGGER= LoggerFactory.getLogger(GameToClusterRpcService.class);
 
     private ServerServiceGrpc.ServerServiceBlockingStub blockingStub;
     private ServerServiceGrpc.ServerServiceStub stub;
@@ -41,7 +41,7 @@ public class LoginToClusterRpcService extends RpcClientService {
                 .setVersion(String.valueOf(serverProperties.getVersion()))
                 .build();
         var response= blockingStub.serverRegister(ServerRegisterUpdateRequest.newBuilder().setServerInfo(serverInfo).build());
-        LOGGER.info("login 成功注册到 cluster {}",response.toString());
+        LOGGER.info("game 成功注册到 cluster {}",response.toString());
     }
 
     public ServerServiceGrpc.ServerServiceBlockingStub getBlockingStub() {

@@ -60,7 +60,7 @@ public class GateServerScript implements IServerScript {
             });
 
             //拉取登陆服列表
-            GateManager.getInstance().getGateToClusterRpcService().getStub().serverList(ServerListRequest.newBuilder().setType(ServerType.Login.getType()).build(), new StreamObserver<ServerListResponse>() {
+            GateManager.getInstance().getGateToClusterRpcService().getStub().serverList(ServerListRequest.newBuilder().setType(ServerType.LOGIN.getType()).build(), new StreamObserver<ServerListResponse>() {
                 @Override
                 public void onNext(ServerListResponse value) {
                     GateManager.getInstance().getGateToLoginRpcService().updateLoginServer(value);
