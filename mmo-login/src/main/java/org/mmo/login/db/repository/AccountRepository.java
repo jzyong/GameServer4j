@@ -20,6 +20,8 @@ import java.util.Optional;
  * API使用文档
  * https://docs.spring.io/spring-data/mongodb/docs/3.0.3.RELEASE/reference/html/#reference
  * <li>1 排序和分页：https://docs.spring.io/spring-data/mongodb/docs/3.0.3.RELEASE/reference/html/#repositories.paging-and-sorting</li>
+ * <li>2 使用简介：https://docs.spring.io/spring-data/mongodb/docs/3.0.3.RELEASE/reference/html/#mongo.core</li>
+ * <li>3 样例代码：https://github.com/spring-projects/spring-data-examples/tree/master/mongodb</li>
  *
  * @author jzy
  */
