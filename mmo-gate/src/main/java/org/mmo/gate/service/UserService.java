@@ -51,7 +51,7 @@ public class UserService {
     }
 
     public User getUserByPlayerId(Long playerId) {
-        return userIds.get(playerId);
+        return playerIds.get(playerId);
     }
 
 
@@ -60,10 +60,26 @@ public class UserService {
      *
      * @param user
      */
-    public void onConnect(User user) {
+    public void onSocketConnect(User user) {
         user.setChannelId(MsgUtil.getChannelId(user.getClientChannel()));
         user.setIp(MsgUtil.getIp(user.getClientChannel()));
         channelIds.put(user.getChannelId(), user);
+    }
+
+    /**
+     * 用户登录成功
+     * @param user
+     */
+    public void onUserLoginSuccess(User user){
+        userIds.put(user.getUserId(),user);
+    }
+
+    /**
+     * 玩家加载成功
+     * @param user
+     */
+    public void onPlayerLoadSuccess(User user){
+        playerIds.put(user.getPlayerId(),user);
     }
 
 
@@ -84,6 +100,7 @@ public class UserService {
             }
             userIds.remove(user.getUserId());
             channelIds.remove(user.getChannelId());
+            playerIds.remove(user.getPlayerId());
             clientChannel.close();
             LOGGER.info("{}-{}-{} 离线{}", user.getAccount(), user.getUserId(), offlineType.toString(), MsgUtil.getIp(clientChannel));
         } else {

@@ -5,6 +5,8 @@ import org.mmo.engine.io.netty.config.NettyProperties;
 import org.mmo.engine.io.netty.config.NettyServerConfig;
 import org.mmo.engine.io.netty.tcp.TcpServer;
 import org.mmo.engine.io.service.TcpService;
+import org.mmo.engine.server.ServerInfo;
+import org.mmo.gate.struct.GameServerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 游戏 tcp 通信
@@ -27,6 +31,11 @@ public class GameTcpService extends TcpService {
     private GameTcpChannelInitializer tcpChannelInitializer;
     @Autowired
     private NettyProperties nettyProperties;
+
+    /**
+     * 游戏服务器 TODO 游戏服关闭，移除操作
+     */
+    private final Map<Integer, GameServerInfo> gameServers=new ConcurrentHashMap<>();
 
     public GameTcpService() {
     }
@@ -47,4 +56,7 @@ public class GameTcpService extends TcpService {
         nettyServer.stop();
     }
 
+    public Map<Integer, GameServerInfo> getGameServers() {
+        return gameServers;
+    }
 }

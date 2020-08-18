@@ -42,6 +42,11 @@ public class ServerProperties {
 	 */
 	private String wwwip;
 
+	/**
+	 * 服务器注册心跳
+	 */
+	public static final int ServerRegisterHeart=2;
+
 
 	public int getId() {
 		return id;

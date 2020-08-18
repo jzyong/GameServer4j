@@ -1,7 +1,9 @@
 package org.mmo.game.service;
 
 import org.mmo.engine.io.grpc.RpcProperties;
+import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.server.ServerProperties;
+import org.mmo.game.db.repository.IPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,15 @@ public class GameManager {
 
 	@Autowired
 	GameToClusterRpcService gameToClusterRpcService;
+
+	@Autowired
+	private ScriptService scriptService;
+
+	@Autowired
+	private PlayerService playerService;
+
+	@Autowired
+	IPlayerRepository playerRepository;
 
 
 	@PostConstruct()
@@ -52,5 +63,17 @@ public class GameManager {
 
 	public GameToClusterRpcService getGameToClusterRpcService() {
 		return gameToClusterRpcService;
+	}
+
+	public ScriptService getScriptService() {
+		return scriptService;
+	}
+
+	public PlayerService getPlayerService() {
+		return playerService;
+	}
+
+	public IPlayerRepository getPlayerRepository() {
+		return playerRepository;
 	}
 }

@@ -13,7 +13,7 @@ import org.mmo.message.MIDMessage;
  * @author jzy
  */
 @Handler(mid = MIDMessage.MID.HeartReq_VALUE, msg = HeartRequest.class)
-public class HeartHandler extends TcpHandler {
+public class HeartReqHandler extends TcpHandler {
     @Override
     public void run() {
         sendMsg(HeartResponse.newBuilder().setTime(TimeUtil.currentTimeMillis()).build());

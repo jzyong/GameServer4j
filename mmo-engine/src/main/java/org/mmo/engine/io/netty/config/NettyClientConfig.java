@@ -110,6 +110,6 @@ public class NettyClientConfig {
 
     @Override
     public String toString() {
-        return String.format("{}:{}",ip,port);
+        return String.format("%s:%d",ip,port);
     }
 }

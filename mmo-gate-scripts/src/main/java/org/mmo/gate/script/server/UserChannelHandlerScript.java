@@ -77,7 +77,7 @@ public class UserChannelHandlerScript implements IChannelHandlerScript {
 
         //属性设置
         User user = new User(channel);
-        GateManager.getInstance().getUserService().onConnect(user);
+        GateManager.getInstance().getUserService().onSocketConnect(user);
         Attribute<User> userAttr = channel.attr(UserTcpServerHandler.USER);
         userAttr.set(user);
         Attribute<Integer> requestCountAttr = channel.attr(UserTcpServerHandler.REQUEST_COUNT);

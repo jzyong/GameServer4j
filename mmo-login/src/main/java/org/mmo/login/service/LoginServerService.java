@@ -59,7 +59,7 @@ public class LoginServerService extends AbstractScene {
         loginExecutorService.registerScene(ThreadType.server.toString(), this);
         scheduleAtFixedRate(() -> {
             scriptService.consumerScript("LoginServerScript", (IServerScript script) -> script.updateServerInfo());
-        }, 3, 5, TimeUnit.SECONDS);
+        }, 3, ServerProperties.ServerRegisterHeart, TimeUnit.SECONDS);
 
     }
 

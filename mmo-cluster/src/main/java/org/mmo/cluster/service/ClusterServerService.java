@@ -2,10 +2,15 @@ package org.mmo.cluster.service;
 
 
 import io.grpc.stub.StreamObserver;
+import io.netty.util.concurrent.ScheduledFuture;
 import org.mmo.common.constant.ServerType;
+import org.mmo.common.constant.ThreadType;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.server.ServerInfo;
 import org.mmo.engine.server.ServerProperties;
+import org.mmo.engine.thread.Scene.Scene;
+import org.mmo.engine.thread.Scene.SceneLoop;
+import org.mmo.engine.util.TimeUtil;
 import org.mmo.message.ServerListRequest;
 import org.mmo.message.ServerListResponse;
 import org.mmo.message.ServerRegisterUpdateResponse;
@@ -17,11 +22,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -31,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @mail 359135103@qq.com
  */
 @Service
-public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBase {
+public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBase implements Scene {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClusterServerService.class);
 
 
@@ -39,6 +43,8 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
     private ScriptService scriptService;
     @Autowired
     private ServerProperties serverProperties;
+    @Autowired
+    ClusterExecutorService executorService;
 
     /**
      * 游戏服务器信息 serverId
@@ -48,6 +54,33 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
      * 网关服务器列表
      */
     private final Vector<ServerInfo> gateServerInfos = new Vector<>();
+
+    private SceneLoop sceneLoop;
+
+    private Set<ScheduledFuture<?>> fixedRateScheduledFutures = new HashSet<ScheduledFuture<?>>();
+
+
+    @Override
+    public SceneLoop eventLoop() {
+        return sceneLoop;
+    }
+
+    @Override
+    public boolean isRegistered() {
+        return sceneLoop != null;
+    }
+
+    @Override
+    public void register(SceneLoop sceneLoop) {
+        this.sceneLoop = sceneLoop;
+
+    }
+
+    @Override
+    public Set<ScheduledFuture<?>> getFixedRateScheduledFutures() {
+        return this.fixedRateScheduledFutures;
+    }
+
 
     /**
      * 初始化
@@ -60,7 +93,32 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
             LOGGER.error("脚本加载错误:{}", str);
             System.exit(0);
         });
+        executorService.registerScene(ThreadType.server.name(), this);
+        this.scheduleAtFixedRate(() -> {
+            update();
+        }, 10, 1, TimeUnit.SECONDS);
+    }
 
+
+    /**
+     * 定时任务
+     */
+    public void update() {
+        long now = TimeUtil.currentTimeMillis();
+        servers.forEach((k, v) -> {
+            Iterator<ServerInfo> iterator = v.values().iterator();
+            while (iterator.hasNext()) {
+                ServerInfo serverInfo = iterator.next();
+                if (serverInfo.getUpdateTime() + 6 > now) {
+                    iterator.remove();
+                    if (serverInfo.getServerType() == ServerType.GATE.getType()) {
+                        gateServerInfos.remove(serverInfo);
+                    }
+                    LOGGER.info("服务器：{}-{}-{} 关闭", serverInfo.getId(), serverInfo.getName(), ServerType.valueof(serverInfo.getServerType()));
+                }
+
+            }
+        });
     }
 
     /**
@@ -163,6 +221,8 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
         info.setMaxUserCount(serverInfo.getMaxUserCount());
         info.setOpenTime(serverInfo.getOpenTime());
         info.setGateGamePort(serverInfo.getGamePort());
+        info.setServerType(serverInfo.getType());
+        info.setUpdateTime(TimeUtil.currentTimeMillis());
         addServerInfo(serverType, info);
 
         responseObserver.onNext(response);
@@ -192,6 +252,8 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
         info.setMaxUserCount(serverInfo.getMaxUserCount());
         info.setOpenTime(serverInfo.getOpenTime());
         info.setGateGamePort(serverInfo.getGamePort());
+        info.setServerType(serverInfo.getType());
+        info.setUpdateTime(TimeUtil.currentTimeMillis());
         if (serverType == ServerType.GATE) {
             updateGateServer();
         }
@@ -230,7 +292,8 @@ public class ClusterServerService extends ServerServiceGrpc.ServerServiceImplBas
             info.setPort(it.getPort());
             info.setState(it.getServerState());
             info.setGamePort(it.getGateGamePort());
-            if(it.getVersion()!=null){
+            info.setType(it.getServerType());
+            if (it.getVersion() != null) {
                 info.setVersion(it.getVersion());
             }
             info.setWwwip(it.getWwwip());

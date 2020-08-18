@@ -44,10 +44,12 @@ public class ServerInfo implements Serializable{
     private String maintainTime;
     //网关游戏服端口
     private int gateGamePort;
-
-
     // 在线人数
     private int online;
+    //服务器类型
+    private int serverType;
+    //服务器更新时间
+    private long updateTime;
 
     public ServerInfo() {
     }
@@ -80,6 +82,13 @@ public class ServerInfo implements Serializable{
         this.openTime = openTime;
     }
 
+    public int getServerType() {
+        return serverType;
+    }
+
+    public void setServerType(int serverType) {
+        this.serverType = serverType;
+    }
 
     @Override
     public String toString() {
@@ -210,5 +219,13 @@ public class ServerInfo implements Serializable{
 
     public void setGateGamePort(int gateGamePort) {
         this.gateGamePort = gateGamePort;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -10,6 +10,8 @@ option go_package="message";
 
 enum MID{
 	None													= 0;
+	ServerRegisterUpdateReq				=1;				//服务器注册
+	ServerRegisterUpdateRes				=2;				//服务器注册
 
 	//账号模块100000-100100
 	LoginReq											=	100000; //登录
@@ -19,5 +21,12 @@ enum MID{
 
 	//充值模块100100-100200
 
+	//角色模块100200-100300
+	PlayerInfoReq									= 100200; //角色信息
+	PlayerInfoRes									= 100201; //角色信息
+
+	//角色模块100300-100400
+	ItemListReq										= 100300;	//道具列表
+	ItemListRes										= 100301;	//道具列表
 
 }

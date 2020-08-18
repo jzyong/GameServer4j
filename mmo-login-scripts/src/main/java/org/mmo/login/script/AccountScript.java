@@ -41,8 +41,8 @@ public class AccountScript implements IAccountScript {
             account.setPassword(request.getPassword());
             LoginManager.getInstance().getAccountRepository().save(account);
         } else {
-            if (!account.getPassword().equals(request.getAccount())) {
-                LOGGER.warn("{} 请求密码错误：{}", request.getAccount(), request.getPassword());
+            if (!account.getPassword().equals(request.getPassword())) {
+                LOGGER.warn("{} 请求密码错误：{} {}", request.getAccount(), request.getPassword(),account.getPassword());
                 return;
             }
         }

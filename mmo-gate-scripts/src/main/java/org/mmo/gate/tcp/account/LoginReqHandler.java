@@ -3,7 +3,9 @@ package org.mmo.gate.tcp.account;
 import io.grpc.stub.StreamObserver;
 import org.mmo.engine.io.handler.Handler;
 import org.mmo.engine.io.handler.TcpHandler;
+import org.mmo.gate.server.tcp.server.user.UserTcpServerHandler;
 import org.mmo.gate.service.GateManager;
+import org.mmo.gate.struct.User;
 import org.mmo.message.AccountServiceGrpc;
 import org.mmo.message.LoginRequest;
 import org.mmo.message.LoginResponse;
@@ -18,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * @author jzy
  */
 @Handler(mid = MIDMessage.MID.LoginReq_VALUE, msg = LoginRequest.class)
-public class LoginHandler extends TcpHandler {
-    public static final Logger LOGGER = LoggerFactory.getLogger(LoginHandler.class);
+public class LoginReqHandler extends TcpHandler {
+    public static final Logger LOGGER = LoggerFactory.getLogger(LoginReqHandler.class);
 
     @Override
     public void run() {
@@ -27,8 +29,14 @@ public class LoginHandler extends TcpHandler {
         var request = (LoginRequest) getMsg();
         LOGGER.debug("登录消息：{}", request.toString());
         AccountServiceGrpc.AccountServiceStub stub = GateManager.getInstance().getGateToLoginRpcService().randomAccountStub();
-        if(stub==null){
-            LOGGER.warn("登陆服grpc不可用.. {}",request.toString());
+        if (stub == null) {
+            LOGGER.warn("登陆服grpc不可用.. {}", request.toString());
+            return;
+        }
+
+        User user = getChannel().attr(UserTcpServerHandler.USER).get();
+        if (user == null) {
+            LOGGER.warn("用户{} socket创建异常，无可用用户", request.getAccount());
             return;
         }
 
@@ -36,6 +44,8 @@ public class LoginHandler extends TcpHandler {
             @Override
             public void onNext(LoginResponse value) {
                 LOGGER.debug("登录返回：{}", value.toString());
+                user.setUserId(value.getUserId());
+                GateManager.getInstance().getUserService().onUserLoginSuccess(user);
                 sendMsg(value);
             }
 

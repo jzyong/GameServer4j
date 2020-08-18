@@ -4,6 +4,7 @@ package org.mmo.gate.service;
 import org.mmo.engine.io.netty.config.NettyProperties;
 import org.mmo.engine.server.ServerProperties;
 import org.mmo.gate.server.tcp.client.cluster.GateToClusterService;
+import org.mmo.gate.server.tcp.server.game.GameTcpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,12 @@ public class GateManager {
     @Autowired
     GateToLoginRpcService gateToLoginRpcService;
 
+    @Autowired
+    GateServerService gateServerService;
+
+    @Autowired
+    GameTcpService gameTcpService;
+
 
     @PostConstruct
     public void init(){
@@ -72,5 +79,13 @@ public class GateManager {
 
     public GateToLoginRpcService getGateToLoginRpcService() {
         return gateToLoginRpcService;
+    }
+
+    public GateServerService getGateServerService() {
+        return gateServerService;
+    }
+
+    public GameTcpService getGameTcpService() {
+        return gameTcpService;
     }
 }

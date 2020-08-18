@@ -45,6 +45,7 @@ message ServerRegisterUpdateRequest {
 }
 // 注册更新服务器
 message ServerRegisterUpdateResponse {
+    ServerInfo serverInfo                   = 1;
     int32 status                            = 2; //0成功
 }
 

@@ -96,11 +96,12 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
             if (msgType == MsgType.IDMESSAGE.getType()) {// 数据结构:msgId:pfbytes
                 int msgId = byteBuf.getInt(byteBuf.readerIndex());
                 // 在本地注册，必须预处理
-                TcpMessageBean messageBean = scriptService.getMessagebean(byteBuf.readInt());
-                byte[] bytes = new byte[byteBuf.readableBytes()];
-                byteBuf.readBytes(bytes);// 消息id+消息内容
+                TcpMessageBean messageBean = scriptService.getMessagebean(msgId);
                 //本地拦截处理
                 if (messageBean != null) {
+                    byteBuf.readInt();  //删除消息id
+                    byte[] bytes = new byte[byteBuf.readableBytes()];
+                    byteBuf.readBytes(bytes);// 消息内容
                     Message message = messageBean.buildMessage(bytes);
                     TcpHandler handler = (TcpHandler) messageBean.newHandler();
                     if (handler != null) {
@@ -113,6 +114,8 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
                         return;
                     }
                 } else {
+                    byte[] bytes = new byte[byteBuf.readableBytes()];
+                    byteBuf.readBytes(bytes);// 消息id+消息内容
                     // 转发给客户端
                     User user = GateManager.getInstance().getUserService().getUserByPlayerId(id);
                     if (user == null) {

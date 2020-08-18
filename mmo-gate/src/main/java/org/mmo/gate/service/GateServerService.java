@@ -3,6 +3,7 @@ package org.mmo.gate.service;
 import org.mmo.common.constant.ThreadType;
 import org.mmo.common.scripts.IServerScript;
 import org.mmo.engine.script.ScriptService;
+import org.mmo.engine.server.ServerInfo;
 import org.mmo.engine.server.ServerProperties;
 import org.mmo.engine.thread.Scene.AbstractScene;
 import org.slf4j.Logger;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,6 +34,8 @@ public class GateServerService extends AbstractScene {
     @Autowired
     private ServerProperties serverProperties;
 
+
+
     @PostConstruct
     public void init(){
         LOGGER.debug("服务器启动：{}-{}...",serverProperties.getId(),serverProperties.getName());
@@ -43,7 +48,7 @@ public class GateServerService extends AbstractScene {
         //执行服务器状态更新
         this.scheduleWithFixedDelay(()->{
             scriptService.consumerScript("GateServerScript",(IServerScript script)-> script.updateServerInfo());
-        },3,5, TimeUnit.SECONDS);
+        },3,ServerProperties.ServerRegisterHeart, TimeUnit.SECONDS);
     }
 
     @PreDestroy

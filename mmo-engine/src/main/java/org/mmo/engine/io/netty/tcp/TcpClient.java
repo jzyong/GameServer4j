@@ -35,6 +35,8 @@ public class TcpClient {
     private int port;
     private ChannelInitializer<SocketChannel> channelInitializer;
 
+    private Channel channel;
+
     public TcpClient( ) {
     }
 
@@ -103,9 +105,10 @@ public class TcpClient {
                         @Override
                         public void operationComplete(Future<? super Void> future) throws Exception {
                             if (future.isSuccess()) {
-                                Channel channel = channelFuture.channel();
-                                if (channel != null) {
-                                    LOGGER.info("成功连接到服务器：" + nettyClientConfig.toString());
+                                Channel c = channelFuture.channel();
+                                if (c != null) {
+                                    LOGGER.info("成功连接到服务器{}:{}" ,host,port);
+                                    TcpClient.this.setChannel(c);
 //                                    Attribute<NettyClientConfig> attr = channel.attr(BaseServerConfig.config);
 //                                    attr.set(nettyClientConfig);
 //                                    nettyClientConfig.onChannelOpen(channel);
@@ -139,5 +142,13 @@ public class TcpClient {
 
     public void setChannelInitializer(ChannelInitializer<SocketChannel> channelInitializer) {
         this.channelInitializer = channelInitializer;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
     }
 }

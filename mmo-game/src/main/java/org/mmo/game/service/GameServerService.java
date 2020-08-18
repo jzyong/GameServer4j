@@ -5,6 +5,7 @@ import org.mmo.common.scripts.IServerScript;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.server.ServerProperties;
 import org.mmo.engine.thread.Scene.AbstractScene;
+import org.mmo.engine.util.IdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class GameServerService extends AbstractScene {
 
     @PostConstruct
     public void init(){
+        IdUtil.SERVER_ID=serverProperties.getId();
         LOGGER.info("服务器：{}-{} 启动...", serverProperties.getId(), serverProperties.getName());
         scriptService.init((str) -> {
             LOGGER.error("脚本加载错误:{}", str);
@@ -39,6 +41,6 @@ public class GameServerService extends AbstractScene {
         executorService.registerScene(ThreadType.server.toString(), this);
         scheduleAtFixedRate(() -> {
             scriptService.consumerScript("GameServerScript", (IServerScript script) -> script.updateServerInfo());
-        }, 3, 5, TimeUnit.SECONDS);
+        }, 3, ServerProperties.ServerRegisterHeart, TimeUnit.SECONDS);
     }
 }

@@ -4,6 +4,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import org.mmo.engine.io.message.IdMessage;
 import org.mmo.engine.io.message.MsgUtil;
+import org.mmo.message.MIDMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -209,7 +210,7 @@ public class User {
      */
     public void sendToGame(byte[] data, int msgId) {
         if (userId < 1 || gameChannel == null) {
-            LOGGER.warn("连接{}未登录，消息{}转发失败", MsgUtil.getIp(clientChannel), msgId);
+            LOGGER.warn("连接{}未登录，消息{}转发失败", MsgUtil.getIp(clientChannel), MIDMessage.MID.forNumber(msgId));
             return;
         }
         IdMessage idMessage = IdMessage.newIDMessage(gameChannel, data, playerId < 1 ? userId : playerId, msgId);
