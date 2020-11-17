@@ -39,8 +39,5 @@ public class GameServerService extends AbstractScene {
         });
 
         executorService.registerScene(ThreadType.server.toString(), this);
-        scheduleAtFixedRate(() -> {
-            scriptService.consumerScript("GameServerScript", (IServerScript script) -> script.updateServerInfo());
-        }, 3, ServerProperties.ServerRegisterHeart, TimeUnit.SECONDS);
     }
 }

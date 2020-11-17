@@ -5,8 +5,10 @@ import org.mmo.engine.server.ServerInfo;
 
 /**
  * 游戏服信息
+ * TODO 使用zookeeper
  * @author jzy
  */
+@Deprecated
 public class GameServerInfo {
     private ServerInfo serverInfo;
     private Channel channel;

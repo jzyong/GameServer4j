@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 连接登录服rpc
  * <br>
  * 有多个rpc服务器
- *
+ * TODO 使用zookeeper
  * @author jzy
  */
 @Service
@@ -31,6 +31,7 @@ public class GateToLoginRpcService {
      * 更新登陆服信息
      * @param value
      */
+    @Deprecated
     public void updateLoginServer(ServerListResponse value){
         if(value.getServerCount()<1){
             LOGGER.warn("无可用登陆服");
@@ -67,6 +68,7 @@ public class GateToLoginRpcService {
 
     /**
      * 随机选择发送消息
+     * TODO 通过zookeeper获取
      */
     public AccountServiceGrpc.AccountServiceStub randomAccountStub(){
         if(loginServerInfoMap.size()<1){

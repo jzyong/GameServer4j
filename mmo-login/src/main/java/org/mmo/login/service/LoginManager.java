@@ -2,7 +2,6 @@ package org.mmo.login.service;
 
 import org.mmo.engine.io.grpc.RpcProperties;
 import org.mmo.engine.server.ServerProperties;
-import org.mmo.login.db.repository.AccountRepository;
 import org.mmo.login.db.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,63 +13,43 @@ import javax.annotation.PostConstruct;
  */
 @Service
 public class LoginManager {
-	private static LoginManager instance;
-	
-	@Autowired
-	LoginServerService loginServerService;
+    private static LoginManager instance;
 
-	@Autowired
-	BillingService billingService;
+    @Autowired
+    LoginService loginService;
 
-	@Autowired
-	AccountService accountService;
+    @Autowired
+    BillingService billingService;
 
-	@Autowired
-	ServerProperties serverProperties;
+    @Autowired
+    AccountService accountService;
 
-	@Autowired
-	RpcProperties rpcProperties;
+    @Autowired
+    IAccountRepository accountRepository;
 
-	@Autowired
-	LoginToClusterRpcService loginToClusterRpcService;
+    @PostConstruct()
+    public void Init() {
+        instance = this;
+    }
 
-	@Autowired
-	IAccountRepository accountRepository;
-	
-	@PostConstruct()
-	public void Init() {
-		instance=this;
-	}
-	
-	public static LoginManager getInstance() {
-		return instance;
-	}
+    public static LoginManager getInstance() {
+        return instance;
+    }
 
-	public LoginServerService getLoginServerService() {
-		return loginServerService;
-	}
+    public LoginService getLoginServerService() {
+        return loginService;
+    }
 
-	public BillingService getBillingService() {
-		return billingService;
-	}
+    public BillingService getBillingService() {
+        return billingService;
+    }
 
-	public AccountService getAccountService() {
-		return accountService;
-	}
+    public AccountService getAccountService() {
+        return accountService;
+    }
 
-	public ServerProperties getServerProperties() {
-		return serverProperties;
-	}
 
-	public LoginToClusterRpcService getLoginToClusterRpcService() {
-		return loginToClusterRpcService;
-	}
-
-	public RpcProperties getRpcProperties() {
-		return rpcProperties;
-	}
-
-	public IAccountRepository getAccountRepository() {
-		return accountRepository;
-	}
+    public IAccountRepository getAccountRepository() {
+        return accountRepository;
+    }
 }

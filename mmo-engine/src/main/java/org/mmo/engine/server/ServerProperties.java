@@ -15,6 +15,7 @@ import java.util.List;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
+@Deprecated
 @Component
 @ConfigurationProperties("server") // 前缀 如server.id;
 public class ServerProperties {
@@ -36,10 +37,12 @@ public class ServerProperties {
 	/**
 	 * 本地ip地址
 	 */
+	@Deprecated
 	private String ip;
 	/**
 	 * 外网ip地址
 	 */
+	@Deprecated
 	private String wwwip;
 
 	/**

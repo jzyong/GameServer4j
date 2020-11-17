@@ -1,4 +1,4 @@
-package org.mmo.gate.server.tcp.server.user;
+package org.mmo.gate.tcp.game;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class UserTcpChannelInitializer extends ChannelInitializer<SocketChannel> {
+public class GameTcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
     @Autowired
     private ScriptService scriptService;
@@ -28,21 +28,21 @@ public class UserTcpChannelInitializer extends ChannelInitializer<SocketChannel>
     @Autowired
     NettyProperties nettyProperties;
     @Autowired
-    UserTcpService tcpService;
+    GameTcpService tcpService;
     
-    public UserTcpChannelInitializer() {
+    public GameTcpChannelInitializer() {
 
     }
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
-        ch.pipeline().addLast("Codec", new UserTcpByteToMessageCodec(scriptService));
-        ch.pipeline().addLast("MessageHandler", new UserTcpServerHandler(scriptService, gateExecutorService,tcpService));
+        ch.pipeline().addLast("Codec", new GameTcpByteToMessageCodec(scriptService));
+        ch.pipeline().addLast("MessageHandler", new GameTcpServerHandler(scriptService, gateExecutorService,tcpService));
 
-        NettyServerConfig nettyServerConfig = nettyProperties.getServerConfigs().get(0);
+        NettyServerConfig nettyServerConfig = nettyProperties.getServerConfigs().get(1);
         int bothIdleTime = Math.min(nettyServerConfig.getReaderIdleTime(), nettyServerConfig.getWriterIdleTime());
         ch.pipeline().addLast("IdleStateHandler", new IdleStateHandler(nettyServerConfig.getReaderIdleTime(),
                 nettyServerConfig.getWriterIdleTime(), bothIdleTime));
-        scriptService.consumerScript("UserChannelHandlerScript",(IChannelHandlerScript script)->script.initChannel(ch));
+        scriptService.consumerScript("GameChannelHandlerScript",(IChannelHandlerScript script)->script.initChannel(ch));
     }
 }

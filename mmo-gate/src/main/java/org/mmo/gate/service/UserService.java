@@ -3,7 +3,7 @@ package org.mmo.gate.service;
 import io.netty.channel.Channel;
 import org.mmo.common.constant.OfflineType;
 import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.gate.server.tcp.server.user.UserTcpServerHandler;
+import org.mmo.gate.tcp.user.UserTcpServerHandler;
 import org.mmo.gate.struct.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

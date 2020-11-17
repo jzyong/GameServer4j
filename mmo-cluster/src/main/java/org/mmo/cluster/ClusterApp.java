@@ -13,24 +13,25 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 集群启动类
- * 
+ *
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
+@Deprecated
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @ComponentScan("org.mmo")
-public class ClusterApp implements CommandLineRunner{
-	private static final Logger LOGGER=LoggerFactory.getLogger(ClusterApp.class);
-	
-	public static void main(String[] args) {
+public class ClusterApp implements CommandLineRunner {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClusterApp.class);
 
-		SpringApplication.run(ClusterApp.class, args);
-	}
+    public static void main(String[] args) {
 
-	@Override
-	public void run(String... args) throws Exception {
+        SpringApplication.run(ClusterApp.class, args);
+    }
 
-	}
-	
-	
+    @Override
+    public void run(String... args) throws Exception {
+
+    }
+
+
 }

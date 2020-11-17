@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * rpc 配置
  */
+@Deprecated
 @Component
 @ConfigurationProperties("rpc")
 public class RpcProperties {

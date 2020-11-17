@@ -1,4 +1,4 @@
-package org.mmo.gate.server.tcp.server.game;
+package org.mmo.gate.tcp.game;
 
 import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;
@@ -7,9 +7,7 @@ import io.netty.handler.codec.ByteToMessageCodec;
 import org.mmo.engine.io.message.IdMessage;
 import org.mmo.engine.io.message.MsgType;
 import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.engine.io.netty.script.IChannelHandlerScript;
 import org.mmo.engine.script.ScriptService;
-import org.mmo.message.MIDMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

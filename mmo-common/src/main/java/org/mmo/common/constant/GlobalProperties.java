@@ -18,6 +18,16 @@ public class GlobalProperties {
 	@NotEmpty
 	private String info;
 
+	/**
+	 * zookeeper地址
+	 */
+	private String zookeeperUrl;
+
+	/**
+	 * 本地个性化设置
+	 */
+	private String profile;
+
 	public String getInfo() {
 		return info;
 	}
@@ -25,6 +35,20 @@ public class GlobalProperties {
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	
-	
+
+	public String getZookeeperUrl() {
+		return zookeeperUrl;
+	}
+
+	public void setZookeeperUrl(String zookeeperUrl) {
+		this.zookeeperUrl = zookeeperUrl;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 }

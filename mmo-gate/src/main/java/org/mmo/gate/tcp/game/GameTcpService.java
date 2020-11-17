@@ -1,11 +1,10 @@
-package org.mmo.gate.server.tcp.server.game;
+package org.mmo.gate.tcp.game;
 
 
-import org.mmo.engine.io.netty.config.NettyProperties;
+import org.mmo.common.config.server.GateConfig;
 import org.mmo.engine.io.netty.config.NettyServerConfig;
 import org.mmo.engine.io.netty.tcp.TcpServer;
 import org.mmo.engine.io.service.TcpService;
-import org.mmo.engine.server.ServerInfo;
 import org.mmo.gate.struct.GameServerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public class GameTcpService extends TcpService {
     @Autowired
     private GameTcpChannelInitializer tcpChannelInitializer;
     @Autowired
-    private NettyProperties nettyProperties;
+    private GateConfig gateConfig;
 
     /**
      * 游戏服务器 TODO 游戏服关闭，移除操作
@@ -44,7 +43,8 @@ public class GameTcpService extends TcpService {
     @PostConstruct
     public void start() {
         LOG.debug(" run game tcp ... ");
-        NettyServerConfig nettyServerConfig = nettyProperties.getServerConfigs().get(1);
+        NettyServerConfig nettyServerConfig = new NettyServerConfig();
+        nettyServerConfig.setPort(gateConfig.getGameTcpPort());
         nettyServer.setNettyServerConfig(nettyServerConfig);
         nettyServer.setChannelInitializer(tcpChannelInitializer);
         nettyServer.start();

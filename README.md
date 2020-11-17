@@ -10,7 +10,7 @@
 ### 模块说明：
 &emsp;&emsp;scripts模块为对应项目的逻辑脚本项目，可热更新  
 **mmo-bill：** kotlin+spring+netty+gradle充值使用demo,已从项目中移除  
-**mmo-cluster:** 服务器管理中心，可使用zookeeper替换  
+**mmo-cluster:** 服务器管理中心，使用zookeeper替换 ,已从项目中移除 
 **mmo-common:** 通用公共逻辑代码  
 **mmo-db:** akka+spring 跨服数据共享使用demo，已从项目移除
 **mmo-engine:** 框架底层核心逻辑，网络通信、线程模型、常用工具类等的封装  

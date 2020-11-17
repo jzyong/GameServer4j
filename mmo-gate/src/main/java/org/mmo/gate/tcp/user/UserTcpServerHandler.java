@@ -1,4 +1,4 @@
-package org.mmo.gate.server.tcp.server.user;
+package org.mmo.gate.tcp.user;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
@@ -11,7 +11,6 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.AttributeKey;
 import org.mmo.common.constant.OfflineType;
 import org.mmo.engine.io.handler.TcpHandler;
-import org.mmo.engine.io.message.MsgType;
 import org.mmo.engine.io.message.MsgUtil;
 import org.mmo.engine.io.message.TcpMessageBean;
 import org.mmo.engine.io.netty.script.IChannelHandlerScript;

@@ -3,7 +3,7 @@ package org.mmo.gate.tcp.account;
 import io.grpc.stub.StreamObserver;
 import org.mmo.engine.io.handler.Handler;
 import org.mmo.engine.io.handler.TcpHandler;
-import org.mmo.gate.server.tcp.server.user.UserTcpServerHandler;
+import org.mmo.gate.tcp.user.UserTcpServerHandler;
 import org.mmo.gate.service.GateManager;
 import org.mmo.gate.struct.User;
 import org.mmo.message.AccountServiceGrpc;

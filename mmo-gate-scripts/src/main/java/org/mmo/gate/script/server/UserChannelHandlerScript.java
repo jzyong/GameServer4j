@@ -10,7 +10,7 @@ import io.netty.util.concurrent.ScheduledFuture;
 import org.mmo.engine.io.message.MsgUtil;
 import org.mmo.engine.io.netty.script.IChannelHandlerScript;
 import org.mmo.engine.util.TimeUtil;
-import org.mmo.gate.server.tcp.server.user.UserTcpServerHandler;
+import org.mmo.gate.tcp.user.UserTcpServerHandler;
 import org.mmo.gate.service.GateManager;
 import org.mmo.gate.struct.RC4;
 import org.mmo.gate.struct.User;

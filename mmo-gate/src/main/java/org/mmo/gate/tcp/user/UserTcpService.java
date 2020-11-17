@@ -1,7 +1,7 @@
-package org.mmo.gate.server.tcp.server.user;
+package org.mmo.gate.tcp.user;
 
 
-import org.mmo.engine.io.netty.config.NettyProperties;
+import org.mmo.common.config.server.GateConfig;
 import org.mmo.engine.io.netty.config.NettyServerConfig;
 import org.mmo.engine.io.netty.tcp.TcpServer;
 import org.mmo.engine.io.service.TcpService;
@@ -26,7 +26,7 @@ public class UserTcpService extends TcpService {
     @Autowired
     private UserTcpChannelInitializer userTcpChannelInitializer;
     @Autowired
-    private NettyProperties nettyProperties;
+    private GateConfig gateConfig;
 
     public UserTcpService() {
     }
@@ -35,7 +35,8 @@ public class UserTcpService extends TcpService {
     @PostConstruct
     public void start() {
         LOG.debug(" run user tcp ... ");
-        NettyServerConfig nettyServerConfig = nettyProperties.getServerConfigs().get(0);
+        NettyServerConfig nettyServerConfig = new NettyServerConfig();
+        nettyServerConfig.setPort(gateConfig.getClientTcpPort());
         nettyServer.setNettyServerConfig(nettyServerConfig);
         nettyServer.setChannelInitializer(userTcpChannelInitializer);
         nettyServer.start();

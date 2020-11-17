@@ -10,7 +10,7 @@ import java.util.List;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
-
+@Deprecated
 @Component
 @ConfigurationProperties("netty")
 public class NettyProperties {

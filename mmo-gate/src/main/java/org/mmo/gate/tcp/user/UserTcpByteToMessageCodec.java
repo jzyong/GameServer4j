@@ -1,4 +1,4 @@
-package org.mmo.gate.server.tcp.server.user;
+package org.mmo.gate.tcp.user;
 
 import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;

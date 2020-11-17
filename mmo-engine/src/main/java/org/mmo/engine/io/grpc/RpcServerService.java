@@ -15,21 +15,22 @@ import java.util.List;
  * rpc
  */
 public class RpcServerService {
-    private static final Logger LOGGER= LoggerFactory.getLogger(RpcServerService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RpcServerService.class);
 
     protected Server server;
 
     @Autowired
     protected RpcProperties rpcProperties;
 
-    private List<BindableService> services=new ArrayList<>();
+    private List<BindableService> services = new ArrayList<>();
 
 
     /**
      * 注册service
+     *
      * @param service
      */
-    public void registerService(BindableService service){
+    public void registerService(BindableService service) {
         services.add(service);
     }
 
@@ -37,19 +38,30 @@ public class RpcServerService {
     /**
      * 启动rpc
      */
-    public void start(){
+    @Deprecated
+    public void start() {
         try {
-            ServerBuilder serverBuilder= ServerBuilder.forPort(rpcProperties.getServerPort());
-            services.forEach(service->serverBuilder.addService(service));
-            server= serverBuilder.build().start();
-            LOGGER.info("rpc started,listening on {}",rpcProperties.getServerPort());
-        }catch (Exception e){
-            LOGGER.error("rpc star error",e);
+            ServerBuilder serverBuilder = ServerBuilder.forPort(rpcProperties.getServerPort());
+            services.forEach(service -> serverBuilder.addService(service));
+            server = serverBuilder.build().start();
+            LOGGER.info("rpc started,listening on {}", rpcProperties.getServerPort());
+        } catch (Exception e) {
+            LOGGER.error("rpc star error", e);
         }
-
     }
 
-    public void stop(){
+    public void start(int rpcPort) {
+        try {
+            ServerBuilder serverBuilder = ServerBuilder.forPort(rpcPort);
+            services.forEach(service -> serverBuilder.addService(service));
+            server = serverBuilder.build().start();
+            LOGGER.info("rpc started,listening on {}", rpcPort);
+        } catch (Exception e) {
+            LOGGER.error("rpc star error", e);
+        }
+    }
+
+    public void stop() {
         server.shutdownNow();
     }
 

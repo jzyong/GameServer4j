@@ -1,5 +1,6 @@
 package org.mmo.login.service;
 
+import org.mmo.common.config.server.LoginConfig;
 import org.mmo.engine.io.grpc.RpcServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,14 @@ public class LoginRpcService extends RpcServerService {
     @Autowired
     private BillingService billingService;
 
+    @Autowired
+    private LoginConfig loginConfig;
+
     @PostConstruct
     public void init() {
         //注册
         registerService(accountService);
 
-        start();
+        start(loginConfig.getRpcPort());
     }
 }
