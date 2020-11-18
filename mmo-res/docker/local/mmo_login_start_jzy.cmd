@@ -3,7 +3,7 @@ cd ..
 cd ..
 cd mmo-login
 
-rem call mvn clean package -Pjzy -DskipTests
+call mvn clean package -Pjzy -DskipTests
 
 call DockerBuild.bat
 

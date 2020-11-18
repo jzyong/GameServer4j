@@ -1,10 +1,16 @@
 package org.mmo.common.constant;
 
 /**
+ * zookeeper路径枚举
  * @author jzy
  */
 public enum ZKNode {
 
+
+    /**
+     * 服务路径 profile
+     */
+    ServicePath("/mmo/%s/service"),
 
     /**
      * 后台web配置 profile serverId
@@ -21,7 +27,7 @@ public enum ZKNode {
      * 登陆服配置 profile serverId
      * {@link org.mmo.common.config.server.LoginConfig}
      */
-    LoginConfig("/mmo/%s/gate%s"),
+    LoginConfig("/mmo/%s/login%s"),
 
     /**
      * 游戏mongo数据库

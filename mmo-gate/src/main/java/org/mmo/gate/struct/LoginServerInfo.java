@@ -2,6 +2,7 @@ package org.mmo.gate.struct;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import org.apache.curator.x.discovery.ServiceInstance;
 import org.mmo.engine.server.ServerInfo;
 import org.mmo.message.AccountServiceGrpc;
 import org.slf4j.Logger;
@@ -14,31 +15,52 @@ import org.slf4j.LoggerFactory;
  */
 public class LoginServerInfo {
     public static final Logger LOGGER = LoggerFactory.getLogger(LoginServerInfo.class);
-    private ServerInfo serverInfo;
 
     private ManagedChannel channel;
 
+    private String id;
+    /**
+     * 连接地址
+     */
+    private String url;
+
     private AccountServiceGrpc.AccountServiceStub accountStub;
 
-
-    public ServerInfo getServerInfo() {
-        return serverInfo;
+    public LoginServerInfo() {
     }
 
-    public void setServerInfo(ServerInfo serverInfo) {
-        this.serverInfo = serverInfo;
+    public LoginServerInfo(String id, String url) {
+        this.id = id;
+        this.url = url;
     }
 
     /**
      * 连接登陆服
      */
     public void connectLogin() {
-        channel = ManagedChannelBuilder.forTarget(serverInfo.getWwwip()).usePlaintext().build();
+        channel = ManagedChannelBuilder.forTarget(url).usePlaintext().build();
         accountStub = AccountServiceGrpc.newStub(channel);
-        LOGGER.info("连接登陆服：{}", serverInfo.getWwwip());
+        LOGGER.info("connect to login：{} {}", id, url);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void stop() {
+        LOGGER.info("close to login：{} {}", id, url);
         channel.shutdownNow();
     }
 

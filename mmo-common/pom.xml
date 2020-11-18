@@ -44,6 +44,11 @@
             <artifactId>curator-x-async</artifactId>
             <version>5.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-x-discovery</artifactId>
+            <version>5.1.0</version>
+        </dependency>
         <!--学习案例-->
         <dependency>
             <groupId>org.apache.curator</groupId>

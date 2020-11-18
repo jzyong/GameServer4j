@@ -11,6 +11,7 @@ import java.io.Serializable;
 /**
  * 服务器信息
  */
+@Deprecated
 public class ServerInfo implements Serializable{
     private static final long serialVersionUID = 1L;
 

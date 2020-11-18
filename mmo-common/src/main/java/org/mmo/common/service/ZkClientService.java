@@ -1,12 +1,19 @@
 package org.mmo.common.service;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.CuratorCache;
 import org.apache.curator.framework.recipes.cache.CuratorCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.curator.utils.CloseableUtils;
+import org.apache.curator.x.discovery.*;
+import org.apache.curator.x.discovery.details.InstanceSerializer;
+import org.apache.curator.x.discovery.strategies.RandomStrategy;
+import org.apache.curator.x.discovery.strategies.RoundRobinStrategy;
+import org.mmo.common.config.server.ServiceConfig;
 import org.mmo.common.constant.GlobalProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,6 +42,10 @@ public class ZkClientService {
 
     private CuratorCache curatorCache;
 
+    //服务
+    private ServiceDiscovery<ServiceConfig> serviceDiscovery;
+    private Map<String, ServiceProvider<ServiceConfig>> providers = Maps.newHashMap();
+
     /**
      * zk 配置文件
      */
@@ -44,6 +59,20 @@ public class ZkClientService {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 5);
         client = CuratorFrameworkFactory.newClient(globalProperties.getZookeeperUrl(), retryPolicy);
         client.start();
+    }
+
+    @PreDestroy
+    public void destroy() {
+        if (curatorCache != null) {
+            CloseableUtils.closeQuietly(curatorCache);
+        }
+        if (serviceDiscovery != null) {
+            CloseableUtils.closeQuietly(serviceDiscovery);
+        }
+        providers.forEach((key, value) -> {
+            CloseableUtils.closeQuietly(value);
+        });
+        CloseableUtils.closeQuietly(client);
     }
 
     /**
@@ -136,4 +165,145 @@ public class ZkClientService {
         return true;
     }
 
+    /**
+     * 启动服务信息
+     *
+     * @param path 监听根路径
+     * @param serviceInstance 当前服务
+     */
+    public void starService(String path, ServiceInstance<ServiceConfig> serviceInstance) {
+        try {
+            serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceConfig.class)
+                    .client(client)
+                    .basePath(path)
+                    .serializer(new InstanceSerializer<ServiceConfig>() {
+                        @Override
+                        public byte[] serialize(ServiceInstance<ServiceConfig> instance) {
+                            return JSON.toJSONString(instance).getBytes();
+                        }
+
+                        @Override
+                        public ServiceInstance<ServiceConfig> deserialize(byte[] bytes) {
+                            return JSON.parseObject(new String(bytes), ServiceInstance.class);
+                        }
+                    })
+                    .thisInstance(serviceInstance)
+                    .build();
+
+            serviceDiscovery.start();
+        } catch (Exception e) {
+            LOGGER.error("service push", e);
+        }
+    }
+
+
+    /**
+     * 注册服务
+     * @param serviceInstance
+     */
+    public void registerService(ServiceInstance<ServiceConfig> serviceInstance){
+        try {
+            serviceDiscovery.registerService(serviceInstance);
+        } catch (Exception e) {
+            LOGGER.error("register service",e);
+        }
+    }
+
+    /**
+     * 取消注册服务
+     * @param serviceInstance
+     */
+    public void unregisterService(ServiceInstance<ServiceConfig> serviceInstance){
+        try {
+            serviceDiscovery.unregisterService(serviceInstance);
+        } catch (Exception e) {
+            LOGGER.error("unregister service",e);
+        }
+    }
+
+
+    /**
+     * 获取服务对象
+     *
+     * @param serviceName
+     * @return
+     */
+    private ServiceProvider<ServiceConfig> getServiceProvider(String serviceName) {
+        try {
+            ServiceProvider<ServiceConfig> provider = providers.get(serviceName);
+            if (provider == null) {
+                provider = serviceDiscovery.serviceProviderBuilder().serviceName(serviceName).providerStrategy(new RoundRobinStrategy<>()).build();
+                providers.put(serviceName, provider);
+                provider.start();
+            }
+            return provider;
+        } catch (Exception e) {
+            LOGGER.error("get ServiceProvider", e);
+        }
+        return null;
+    }
+
+    /**
+     * 循环获取一个可用服务
+     *
+     * @param serviceName
+     * @return
+     */
+    public ServiceInstance getServiceInstance(String serviceName) {
+        try {
+            ServiceInstance<ServiceConfig> instance = getServiceProvider(serviceName).getInstance();
+            if (instance == null) {
+                LOGGER.warn("server {} can not use", serviceName);
+                return null;
+            }
+            return instance;
+        } catch (Exception e) {
+            LOGGER.error("get ServiceInstance", e);
+        }
+        return null;
+    }
+
+
+    /**
+     * 获取所有可用服务
+     *
+     * @return
+     */
+    public Collection<ServiceInstance<ServiceConfig>> getServiceInstances(String serviceName) {
+
+        try {
+            Collection<ServiceInstance<ServiceConfig>> allInstances = getServiceProvider(serviceName).getAllInstances();
+            if (allInstances.isEmpty()) {
+                LOGGER.warn("service {} not find", serviceName);
+                return null;
+            }
+            return allInstances;
+        } catch (Exception e) {
+            LOGGER.error("get ServiceInstances", e);
+        }
+        return null;
+    }
+
+    /**
+     * 获取所有服务
+     *
+     * @return
+     */
+    public List<ServiceInstance<ServiceConfig>> getAllService() {
+        List<ServiceInstance<ServiceConfig>> serviceInstances = new ArrayList<>();
+        try {
+            Collection<String> serviceNames = serviceDiscovery.queryForNames();
+            for (String serviceName : serviceNames) {
+                Collection<ServiceInstance<ServiceConfig>> instances = serviceDiscovery.queryForInstances(serviceName);
+                serviceInstances.addAll(instances);
+            }
+        } catch (Exception e) {
+            LOGGER.error("get all service", e);
+        }
+        return serviceInstances;
+    }
+
+    public ServiceDiscovery<ServiceConfig> getServiceDiscovery() {
+        return serviceDiscovery;
+    }
 }

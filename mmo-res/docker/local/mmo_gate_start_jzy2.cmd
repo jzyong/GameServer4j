@@ -9,6 +9,6 @@ call DockerBuild.bat
 
 
 rem docker pull mmo-gate:releases
-docker stop mmo-gate
-docker rm mmo-gate
-docker run --name mmo-gate  mmo-gate:releases
+docker stop mmo-gate2
+docker rm mmo-gate2
+docker run --name mmo-gate2  mmo-gate:releases

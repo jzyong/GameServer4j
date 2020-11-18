@@ -1,22 +1,34 @@
 # docker服务器本地运行
 
 ##前置条件
+
 1.本地windows安装docker运行环境<br>
 2.默认端口需求<br>
 
 |  端口   | 描述  |
 |  ----  | ----  |
-| 1  | 登陆服 |
-| 单元格  | 单元格 |
+| 7000  | 登陆服1 rpc |
+| 7001  | 登陆服2 rpc |
+| 7010  | 网关服1 客户端 |
+| 7011  | 网关服1 游戏 |
+| 7012  | 网关服2 客户端 |
+| 7013  | 网关服2 游戏 |
 
+3.修改/resources/filter目录下配置文件ip地址
+
+4.打包项目<br>
+
+    mvn clean package -Pjzy -DskipTests
 
 ##Zookeeper 
+
 **安装zookeeper：**
 
        rem docker run --privileged=true -d --name zookeeper -p 2181:2181 zookeeper:latest
 双击 zookeeper_run.cmd启动 zookeeper
 
 ##Mongodb
+
 安装配置参考：https://www.runoob.com/docker/docker-install-mongodb.html
 
 **安装mongodb：**
@@ -33,6 +45,7 @@
 双击mongo_run.cmd 运行mongodb
 
 ##Redis
+
 **安装redis:**
 
     docker pull redis
@@ -42,8 +55,16 @@
     ./redis-cli
     info
     
+## java进程启动
+**login运行：**
 
+ mmo_login_start_jzy.cmd <br>
+ mmo_login_start_jzy2.cmd
 
+**gate运行：**
+
+ mmo_gate_start_jzy.cmd <br>
+ mmo_gate_start_jzy2.cmd
 
 
 
