@@ -1,7 +1,6 @@
 # docker服务器本地运行
 
 ##前置条件
-
 1.本地windows安装docker运行环境<br>
 2.默认端口需求<br>
 
@@ -22,14 +21,12 @@
     mvn clean package -Pjzy -DskipTests
 
 ##Zookeeper 
-
 **安装zookeeper：**
 
        rem docker run --privileged=true -d --name zookeeper -p 2181:2181 zookeeper:latest
 双击 zookeeper_run.cmd启动 zookeeper
 
 ##Mongodb
-
 安装配置参考：https://www.runoob.com/docker/docker-install-mongodb.html
 
 **安装mongodb：**
@@ -46,7 +43,6 @@
 双击mongo_run.cmd 运行mongodb
 
 ##Redis
-
 **安装redis:**
 
     docker pull redis
