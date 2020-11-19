@@ -1,7 +1,7 @@
 # mmo-server
 
 
-##简介
+## 简介
 &emsp;&emsp;使用java,netty,zookeeper,spring boot,mongodb,redis等工具开发的可热更新分布式游戏服框架。客户端与网关使用TCP自定义协议，内网消息转发使用grpc转发，
 所有无状态服务可水平扩展，有状态服务通过分区，状态绑定等规则水平扩展。项目基本架构如下所示
 
@@ -11,7 +11,7 @@
 
 
 
-##模块说明：
+## 模块说明：
 1. scripts模块为对应项目的逻辑脚本项目可热更新。 [docker运行](https://github.com/jzyong/mmo-server/blob/master/mmo-res/docker/local/DockerLocalRun.md)  
 **mmo-common:** 通用公共逻辑代码  
 **mmo-engine:** 框架底层核心逻辑，网络通信、线程模型、常用工具类等的封装  
