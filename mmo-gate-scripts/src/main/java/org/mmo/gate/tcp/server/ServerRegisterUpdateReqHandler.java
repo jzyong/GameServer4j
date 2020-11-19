@@ -29,24 +29,19 @@ public class ServerRegisterUpdateReqHandler extends TcpHandler {
             //TODO 设置channel属性，channel关闭移除服务器信息
             gameServerInfo = new GameServerInfo();
             gameServerInfo.setChannel(this.channel);
-            gameServerInfo.setServerInfo(new org.mmo.engine.server.ServerInfo());
+            gameServerInfo.setId(serverInfo.getId());
             GateManager.getInstance().getGameTcpService().getGameServers().put(serverInfo.getId(), gameServerInfo);
             LOGGER.info("服务器：{}-{}-{} 连接网关成功", serverInfo.getId(), serverInfo.getName(), serverInfo.getIp());
         }
         gameServerInfo.setChannel(this.channel);
-        org.mmo.engine.server.ServerInfo info = gameServerInfo.getServerInfo();
-        info.setId(serverInfo.getId());
-        info.setPort(serverInfo.getPort());
-        info.setIp(serverInfo.getIp());
-        info.setVersion(serverInfo.getVersion());
-        info.setOpenTime(serverInfo.getOpenTime());
-        info.setServerState(serverInfo.getState());
-        info.setOnline(serverInfo.getOnline());
-        info.setName(serverInfo.getName());
-        info.setMaxUserCount(serverInfo.getMaxUserCount());
+        gameServerInfo.setId(serverInfo.getId());
+        gameServerInfo.setIp(serverInfo.getIp());
+        gameServerInfo.setVersion(serverInfo.getVersion());
+        gameServerInfo.setServerState(serverInfo.getState());
+        gameServerInfo.setOnline(serverInfo.getOnline());
         ServerRegisterUpdateResponse.Builder builder = ServerRegisterUpdateResponse.newBuilder();
         ServerInfo.Builder replayServerInfo = ServerInfo.newBuilder();
-        replayServerInfo.setId(GateManager.getInstance().getServerProperties().getId());
+        replayServerInfo.setId(GateManager.getInstance().getGateConfig().getId());
         builder.setServerInfo(replayServerInfo);
         sendInnerMsg(MIDMessage.MID.ServerRegisterUpdateRes_VALUE, builder.build());
     }

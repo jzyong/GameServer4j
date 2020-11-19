@@ -72,7 +72,10 @@
  mmo_manage_start_jzy.cmd <br>
  mmo_manage_start_jzy2.cmd
 
+**game运行：**
 
+ mmo_game_start_jzy.cmd <br>
+ mmo_game_start_jzy2.cmd
 
 
 

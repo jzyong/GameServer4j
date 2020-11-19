@@ -137,6 +137,7 @@ public class ZkClientService {
                 returnObject = JSON.parseObject(str, clazz);
             }
             zkConfigs.put(path, returnObject);
+            return returnObject;
         } catch (Exception e) {
             LOGGER.error("加载配置：", e);
         }

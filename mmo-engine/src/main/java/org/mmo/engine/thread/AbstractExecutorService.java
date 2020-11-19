@@ -1,7 +1,6 @@
 package org.mmo.engine.thread;
 
 import io.netty.util.concurrent.SingleThreadEventExecutor;
-import org.mmo.engine.server.ServerProperties;
 import org.mmo.engine.thread.Scene.Scene;
 import org.mmo.engine.thread.Scene.SceneLoop;
 import org.mmo.engine.thread.Scene.SceneLoopGroup;
@@ -30,15 +29,12 @@ public abstract class AbstractExecutorService implements IExecutorService{
     @Autowired
     private ExecutorProperties executorProperties;
 
-    @Autowired
-    private ServerProperties serverProperties;
-
     private SceneLoopGroup soleTaskLoopGroup;
 
     @PostConstruct
     public void init(){
         //注册无序默认IO线程池
-        MyThreadFactory factory = new MyThreadFactory(new ThreadGroup(serverProperties.getName()),executorProperties.getName());
+        MyThreadFactory factory = new MyThreadFactory(new ThreadGroup("game"),executorProperties.getName());
         Executor defaultExecutor;
         if (executorProperties.getCorePoolSize() == executorProperties.getMaximumPoolSize() && executorProperties.getCorePoolSize() == 1) {
             defaultExecutor = Executors.newSingleThreadExecutor(factory);
@@ -52,7 +48,7 @@ public abstract class AbstractExecutorService implements IExecutorService{
         register("io",defaultExecutor);
 
         //顺序执行的线程组
-        factory = new MyThreadFactory(new ThreadGroup(serverProperties.getName()),"sole");
+        factory = new MyThreadFactory(new ThreadGroup("game"),"sole");
         soleTaskLoopGroup=new SceneTaskLoopGroup(0,factory);
     }
 

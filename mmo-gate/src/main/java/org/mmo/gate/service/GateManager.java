@@ -1,8 +1,7 @@
 package org.mmo.gate.service;
 
 
-import org.mmo.engine.io.netty.config.NettyProperties;
-import org.mmo.engine.server.ServerProperties;
+import org.mmo.common.config.server.GateConfig;
 import org.mmo.gate.tcp.game.GameTcpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +22,6 @@ public class GateManager {
 
     @Autowired
     GateExecutorService executorService;
-    
-    @Autowired
-    NettyProperties nettyProperties;
-    
-    @Autowired
-    ServerProperties serverProperties;
-
 
     @Autowired
     UserService userService;
@@ -42,6 +34,9 @@ public class GateManager {
 
     @Autowired
     GameTcpService gameTcpService;
+    @Autowired
+    private GateConfig gateConfig;
+
 
 
     @PostConstruct
@@ -57,12 +52,6 @@ public class GateManager {
         return executorService;
     }
     
-
-	public ServerProperties getServerProperties() {
-		return serverProperties;
-	}
-
-
     public UserService getUserService() {
         return userService;
     }
@@ -71,11 +60,15 @@ public class GateManager {
         return gateToLoginRpcService;
     }
 
-    public GateService getGateServerService() {
+    public GateService getGateService() {
         return gateService;
     }
 
     public GameTcpService getGameTcpService() {
         return gameTcpService;
+    }
+
+    public GateConfig getGateConfig() {
+        return gateConfig;
     }
 }

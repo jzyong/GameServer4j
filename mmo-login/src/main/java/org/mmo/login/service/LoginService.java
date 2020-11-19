@@ -6,11 +6,12 @@ import org.apache.curator.x.discovery.UriSpec;
 import org.mmo.common.config.server.LoginConfig;
 import org.mmo.common.config.server.MongoConfig;
 import org.mmo.common.config.server.ServiceConfig;
-import org.mmo.common.constant.*;
-import org.mmo.common.scripts.IServerScript;
+import org.mmo.common.constant.GlobalProperties;
+import org.mmo.common.constant.ServiceName;
+import org.mmo.common.constant.ThreadType;
+import org.mmo.common.constant.ZKNode;
 import org.mmo.common.service.ZkClientService;
 import org.mmo.engine.script.ScriptService;
-import org.mmo.engine.server.ServerProperties;
 import org.mmo.engine.thread.Scene.AbstractScene;
 import org.mmo.engine.util.TimeUtil;
 import org.slf4j.Logger;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.concurrent.TimeUnit;
 
 
 /**

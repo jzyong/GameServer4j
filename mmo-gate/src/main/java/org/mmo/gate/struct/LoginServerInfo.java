@@ -2,8 +2,6 @@ package org.mmo.gate.struct;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.apache.curator.x.discovery.ServiceInstance;
-import org.mmo.engine.server.ServerInfo;
 import org.mmo.message.AccountServiceGrpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,15 +1,12 @@
 package org.mmo.gate.service;
 
-import com.google.protobuf.Message;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.mmo.common.config.server.ServiceConfig;
 import org.mmo.common.constant.ServiceName;
 import org.mmo.common.service.ZkClientService;
-import org.mmo.engine.server.ServerInfo;
 import org.mmo.engine.util.math.MathUtil;
 import org.mmo.gate.struct.LoginServerInfo;
 import org.mmo.message.AccountServiceGrpc;
-import org.mmo.message.ServerListResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 连接登录服rpc

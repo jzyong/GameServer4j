@@ -92,4 +92,13 @@ public class MongoConfig {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    /**
+     * 通过ip地址，端口构建URL
+     *
+     * @return
+     */
+    public String buildUrl() {
+        return String.format("mongodb://%s:%s@%s:%s", username, password, host, port);
+    }
 }

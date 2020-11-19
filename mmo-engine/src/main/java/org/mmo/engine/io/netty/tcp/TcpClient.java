@@ -8,6 +8,8 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import org.mmo.engine.io.netty.config.NettyClientConfig;
@@ -29,6 +31,7 @@ public class TcpClient {
     NioEventLoopGroup workGroup;
 
     private NettyClientConfig nettyClientConfig;
+    public static final AttributeKey<Object> ChannelParamsKey = AttributeKey.valueOf("channelParamsKey");
 
     protected boolean isRunning = false;
     private String host = "";
@@ -79,20 +82,9 @@ public class TcpClient {
         }
     }
 
-    public void checkStatus() {
-        //TODO 待完善 断线重连
-//        // LOGGER.warn("tcpClient 执行 checkStatus：【最大连接数:" + value.getMaxConnectCount() + "】【当前连接数"
-//        // + value.getAllSession().size() + "】" + value.toString());
-//        if (nettyClientConfig.getMaxConnectCount() > nettyConfig.getAllChannel().size()) {
-//            connect(nettyConfig);
-//        }
-    }
-
-
 
     private void connect(NettyClientConfig nettyClientConfig) {
         new Thread(() -> {
-            //TODO 待完善 断线重连
             for (int i = 0, size = nettyClientConfig.getConnectCount() ; i < size; i++) {
                 try {
                     host = nettyClientConfig.getIp();
@@ -109,9 +101,10 @@ public class TcpClient {
                                 if (c != null) {
                                     LOGGER.info("成功连接到服务器{}:{}" ,host,port);
                                     TcpClient.this.setChannel(c);
-//                                    Attribute<NettyClientConfig> attr = channel.attr(BaseServerConfig.config);
-//                                    attr.set(nettyClientConfig);
-//                                    nettyClientConfig.onChannelOpen(channel);
+                                    if(nettyClientConfig.getChannelParam()!=null){
+                                        Attribute<Object> attr = channel.attr(ChannelParamsKey);
+                                        attr.set(nettyClientConfig.getChannelParam());
+                                    }
                                 }
                             } else {
                                 LOGGER.warn("失败！连接到服务器：" + nettyClientConfig.toString());

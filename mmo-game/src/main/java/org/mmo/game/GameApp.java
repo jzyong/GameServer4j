@@ -3,6 +3,8 @@ package org.mmo.game;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -12,7 +14,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @ComponentScan("org.mmo")
 @EnableMongoRepositories()
 public class GameApp implements CommandLineRunner {

@@ -34,6 +34,8 @@ public class NettyClientConfig {
     /**连接数*/
     private int connectCount=1;
 
+    private Object channelParam;
+
     public String getName() {
         return name;
     }
@@ -106,6 +108,14 @@ public class NettyClientConfig {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public Object getChannelParam() {
+        return channelParam;
+    }
+
+    public void setChannelParam(Object channelParam) {
+        this.channelParam = channelParam;
     }
 
     @Override

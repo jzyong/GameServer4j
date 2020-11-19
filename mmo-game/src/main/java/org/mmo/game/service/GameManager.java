@@ -1,8 +1,7 @@
 package org.mmo.game.service;
 
-import org.mmo.engine.io.grpc.RpcProperties;
+import org.mmo.common.config.server.GameConfig;
 import org.mmo.engine.script.ScriptService;
-import org.mmo.engine.server.ServerProperties;
 import org.mmo.game.db.repository.IPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +19,6 @@ public class GameManager {
 	ExecutorService executorService;
 
 	@Autowired
-	ServerProperties serverProperties;
-
-	@Autowired
-	RpcProperties rpcProperties;
-
-	@Autowired
-	GameToClusterRpcService gameToClusterRpcService;
-
-	@Autowired
 	private ScriptService scriptService;
 
 	@Autowired
@@ -36,6 +26,14 @@ public class GameManager {
 
 	@Autowired
 	IPlayerRepository playerRepository;
+
+	@Autowired
+	private GateInfoService gateInfoService;
+
+	@Autowired
+	private GameConfig gameConfig;
+	@Autowired
+	private GameService gameService;
 
 
 	@PostConstruct()
@@ -47,22 +45,8 @@ public class GameManager {
 		return instance;
 	}
 	
-
-	public ServerProperties getServerProperties() {
-		return serverProperties;
-	}
-
-
-	public RpcProperties getRpcProperties() {
-		return rpcProperties;
-	}
-
 	public ExecutorService getExecutorService() {
 		return executorService;
-	}
-
-	public GameToClusterRpcService getGameToClusterRpcService() {
-		return gameToClusterRpcService;
 	}
 
 	public ScriptService getScriptService() {
@@ -75,5 +59,17 @@ public class GameManager {
 
 	public IPlayerRepository getPlayerRepository() {
 		return playerRepository;
+	}
+
+	public GateInfoService getGateInfoService() {
+		return gateInfoService;
+	}
+
+	public GameService getGameService() {
+		return gameService;
+	}
+
+	public GameConfig getGameConfig() {
+		return gameConfig;
 	}
 }

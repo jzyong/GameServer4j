@@ -29,7 +29,7 @@ public final class ScriptService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScriptService.class);
     /**jdk版本*/
-    public static String JDK_VERSION="13";
+    public static String JDK_VERSION="14";
 
 
     public ScriptService() {

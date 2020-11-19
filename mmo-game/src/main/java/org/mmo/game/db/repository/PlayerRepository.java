@@ -3,6 +3,7 @@ package org.mmo.game.db.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.mmo.game.db.MongoGameService;
 import org.mmo.game.db.struct.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Repository;
 public class PlayerRepository implements IPlayerRepository {
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private MongoGameService mongoGameService;
 
     @Override
     public <S extends Player> List<S> saveAll(Iterable<S> entites) {
@@ -75,13 +76,13 @@ public class PlayerRepository implements IPlayerRepository {
 
     @Override
     public <S extends Player> S save(S entity) {
-        mongoTemplate.save(entity);
+        mongoGameService.getMongoOperations().save(entity);
         return entity;
     }
 
     @Override
     public Optional<Player> findById(Long id) {
-        Player player = mongoTemplate.findById(id, Player.class);
+        Player player =mongoGameService.getMongoOperations().findById(id, Player.class);
         if (player == null) {
             return Optional.empty();
         }
@@ -163,7 +164,7 @@ public class PlayerRepository implements IPlayerRepository {
 
     @Override
     public List<Player> findByUserId(long userId) {
-        List<Player> players = mongoTemplate.find(Query.query(Criteria.where("userId").is(userId)), Player.class);
+        List<Player> players = mongoGameService.getMongoOperations().find(Query.query(Criteria.where("userId").is(userId)), Player.class);
         return players;
     }
 

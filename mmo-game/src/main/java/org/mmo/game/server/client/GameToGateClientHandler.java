@@ -13,6 +13,7 @@ import org.mmo.engine.io.handler.TcpHandler;
 import org.mmo.engine.io.message.MsgType;
 import org.mmo.engine.io.message.MsgUtil;
 import org.mmo.engine.io.message.TcpMessageBean;
+import org.mmo.engine.io.netty.tcp.TcpClient;
 import org.mmo.game.service.GameManager;
 import org.mmo.game.struct.GateServerInfo;
 import org.mmo.message.MIDMessage;
@@ -30,7 +31,6 @@ import java.util.concurrent.Executor;
  */
 public class GameToGateClientHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameToGateClientHandler.class);
-    public static final AttributeKey<Integer> ServerId = AttributeKey.valueOf("SERVER_ID");
 
     public GameToGateClientHandler() {
     }
@@ -57,11 +57,11 @@ public class GameToGateClientHandler extends ChannelInboundHandlerAdapter {
     public void channelClosed(Channel channel) {
         LOGGER.warn("连接{}已关闭", channel);
         // 移除网关服务器
-        Integer serverId = channel.attr(ServerId).get();
-        if (serverId != null) {
-            GateServerInfo gateServerInfo = GameManager.getInstance().getGameToClusterRpcService().getGateServerInfoMap().remove(serverId);
+        Object paramObject = channel.attr(TcpClient.ChannelParamsKey).get();
+        if (paramObject != null) {
+            GateServerInfo gateServerInfo = GameManager.getInstance().getGateInfoService().deleteGateServer((String) paramObject);
             if (gateServerInfo != null) {
-                LOGGER.warn("网关：{}-{}-{}移除", gateServerInfo.getServerInfo().getId(), gateServerInfo.getServerInfo().getName(), gateServerInfo.getServerInfo().getIp());
+                LOGGER.warn("网关：{}-{}:{}移除", gateServerInfo.getId(), gateServerInfo.getIp(), gateServerInfo.getPort());
             }
         }
         //TODO 玩家离线处理

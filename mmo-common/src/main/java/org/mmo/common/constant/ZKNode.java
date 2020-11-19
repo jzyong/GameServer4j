@@ -30,6 +30,12 @@ public enum ZKNode {
     LoginConfig("/mmo/%s/login%s"),
 
     /**
+     * 游戏服配置 profile serverId
+     * {@link org.mmo.common.config.server.GameConfig}
+     */
+    GameConfig("/mmo/%s/game%s"),
+
+    /**
      * 游戏mongo数据库
      * {@link org.mmo.common.config.server.MongoConfig}
      */
@@ -40,6 +46,7 @@ public enum ZKNode {
      * {@link org.mmo.common.config.server.MongoConfig}
      */
     MongoExcelConfig("/mmo/%s/mongo/excel"),
+
 
 
     ;

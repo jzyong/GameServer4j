@@ -3,10 +3,8 @@ package org.mmo.engine.io.service;
 import com.google.protobuf.Message;
 import io.netty.channel.Channel;
 import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.engine.server.ServerProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +21,6 @@ public abstract class TcpService implements INettyService<Integer> {
     protected final List<Channel> allChannels =new ArrayList<Channel>();//
     private AtomicInteger channelGetCount=new AtomicInteger();
 
-    @Autowired
-    private ServerProperties serverProperties;
 
     public TcpService() {
     }
@@ -52,7 +48,7 @@ public abstract class TcpService implements INettyService<Integer> {
         allChannels.forEach(s -> {
             if(obj instanceof Message) {
                 //TODO 修改
-                MsgUtil.sendInnerMsg(s, (Message)obj, serverProperties.getId(),-1);
+                MsgUtil.sendInnerMsg(s, (Message)obj, -1,-1);
             }else {
                 throw new UnsupportedOperationException(String.format("消息 %s 类型不支持", obj.getClass().getSimpleName()));
             }
@@ -76,7 +72,7 @@ public abstract class TcpService implements INettyService<Integer> {
         Channel channel = nextChannel();
         if (msg instanceof Message) {
             //TODO 获取消息id
-               return MsgUtil.sendInnerMsg(channel, (Message)msg, serverProperties.getId(),-1);
+               return MsgUtil.sendInnerMsg(channel, (Message)msg, -1,-1);
         }else {
             return MsgUtil.sendInnerMsg(channel, msg);
         }
