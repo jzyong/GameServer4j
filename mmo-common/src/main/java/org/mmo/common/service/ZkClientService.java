@@ -11,6 +11,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.apache.curator.x.discovery.*;
 import org.apache.curator.x.discovery.details.InstanceSerializer;
+import org.apache.curator.x.discovery.details.JsonInstanceSerializer;
 import org.apache.curator.x.discovery.strategies.RandomStrategy;
 import org.apache.curator.x.discovery.strategies.RoundRobinStrategy;
 import org.mmo.common.config.server.ServiceConfig;
@@ -173,20 +174,11 @@ public class ZkClientService {
      */
     public void starService(String path, ServiceInstance<ServiceConfig> serviceInstance) {
         try {
+            JsonInstanceSerializer<ServiceConfig> serializer = new JsonInstanceSerializer<ServiceConfig>(ServiceConfig.class);
             serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceConfig.class)
                     .client(client)
                     .basePath(path)
-                    .serializer(new InstanceSerializer<ServiceConfig>() {
-                        @Override
-                        public byte[] serialize(ServiceInstance<ServiceConfig> instance) {
-                            return JSON.toJSONString(instance).getBytes();
-                        }
-
-                        @Override
-                        public ServiceInstance<ServiceConfig> deserialize(byte[] bytes) {
-                            return JSON.parseObject(new String(bytes), ServiceInstance.class);
-                        }
-                    })
+                    .serializer(serializer)
                     .thisInstance(serviceInstance)
                     .build();
 

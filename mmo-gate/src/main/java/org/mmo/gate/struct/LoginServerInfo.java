@@ -61,7 +61,10 @@ public class LoginServerInfo {
 
     public void stop() {
         LOGGER.info("close to login：{} {}", id, url);
-        channel.shutdownNow();
+        if(channel!=null){
+            channel.shutdownNow();
+        }
+
     }
 
     public ManagedChannel getChannel() {

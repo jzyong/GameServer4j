@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 连接登录服rpc
  * <br>
  * 有多个rpc服务器
- * TODO 使用zookeeper
  *
  * @author jzy
  */

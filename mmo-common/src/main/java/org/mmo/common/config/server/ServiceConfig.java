@@ -1,6 +1,7 @@
 package org.mmo.common.config.server;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * 服务配置
@@ -8,6 +9,7 @@ import com.alibaba.fastjson.JSON;
  * @author jzy
  * @mail 359135103@qq.com
  */
+@JsonRootName("details")
 public class ServiceConfig {
 
     /**
