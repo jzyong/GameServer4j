@@ -153,6 +153,16 @@
                 </filters>
             </build>
         </profile>
+        <profile>
+            <id>jzy2</id>
+            <build>
+                <filters>
+                    <filter>
+                        src/main/resources/filter/manage_jzy2.properties
+                    </filter>
+                </filters>
+            </build>
+        </profile>
     </profiles>
 
 </project>

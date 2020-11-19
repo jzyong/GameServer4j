@@ -11,4 +11,4 @@ call DockerBuild.bat
 rem docker pull mmo-login:releases
 docker stop mmo-login2
 docker rm mmo-login2
-docker run --name mmo-login2  mmo-login:releases
+docker run --name mmo-login2 -p 7001:7001  mmo-login:releases

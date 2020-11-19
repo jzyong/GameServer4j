@@ -19,5 +19,9 @@ public enum ServiceName {
      * 客户端Tcp
      */
     GateClientTcp,
+    /**
+     * 后台manage http
+     */
+    ManageHttp,
 
 }

@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +22,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @mail 359135103@qq.com
  */
 @ComponentScan("org.mmo")
-@SpringBootApplication
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class ManageApp {
     public static final Logger LOGGER = LoggerFactory.getLogger(ManageApp.class);
 

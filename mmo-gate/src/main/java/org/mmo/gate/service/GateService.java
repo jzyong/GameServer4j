@@ -122,6 +122,9 @@ public class GateService extends AbstractScene {
 
     @PreDestroy
     public void destroy() {
+        if(loginServiceCache!=null){
+            CloseableUtils.closeQuietly(loginServiceCache);
+        }
         zkClientService.unregisterService(clientServiceInstance);
         zkClientService.unregisterService(gameServiceInstance);
         LOGGER.info("gate service close");
