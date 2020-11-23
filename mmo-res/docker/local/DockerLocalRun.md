@@ -11,6 +11,7 @@
 | 7011  | 网关服1 游戏 |7013  | 网关服2 游戏 |
 | 7020  | 后台1服 http | 7021  | 后台2服 http |
 | 2181  | zookeeper |
+| 9092  | kafka     |
 | 16379  | redis |
 | 27017  | mongodb |
 
@@ -52,6 +53,14 @@
     ./redis-cli
     info
     
+## kafka
+    docker pull wurstmeister/kafka
+    docker run -d --name kafka -p 9092:9092 --link zookeeper --env KAFKA_ZOOKEEPER_CONNECT=192.168.0.2:2181 --env KAFKA_ADVERTISED_HOST_NAME=192.168.0.2 --env KAFKA_ADVERTISED_PORT=9092 wurstmeister/kafka
+    docker exec -it kafka /bin/sh
+    cd /opt/kafka_2.13-2.6.0/bin
+    
+    
+
 ## java进程启动
 **login运行：**
 

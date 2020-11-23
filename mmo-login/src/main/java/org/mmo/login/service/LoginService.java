@@ -10,6 +10,7 @@ import org.mmo.common.constant.GlobalProperties;
 import org.mmo.common.constant.ServiceName;
 import org.mmo.common.constant.ThreadType;
 import org.mmo.common.constant.ZKNode;
+import org.mmo.common.service.KafkaProducerService;
 import org.mmo.common.service.ZkClientService;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.thread.Scene.AbstractScene;
@@ -62,6 +63,8 @@ public class LoginService extends AbstractScene {
     private String mongoPassword;
     @Value("${spring.data.mongodb.username}")
     private String mongoUsername;
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
 
 
     /**
@@ -86,6 +89,8 @@ public class LoginService extends AbstractScene {
             zkClientService.pushConfig(ZKNode.MongoExcelConfig.getKey(globalProperties.getProfile()), new MongoConfig(mongoConfigUrl, mongoConfigDatabase));
             zkClientService.pushConfig(ZKNode.MongoGameConfig.getKey(globalProperties.getProfile()), new MongoConfig(mongoHost, mongoPort, mongoAuthentication, mongoDatabase, mongoPassword, mongoUsername));
 
+            //TODO 从zookeeper中获取配置
+            kafkaProducerService.connect("127.0.0.1:9092", "mmo.login");
 
             scriptService.init((str) -> {
                 LOGGER.error("load scripts error:{}", str);

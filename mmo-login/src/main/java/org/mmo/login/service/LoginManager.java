@@ -1,5 +1,6 @@
 package org.mmo.login.service;
 
+import org.mmo.common.service.KafkaProducerService;
 import org.mmo.login.db.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class LoginManager {
     @Autowired
     IAccountRepository accountRepository;
 
+    @Autowired
+    KafkaProducerService kafkaProducerService;
+
     @PostConstruct()
     public void Init() {
         instance = this;
@@ -46,8 +50,11 @@ public class LoginManager {
         return accountService;
     }
 
-
     public IAccountRepository getAccountRepository() {
         return accountRepository;
+    }
+
+    public KafkaProducerService getKafkaProducerService() {
+        return kafkaProducerService;
     }
 }

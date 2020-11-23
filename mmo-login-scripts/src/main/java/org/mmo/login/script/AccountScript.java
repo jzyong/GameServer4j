@@ -2,6 +2,7 @@ package org.mmo.login.script;
 
 
 import io.grpc.stub.StreamObserver;
+import org.mmo.common.struct.object.log.LoginLog;
 import org.mmo.engine.util.IdUtil;
 import org.mmo.engine.util.StringUtil;
 import org.mmo.login.service.LoginManager;
@@ -46,6 +47,8 @@ public class AccountScript implements IAccountScript {
                 return;
             }
         }
+
+        LoginManager.getInstance().getKafkaProducerService().sendLog(new LoginLog(IdUtil.getId(),account.getId()));
 
         LoginResponse.Builder builder = LoginResponse.newBuilder();
         builder.setUserId(account.getId());
