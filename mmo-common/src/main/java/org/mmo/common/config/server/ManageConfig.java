@@ -31,6 +31,16 @@ public class ManageConfig {
      */
     private String publicIp;
 
+    /**
+     * kafka URL
+     */
+    private String kafkaUrl;
+
+    /**
+     * 提取kafka日志
+     */
+    private boolean fetchKafkaLog;
+
     public int getId() {
         return id;
     }
@@ -53,5 +63,21 @@ public class ManageConfig {
 
     public void setPublicIp(String publicIp) {
         this.publicIp = publicIp;
+    }
+
+    public String getKafkaUrl() {
+        return kafkaUrl;
+    }
+
+    public void setKafkaUrl(String kafkaUrl) {
+        this.kafkaUrl = kafkaUrl;
+    }
+
+    public boolean isFetchKafkaLog() {
+        return fetchKafkaLog;
+    }
+
+    public void setFetchKafkaLog(boolean fetchKafkaLog) {
+        this.fetchKafkaLog = fetchKafkaLog;
     }
 }

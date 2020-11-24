@@ -13,6 +13,11 @@ public enum ZKNode {
     ServicePath("/mmo/%s/service"),
 
     /**
+     * 日志 kafka 地址
+     */
+    LogKafkaUrl("/mmo/%s/log/kafka/url"),
+
+    /**
      * 后台web配置 profile serverId
      * {@link org.mmo.common.config.server.ManageConfig}
      */

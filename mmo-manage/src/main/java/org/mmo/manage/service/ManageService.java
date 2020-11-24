@@ -78,6 +78,9 @@ public class ManageService {
         mc.setId(manageConfig.getId());
         zkClientService.pushConfig(ZKNode.ManageConfig.getKey(globalProperties.getProfile(), String.valueOf(manageConfig.getId())), mc);
 
+        //推送日志kafka地址
+        zkClientService.pushConfig(ZKNode.LogKafkaUrl.getKey(globalProperties.getProfile()), manageConfig.getKafkaUrl());
+
         //http服务地址
         serviceInstance = ServiceInstance.<ServiceConfig>builder()
                 .id(String.valueOf(manageConfig.getId()))

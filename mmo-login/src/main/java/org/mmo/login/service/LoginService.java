@@ -89,8 +89,7 @@ public class LoginService extends AbstractScene {
             zkClientService.pushConfig(ZKNode.MongoExcelConfig.getKey(globalProperties.getProfile()), new MongoConfig(mongoConfigUrl, mongoConfigDatabase));
             zkClientService.pushConfig(ZKNode.MongoGameConfig.getKey(globalProperties.getProfile()), new MongoConfig(mongoHost, mongoPort, mongoAuthentication, mongoDatabase, mongoPassword, mongoUsername));
 
-            //TODO 从zookeeper中获取配置
-            kafkaProducerService.connect("127.0.0.1:9092", "mmo.login");
+            kafkaProducerService.connectLog("mmo.login"+loginConfig.getId());
 
             scriptService.init((str) -> {
                 LOGGER.error("load scripts error:{}", str);

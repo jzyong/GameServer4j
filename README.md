@@ -17,7 +17,6 @@
 **mmo-engine:** 框架底层核心逻辑，网络通信、线程模型、常用工具类等的封装  
 **mmo-game:** 具体游戏逻辑demo  
 **mmo-gate：** 网关  
-**mmo-log：** 日志存储操作  
 **mmo-login：** 登录服务器demo  
 **mmo-manage:** 服务器后台管理、gm等demo  
 **mmo-message：** protobuf消息定义  
@@ -28,6 +27,7 @@
 **mmo-db:** akka+spring 跨服数据共享使用demo  
 **mmo-bill：** kotlin+spring+netty+gradle充值使用demo  
 **mmo-cluster:** 服务器管理中心  
+**mmo-log：** 日志存储操作  
 
 
 
