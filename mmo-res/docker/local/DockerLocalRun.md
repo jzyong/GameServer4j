@@ -4,14 +4,15 @@
 1.本地windows安装docker运行环境<br>
 2.默认端口需求<br>
 
-|  端口   | 描述  |  端口   | 描述  |
-|  ----  | ----  |  ----  | ----  |
+|  端口   | 描述  |  端口   | 描述  |  端口   | 描述  |
+|  ----  | ----  |  ----  | ----  |  ----  | ----  |
 | 7000  | 登陆服1 rpc | 7001  | 登陆服2 rpc |
 | 7010  | 网关服1 客户端 | 7012  | 网关服2 客户端 |
 | 7011  | 网关服1 游戏 |7013  | 网关服2 游戏 |
-| 7020  | 后台1服 http | 7021  | 后台2服 http |
+| 7020  | 后台1服 http | 7021  | 后台2服 http | 7022  | 后台nginx代理 |
 | 2181  | zookeeper |
 | 9092  | kafka     |
+| 9090  | nginx http |
 | 16379  | redis |
 | 27017  | mongodb |
 
@@ -59,7 +60,16 @@
     docker exec -it kafka /bin/sh
     cd /opt/kafka_2.13-2.6.0/bin
     
-    
+## nginx
+    docker pull nginx:latest
+    docker run -d --name=nginx nginx
+    #docker cp [容器id]:/etc/nginx D:\soft\nginx\config
+    docker cp 3c103:/etc/nginx D:\soft\nginx\config
+    docker run -d --name nginx -p 9090:80 -p 7022:7022 -v D:\soft\nginx\config\nginx:/etc/nginx nginx
+    # http://127.0.0.1:9090/
+
+[manage http代理配置文件](https://github.com/jzyong/mmo-server/blob/master/mmo-res/docker/local/backup/nginx/conf.d/manage.conf)
+       
 
 ## java进程启动
 **login运行：**
