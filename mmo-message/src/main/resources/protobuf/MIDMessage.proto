@@ -10,8 +10,8 @@ option go_package="message";
 
 enum MID{
 	None													= 0;
-	ServerRegisterUpdateReq				=1;				//服务器注册
-	ServerRegisterUpdateRes				=2;				//服务器注册
+	ServerRegisterUpdateReq				= 1;				//服务器注册
+	ServerRegisterUpdateRes				= 2;				//服务器注册
 
 	//账号模块100000-100100
 	LoginReq											=	100000; //登录

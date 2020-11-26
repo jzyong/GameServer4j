@@ -28,9 +28,7 @@
 		<module>mmo-game</module>
 		<module>mmo-world</module>
 		<module>mmo-common</module>
-		<module>mmo-log</module>
 		<module>mmo-scene</module>
-		<!--<module>mmo-cluster</module>-->
     </modules>
 
 	<dependencyManagement>
