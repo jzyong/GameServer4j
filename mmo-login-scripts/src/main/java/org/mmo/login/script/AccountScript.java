@@ -2,7 +2,7 @@ package org.mmo.login.script;
 
 
 import io.grpc.stub.StreamObserver;
-import org.mmo.common.struct.object.log.LoginLog;
+import org.mmo.common.struct.log.LoginLog;
 import org.mmo.engine.util.IdUtil;
 import org.mmo.engine.util.StringUtil;
 import org.mmo.login.service.LoginManager;
@@ -43,12 +43,12 @@ public class AccountScript implements IAccountScript {
             LoginManager.getInstance().getAccountRepository().save(account);
         } else {
             if (!account.getPassword().equals(request.getPassword())) {
-                LOGGER.warn("{} 请求密码错误：{} {}", request.getAccount(), request.getPassword(),account.getPassword());
+                LOGGER.warn("{} 请求密码错误：{} {}", request.getAccount(), request.getPassword(), account.getPassword());
                 return;
             }
         }
 
-        LoginManager.getInstance().getKafkaProducerService().sendLog(new LoginLog(IdUtil.getId(),account.getId()));
+        LoginManager.getInstance().getKafkaProducerService().sendLog(new LoginLog(IdUtil.getId(), account.getId()));
 
         LoginResponse.Builder builder = LoginResponse.newBuilder();
         builder.setUserId(account.getId());

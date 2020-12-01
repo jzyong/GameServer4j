@@ -39,7 +39,7 @@ public class RpcServerService {
      * 启动rpc
      */
     @Deprecated
-    public void start() {
+    public void start( ) {
         try {
             ServerBuilder serverBuilder = ServerBuilder.forPort(rpcProperties.getServerPort());
             services.forEach(service -> serverBuilder.addService(service));
@@ -49,6 +49,8 @@ public class RpcServerService {
             LOGGER.error("rpc star error", e);
         }
     }
+
+
 
     public void start(int rpcPort) {
         try {

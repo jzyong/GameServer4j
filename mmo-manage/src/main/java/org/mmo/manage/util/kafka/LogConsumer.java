@@ -7,7 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.mmo.common.constant.LogTopic;
-import org.mmo.common.struct.object.log.LoginLog;
+import org.mmo.common.struct.log.LoginLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

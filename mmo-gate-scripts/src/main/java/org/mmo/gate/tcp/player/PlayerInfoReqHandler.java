@@ -4,11 +4,10 @@ import org.mmo.engine.io.handler.Handler;
 import org.mmo.engine.io.handler.TcpHandler;
 import org.mmo.engine.io.message.MsgUtil;
 import org.mmo.gate.service.GateManager;
-import org.mmo.gate.struct.GameServerInfo;
+import org.mmo.common.struct.server.GameServerInfo;
 import org.mmo.gate.struct.User;
 import org.mmo.message.MIDMessage;
 import org.mmo.message.PlayerInfoRequest;
-import org.mmo.message.PlayerInfoResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

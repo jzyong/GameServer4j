@@ -27,6 +27,11 @@ public class GameConfig {
      */
     private String privateIp;
 
+    /**
+     * rpc端口
+     */
+    private int rpcPort;
+
 
     /**
      * 最大等级
@@ -58,6 +63,18 @@ public class GameConfig {
 
     public void setMaxLevel(int maxLevel) {
         this.maxLevel = maxLevel;
+    }
+
+    public int getRpcPort() {
+        return rpcPort;
+    }
+
+    public void setRpcPort(int rpcPort) {
+        this.rpcPort = rpcPort;
+    }
+
+    public String buildRpcUrl(){
+        return this.privateIp+":"+this.rpcPort;
     }
 
     @Override

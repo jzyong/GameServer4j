@@ -5,7 +5,7 @@ import org.mmo.common.config.server.ServiceConfig;
 import org.mmo.common.constant.ServiceName;
 import org.mmo.common.service.ZkClientService;
 import org.mmo.engine.util.math.MathUtil;
-import org.mmo.gate.struct.LoginServerInfo;
+import org.mmo.common.struct.server.LoginServerInfo;
 import org.mmo.message.AccountServiceGrpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

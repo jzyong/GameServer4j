@@ -11,6 +11,8 @@ import org.mmo.common.constant.ServiceName;
 import org.mmo.common.constant.ThreadType;
 import org.mmo.common.constant.ZKNode;
 import org.mmo.common.scripts.IServerScript;
+import org.mmo.common.service.CommonServerService;
+import org.mmo.common.service.RpcService;
 import org.mmo.common.service.ZkClientService;
 import org.mmo.engine.script.ScriptService;
 import org.mmo.engine.thread.Scene.AbstractScene;
@@ -54,6 +56,10 @@ public class GameService extends AbstractScene {
     private GateInfoService gateInfoService;
     @Autowired
     private MongoGameService mongoGameService;
+    @Autowired
+    private RpcService rpcService;
+    @Autowired
+    private CommonServerService commonServerService;
 
 
     @PostConstruct
@@ -67,7 +73,7 @@ public class GameService extends AbstractScene {
                 LOGGER.error("脚本加载错误:{}", str);
                 System.exit(0);
             });
-
+            initRpcService();
 //            //初始化数据库
 //            mongoGameService.init();
 
@@ -78,6 +84,11 @@ public class GameService extends AbstractScene {
         } catch (Exception e) {
             LOGGER.error("game start", e);
         }
+    }
+
+    private void initRpcService() {
+        rpcService.registerService(commonServerService);
+        rpcService.start(gameConfig.getRpcPort());
     }
 
 

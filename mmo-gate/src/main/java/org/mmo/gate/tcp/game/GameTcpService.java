@@ -5,7 +5,7 @@ import org.mmo.common.config.server.GateConfig;
 import org.mmo.engine.io.netty.config.NettyServerConfig;
 import org.mmo.engine.io.netty.tcp.TcpServer;
 import org.mmo.engine.io.service.TcpService;
-import org.mmo.gate.struct.GameServerInfo;
+import org.mmo.common.struct.server.GameServerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.mmo.common.constant.GlobalProperties;
 import org.mmo.common.constant.ZKNode;
-import org.mmo.common.struct.object.log.ILog;
+import org.mmo.common.struct.log.ILog;
 import org.mmo.engine.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

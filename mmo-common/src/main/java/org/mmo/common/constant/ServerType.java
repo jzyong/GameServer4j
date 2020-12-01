@@ -37,7 +37,7 @@ public enum ServerType {
         return type;
     }
 
-    public static ServerType valueof(int type) {
+    public static ServerType valueOf(int type) {
         for (ServerType t : ServerType.values()) {
             if (t.getType() == type) {
                 return t;
