@@ -2,10 +2,10 @@ package org.mmo.common.service;
 
 
 import io.grpc.stub.StreamObserver;
+import org.mmo.common.util.RpcHttpHandler;
+import org.mmo.engine.io.handler.RpcHandler;
 import org.mmo.engine.script.ScriptService;
-import org.mmo.message.LoadScriptRequest;
-import org.mmo.message.LoadScriptResponse;
-import org.mmo.message.ServerServiceGrpc;
+import org.mmo.message.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +37,22 @@ public class CommonServerService extends ServerServiceGrpc.ServerServiceImplBase
         });
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void httpPost(HttpRequest request, StreamObserver<HttpResponse> responseObserver) {
+        RpcHandler rpcHandler = scriptService.getRpcHandler(request.getPath());
+        if(rpcHandler==null){
+            LOGGER.warn("路径：{}逻辑未实现",request.getPath());
+            responseObserver.onNext(HttpResponse.newBuilder().setCode(404).build());
+            responseObserver.onCompleted();
+            return;
+        }
+        RpcHttpHandler handler=(RpcHttpHandler)rpcHandler;
+        handler.setId(request.getId());
+        handler.setRequest(request);
+        handler.setResponseObserver(responseObserver);
+        handler.run();
+        handler.sendMsg();
     }
 }

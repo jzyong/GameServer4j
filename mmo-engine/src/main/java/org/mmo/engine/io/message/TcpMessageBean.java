@@ -86,11 +86,11 @@ public class TcpMessageBean<Msg extends Message, MsgHandler extends IHandler> im
      * @throws IllegalAccessException
      */
     @Override
-    public IHandler newHandler() throws InstantiationException, IllegalAccessException {
+    public IHandler newHandler() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         if (handlerClass == null) {
             return null;
         }
-        return handlerClass.newInstance();
+        return handlerClass.getDeclaredConstructor().newInstance();
     }
 
 	public Class<? extends Message> getMessageClass() {

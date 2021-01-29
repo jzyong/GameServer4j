@@ -30,22 +30,18 @@ public abstract class HttpHandler implements IHandler {
         return super.clone();
     }
 
-    @Override
     public Channel getChannel() {
         return channel;
     }
 
-    @Override
     public void setChannel(Channel channel) {
         this.channel = channel;
     }
 
-    @Override
     public DefaultFullHttpRequest getMessage() { // HttpRequestImpl
         return this.message;
     }
 
-    @Override
     public void setMessage(Object message) {
         if (message instanceof DefaultFullHttpRequest) {
             this.message = (DefaultFullHttpRequest) message;
@@ -60,12 +56,10 @@ public abstract class HttpHandler implements IHandler {
 		this.response = response;
 	}
 
-	@Override
     public long getCreateTime() {
         return this.createTime;
     }
 
-    @Override
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
@@ -87,12 +81,10 @@ public abstract class HttpHandler implements IHandler {
     	}
     }
 
-    @Override
     public byte[] getMsgBytes() {
         return response.content().array();
     }
 
-    @Override
     public void setMsgBytes(byte[] msgBytes) {
     	response.content().writeBytes(msgBytes);
     }

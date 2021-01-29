@@ -3,6 +3,8 @@ package org.mmo.engine.io.message;
 
 import org.mmo.engine.io.handler.IHandler;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * 消息构造接口
  */
@@ -21,5 +23,5 @@ public interface IMessageBean {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    IHandler newHandler() throws InstantiationException, IllegalAccessException;
+    IHandler newHandler() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 }

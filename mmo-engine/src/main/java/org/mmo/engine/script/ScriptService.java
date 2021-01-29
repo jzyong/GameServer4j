@@ -1,9 +1,6 @@
 package org.mmo.engine.script;
 
-import org.mmo.engine.io.handler.Handler;
-import org.mmo.engine.io.handler.HttpHandler;
-import org.mmo.engine.io.handler.IHandler;
-import org.mmo.engine.io.handler.TcpHandler;
+import org.mmo.engine.io.handler.*;
 import org.mmo.engine.io.message.TcpMessageBean;
 import org.mmo.engine.util.FileUtil;
 import org.mmo.engine.util.StringUtil;
@@ -66,6 +63,11 @@ public final class ScriptService {
      * HTTP:{path:消息处理Bean}
      */
     Map<String, Class<? extends HttpHandler>> httpHandlerClazzs = new ConcurrentHashMap<>();// 存HTTP消息处理类
+
+    /**
+     * Rpc:{path:Handler}  rpc消息处理类
+     */
+    Map<String,Class<? extends RpcHandler>> rpcHandlerClazzes=new ConcurrentHashMap<>();
 
     public final void setSource(String source, String out, String jarsDir) {
         if (stringIsNullEmpty(source)) {
@@ -536,7 +538,7 @@ public final class ScriptService {
                     if (!Modifier.isAbstract(defineClass.getModifiers())
                             && !Modifier.isPrivate(defineClass.getModifiers())
                             && !Modifier.isStatic(defineClass.getModifiers()) && !nameString.contains("$")) {
-                        Object newInstance = defineClass.newInstance();
+                        Object newInstance = defineClass.getDeclaredConstructor().newInstance();
                         List<Class<?>> interfaces = new ArrayList<>();
                         if (IInitScript.class.isAssignableFrom(defineClass)
                                 || IScript.class.isAssignableFrom(defineClass)) {
@@ -562,6 +564,9 @@ public final class ScriptService {
                                 } else if (HttpHandler.class.isAssignableFrom(defineClass)) {
                                     httpHandlerClazzs.put(handler.path(), (Class<? extends HttpHandler>) (defineClass));
                                     LOGGER.info("[{}]加载到http handler容器", nameString);
+                                } else if (RpcHandler.class.isAssignableFrom(defineClass)){
+                                    rpcHandlerClazzes.put(handler.path(),(Class<? extends  RpcHandler>)(defineClass));
+                                    LOGGER.info("[{}]加载到rpc handler容器", nameString);
                                 } else {
                                     LOGGER.warn("handler[{}]未继承Handler", defineClass.getSimpleName());
                                 }
@@ -668,12 +673,26 @@ public final class ScriptService {
             return null;
         }
         try {
-            return class1.newInstance();
+            return class1.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             LOGGER.error("HTTP消息", e);
         } 
         return null;
     }
+
+    public RpcHandler getRpcHandler(String path){
+        Class<? extends RpcHandler> class1 = rpcHandlerClazzes.get(path);
+        if(class1==null){
+            return null;
+        }
+        try {
+            return class1.getDeclaredConstructor().newInstance();
+        }catch (Exception e){
+            LOGGER.error("RPC消息",e);
+        }
+        return null;
+    }
+
 
     /**
      * 消息是否注册

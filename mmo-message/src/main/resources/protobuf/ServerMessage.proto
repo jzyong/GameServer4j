@@ -57,6 +57,18 @@ message LoadScriptResponse{
   string info = 1; //加载信息
 }
 
+//http 调用
+message HttpRequest{
+  string path                 = 1; //路径
+  int64 id                    = 2; //唯一标识id
+  string jsonParam            = 3; //json字符串参数
+}
+//http 调用
+message HttpResponse{
+  int32 code                  = 2; //结果码 200成功
+  string result               = 3; //返回结果字符串
+}
+
 
 //rpc
 service ServerService{
@@ -68,4 +80,6 @@ service ServerService{
   rpc ServerList (ServerListRequest) returns (ServerListResponse);
   //加载脚本
   rpc LoadScript (LoadScriptRequest) returns (LoadScriptResponse);
+  //http请求
+  rpc httpPost(HttpRequest) returns (HttpResponse);
 }

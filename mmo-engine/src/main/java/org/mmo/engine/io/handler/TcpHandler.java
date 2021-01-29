@@ -11,6 +11,7 @@ public abstract class TcpHandler implements IHandler{
     protected long pid;             //角色|用户唯一ID
     private byte[] msgBytes;       //去除本消息长度后剩下的数据，可能有id等，根据协议确定
 
+
     /**
      * 返回消息
      * @param msg
@@ -35,17 +36,14 @@ public abstract class TcpHandler implements IHandler{
     }
 
 
-    @Override
     public Channel getChannel() {
         return channel;
     }
 
-    @Override
     public void setChannel(Channel channel) {
         this.channel = channel;
     }
 
-    @Override
     public Message getMessage() {
         return this.message;
     }
@@ -56,29 +54,24 @@ public abstract class TcpHandler implements IHandler{
         return (T) message;
     }
 
-    @Override
     public void setMessage(Object message) {
         if (message instanceof Message) {
             this.message = (Message) message;
         }
     }
 
-    @Override
     public long getCreateTime() {
         return this.createTime;
     }
 
-    @Override
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
-    @Override
     public byte[] getMsgBytes() {
         return msgBytes;
     }
 
-    @Override
     public void setMsgBytes(byte[] msgBytes) {
         this.msgBytes = msgBytes;
     }

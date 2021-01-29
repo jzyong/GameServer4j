@@ -38,7 +38,7 @@ public class LoginManager {
         return instance;
     }
 
-    public LoginService getLoginServerService() {
+    public LoginService getLoginService() {
         return loginService;
     }
 

@@ -1,7 +1,6 @@
 # mmo-server
 
-
-## intro
+## Intro
 &emsp;&emsp;Using Java, netty, zookeeper, spring boot and mongo, redis tools to development of game hot update distributed framework.
 Clients and gateways use TCP custom protocols, Intranet message forwarding USES GRPC forwarding, 
 all stateless services can be horizontally extended, and stateful services can be horizontally extended through partition, state binding and other rules.
@@ -13,12 +12,12 @@ The basic architecture of the project is shown below:
 
 
 
-## module
+## Module
 1. Logical scripts that end with the project module at the end of scripts as the corresponding project can be hot-updated. [docker run](https://github.com/jzyong/mmo-server/blob/master/mmo-res/docker/local/DockerLocalRun.md)  
 * [mmo-engine](https://github.com/jzyong/mmo-server/blob/master/mmo-engine/README.md) Framework underlying core logic, network communication, threading models, common tools classes  
 * [mmo-common](https://github.com/jzyong/mmo-server/blob/master/mmo-common/README.md) Common logic code  
-* [mmo-message](https://github.com/jzyong/mmo-server/blob/master/mmo-message/README.md) protobuf message  
-* [mmo-gate](https://github.com/jzyong/mmo-server/blob/master/mmo-gate/README.md) gate 
+* [mmo-message](https://github.com/jzyong/mmo-server/blob/master/mmo-message/README.md) Protobuf message,grpc service  
+* [mmo-gate](https://github.com/jzyong/mmo-server/blob/master/mmo-gate/README.md) Message routing 
 * [mmo-login](https://github.com/jzyong/mmo-server/blob/master/mmo-login/README.md) Login authentication 
 * [mmo-game](https://github.com/jzyong/mmo-server/blob/master/mmo-game/README.md) Game Demo 
 * [mmo-manage](https://github.com/jzyong/mmo-server/blob/master/mmo-manage/README.md) Web background management, GM, etc
@@ -34,7 +33,7 @@ The basic architecture of the project is shown below:
 
 
 
-## Technology selection
+## Technology select
 1. spring-boot 
 2. mongodb 
 3. maven 
@@ -46,6 +45,6 @@ The basic architecture of the project is shown below:
   
   
   
-  
+[中文文档](https://blog.csdn.net/jzhiy/category_10634655.html)  
 **QQ Communication group:** 143469012
 
