@@ -4,6 +4,7 @@ package org.mmo.common.constant;
  * 离线类型
  *
  * @author jzy
+ * @mail 359135103@qq.com
  */
 public enum OfflineType {
     /**

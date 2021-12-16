@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  * 游戏服信息
  *
  * @author jzy
+ * @mail 359135103@qq.com
  */
 public class GameServerInfo {
     public static final Logger LOGGER = LoggerFactory.getLogger(GameServerInfo.class);

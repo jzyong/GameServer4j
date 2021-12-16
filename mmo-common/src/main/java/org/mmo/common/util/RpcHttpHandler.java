@@ -8,7 +8,6 @@ import org.mmo.message.HttpResponse;
 
 /**
  * rpc适配http调用类
- * TODO 添加获取参数接口
  *
  * @author jzy
  * @mail 359135103@qq.com

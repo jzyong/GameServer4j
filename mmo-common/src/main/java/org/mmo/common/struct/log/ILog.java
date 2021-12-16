@@ -3,6 +3,7 @@ package org.mmo.common.struct.log;
 import com.alibaba.fastjson.JSON;
 
 /**
+ * 日志
  * @author jzy
  * @mail 359135103@qq.com
  */
