@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<description>自定义数据存储，自定义分布式key-value内存数据库</description>
 	<parent>
-		<groupId>org.mmo</groupId>
-		<artifactId>mmo</artifactId>
+		<groupId>org.jzy</groupId>
+		<artifactId>game</artifactId>
 		<version>releases</version>
 	</parent>
-	<artifactId>mmo-db</artifactId>
+	<artifactId>game-db</artifactId>
 	<name>mmo-db</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>mmo-engine</artifactId>
+			<artifactId>game-engine</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<description>游戏服务器</description>
 
-	<groupId>org.mmo</groupId>
-	<artifactId>mmo</artifactId>
+	<groupId>org.jzy</groupId>
+	<artifactId>game</artifactId>
 	<version>releases</version>
 	<packaging>pom</packaging>
 
@@ -20,15 +20,15 @@
 	</properties>
 
 	<modules>
-		<module>mmo-message</module>
-		<module>mmo-engine</module>
-		<module>mmo-manage</module>
-		<module>mmo-gate</module>
-		<module>mmo-login</module>
-		<module>mmo-game</module>
-		<module>mmo-world</module>
-		<module>mmo-common</module>
-		<module>mmo-scene</module>
+		<module>game-message</module>
+		<module>game-engine</module>
+		<module>game-manage</module>
+		<module>game-gate</module>
+		<module>game-login</module>
+		<module>game-game</module>
+		<module>game-world</module>
+		<module>game-common</module>
+		<module>game-scene</module>
     </modules>
 
 	<dependencyManagement>

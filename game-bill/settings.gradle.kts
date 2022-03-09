@@ -6,4 +6,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "mmo-bill"
+rootProject.name = "game-bill"
