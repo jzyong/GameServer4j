@@ -13,7 +13,6 @@ The basic architecture of the project is shown below:
 
 ## Module
 1. Logical scripts that end with the project module at the end of scripts as the corresponding project can be hot-updated. [docker run](https://github.com/jzyong/mmo-server/blob/master/mmo-res/docker/local/DockerLocalRun.md)  
-* [game-engine](https://github.com/jzyong/mmo-server/blob/master/mmo-engine/README.md) Framework underlying core logic, network communication, threading models, common tools classes  
 * [game-common](https://github.com/jzyong/mmo-server/blob/master/mmo-common/README.md) Common logic code  
 * [game-message](https://github.com/jzyong/mmo-server/blob/master/mmo-message/README.md) Protobuf message,grpc service  
 * [game-gate](https://github.com/jzyong/mmo-server/blob/master/mmo-gate/README.md) Message routing 
@@ -23,11 +22,6 @@ The basic architecture of the project is shown below:
 * [game-res](https://github.com/jzyong/mmo-server/blob/master/mmo-res/README.md) Server resource files, Docker scripts, documents, etc
 * game-world: World service demo, pause  
 
-2. Abandoned module  
-* game-db: akka+spring Cross-server data sharing using Demo  
-* game-bill： kotlin+spring+netty+gradle billing use demo  
-* game-cluster: Netty tcp,http demo 
-* game-log： Log storage operations, Akka Stream operations log Demo
 
 
 
@@ -46,3 +40,6 @@ The basic architecture of the project is shown below:
 [中文文档](https://blog.csdn.net/jzhiy/category_10634655.html)  
 **QQ Communication group:** 143469012
 
+
+###TODO
+* add microservice
