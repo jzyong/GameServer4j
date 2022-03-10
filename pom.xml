@@ -21,9 +21,9 @@
 
     <modules>
         <module>game-common</module>
+        <module>game-gate</module>
         <module>game-message</module>
         <!--  <module>game-manage</module>
-         <module>game-gate</module>
          <module>game-world</module>-->
 
         <!-- <module>game-hall</module>
