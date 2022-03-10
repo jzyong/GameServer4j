@@ -20,11 +20,12 @@
     </properties>
 
     <modules>
+        <module>game-common</module>
         <module>game-message</module>
         <!--  <module>game-manage</module>
          <module>game-gate</module>
          <module>game-world</module>-->
-       <!-- <module>game-common</module>-->
+
         <!-- <module>game-hall</module>
          <module>game-api</module>-->
     </modules>
