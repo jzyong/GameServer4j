@@ -3,34 +3,35 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>mmo</artifactId>
-        <groupId>org.mmo</groupId>
+        <artifactId>game4j</artifactId>
+        <groupId>org.jzy</groupId>
         <version>releases</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mmo-message</artifactId>
+    <artifactId>game-message</artifactId>
+    <name>game-message</name>
 
     <dependencies>
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.16.1</version>
+            <version>3.19.4</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>
-            <version>1.27.0</version>
+            <version>1.45.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.27.0</version>
+            <version>1.45.0</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-stub</artifactId>
-            <version>1.27.0</version>
+            <version>1.45.0</version>
         </dependency>
     </dependencies>
 
@@ -40,8 +41,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>13</source>
-                    <target>13</target>
+                    <source>14</source>
+                    <target>14</target>
                 </configuration>
             </plugin>
 
@@ -53,10 +54,10 @@
                 <configuration>
                     <protocArtifact>com.google.protobuf:protoc:3.11.0:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.27.0:exe:${os.detected.classifier}</pluginArtifact>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.45.0:exe:${os.detected.classifier}</pluginArtifact>
                     <!--要编译的.proto文件的路径-->
                     <protoSourceRoot>src/main/resources/protobuf</protoSourceRoot>
-<!--                    <outputDirectory>src/main/java/</outputDirectory>-->
+                    <!--                    <outputDirectory>src/main/java/</outputDirectory>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -73,24 +74,11 @@
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
-                <version>1.6.2</version>
+                <version>1.7.0</version>
             </extension>
         </extensions>
 
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>User Project RELEASES</name>
-            <url>http://192.168.110.16:9091/repository/maven-releases/</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>User Project SNAPSHOTS</name>
-            <url>http://192.168.110.16:9091/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>

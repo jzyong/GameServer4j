@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <description>通用模块，实体类，数据存储等</description>
     <parent>
-        <groupId>org.mmo</groupId>
-        <artifactId>mmo</artifactId>
+        <groupId>org.jzy</groupId>
+        <artifactId>game4j</artifactId>
         <version>releases</version>
     </parent>
-    <artifactId>mmo-common</artifactId>
-    <name>mmo-common</name>
+    <artifactId>game-common</artifactId>
+    <name>game-common</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,13 +25,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>mmo-engine</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.jzy.javalib</groupId>
+            <artifactId>javalib-math</artifactId>
+            <version>0.0.4</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>mmo-message</artifactId>
+            <artifactId>game-message</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

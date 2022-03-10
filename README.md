@@ -14,11 +14,17 @@ The basic architecture of the project is shown below:
 ## Module
 1. Logical scripts that end with the project module at the end of scripts as the corresponding project can be hot-updated. [docker run](https://github.com/jzyong/mmo-server/blob/master/mmo-res/docker/local/DockerLocalRun.md)  
 * [game-common](https://github.com/jzyong/mmo-server/blob/master/mmo-common/README.md) Common logic code  
+
 * [game-message](https://github.com/jzyong/mmo-server/blob/master/mmo-message/README.md) Protobuf message,grpc service  
+
 * [game-gate](https://github.com/jzyong/mmo-server/blob/master/mmo-gate/README.md) Message routing 
+
 * [game-api](https://github.com/jzyong/mmo-server/blob/master/mmo-login/README.md) Login authentication ,charge verify
-* [game-game](https://github.com/jzyong/mmo-server/blob/master/mmo-game/README.md) Game Demo 
+
+* [game-hall](https://github.com/jzyong/mmo-server/blob/master/mmo-game/README.md) Game Demo 
+
 * [game-manage](https://github.com/jzyong/mmo-server/blob/master/mmo-manage/README.md) Web background management, GM, etc
+
 * [game-res](https://github.com/jzyong/mmo-server/blob/master/mmo-res/README.md) Server resource files, Docker scripts, documents, etc
 * game-world: World service demo, pause  
 
@@ -43,3 +49,4 @@ The basic architecture of the project is shown below:
 
 ###TODO
 * add microservice
+* protobuf sync to GameServer4g

@@ -1,6 +1,6 @@
 syntax = "proto3";
 package ProtoMessage;
-option java_package = "org.mmo.message";
+option java_package = "org.jzy.game.proto";
 option go_package="message";
 
 
