@@ -30,6 +30,11 @@
             <version>0.0.4</version>
         </dependency>
         <dependency>
+            <groupId>com.jzy.javalib</groupId>
+            <artifactId>javalib-network</artifactId>
+            <version>0.0.4</version>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>game-message</artifactId>
             <version>${project.version}</version>

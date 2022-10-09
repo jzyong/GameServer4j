@@ -4,15 +4,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.mmo</groupId>
-        <artifactId>mmo</artifactId>
+        <groupId>org.jzy</groupId>
+        <artifactId>game4j</artifactId>
         <version>releases</version>
     </parent>
     <description>
         处理登录，支付等接口,无状态服务器
     </description>
-    <artifactId>mmo-login</artifactId>
-    <name>mmo-login</name>
+    <artifactId>game-api</artifactId>
+    <name>game-api</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>mmo-common</artifactId>
+            <artifactId>game-common</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

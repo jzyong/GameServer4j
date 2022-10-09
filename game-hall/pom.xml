@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<description>游戏逻辑服</description>
 	<parent>
-		<groupId>org.mmo</groupId>
-		<artifactId>mmo</artifactId>
+		<groupId>org.jzy</groupId>
+		<artifactId>game4j</artifactId>
 		<version>releases</version>
 	</parent>
-	<artifactId>mmo-game</artifactId>
-	<name>mmo-game</name>
+	<artifactId>game-game</artifactId>
+	<name>game-game</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>mmo-common</artifactId>
+			<artifactId>game-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

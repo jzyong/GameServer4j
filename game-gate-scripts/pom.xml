@@ -8,7 +8,7 @@
         <artifactId>game4j</artifactId>
         <version>releases</version>
     </parent>
-    <artifactId>mmo-gate-scripts</artifactId>
+    <artifactId>game-gate-scripts</artifactId>
     <name>game-gate-scripts</name>
 
     <dependencies>
