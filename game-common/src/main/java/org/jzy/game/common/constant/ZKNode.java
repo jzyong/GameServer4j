@@ -12,47 +12,47 @@ public enum ZKNode {
     /**
      * 服务路径 profile
      */
-    ServicePath("/mmo/%s/service"),
+    ServicePath("/game/%s/service"),
 
     /**
      * 日志 kafka 地址
      */
-    LogKafkaUrl("/mmo/%s/log/kafka/url"),
+    LogKafkaUrl("/game/%s/log/kafka/url"),
 
     /**
      * 后台web配置 profile serverId
      * {@link org.jzy.game.common.config.server.ManageConfig}
      */
-    ManageConfig("/mmo/%s/manage%s"),
+    ManageConfig("/game/%s/manage%s"),
     /**
      * 网关配置 profile serverId
      * {@link org.jzy.game.common.config.server.GateConfig}
      */
-    GateConfig("/mmo/%s/gate%s"),
+    GateConfig("/game/%s/gate%s"),
 
     /**
      * 登陆服配置 profile serverId
      * {@link ApiConfig}
      */
-    LoginConfig("/mmo/%s/login%s"),
+    LoginConfig("/game/%s/login%s"),
 
     /**
      * 游戏服配置 profile serverId
      * {@link HallConfig}
      */
-    GameConfig("/mmo/%s/game%s"),
+    GameConfig("/game/%s/game%s"),
 
     /**
      * 游戏mongo数据库
      * {@link MongoConfig}
      */
-    MongoGameConfig("/mmo/%s/mongo/game"),
+    MongoGameConfig("/game/%s/mongo/game"),
 
     /**
      * 策划excel mongo数据库
      * {@link MongoConfig}
      */
-    MongoExcelConfig("/mmo/%s/mongo/excel"),
+    MongoExcelConfig("/game/%s/mongo/excel"),
 
 
 

@@ -45,7 +45,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.game.api.ApiApp</mainClass>
+                            <mainClass>org.jzy.game.api.ApiApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -71,7 +71,7 @@
         </plugins>
         <filters>
             <filter>
-                src/main/resources/filter/login_jzy.properties
+                src/main/resources/filter/api_jzy.properties
             </filter>
         </filters>
         <resources>
@@ -102,7 +102,7 @@
             <build>
                 <filters>
                     <filter>
-                        src/main/resources/filter/login_jzy.properties
+                        src/main/resources/filter/api_jzy.properties
                     </filter>
                 </filters>
             </build>
@@ -112,7 +112,7 @@
             <build>
                 <filters>
                     <filter>
-                        src/main/resources/filter/login_jzy2.properties
+                        src/main/resources/filter/api_jzy2.properties
                     </filter>
                 </filters>
             </build>
