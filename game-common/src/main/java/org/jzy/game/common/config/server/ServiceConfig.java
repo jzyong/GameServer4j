@@ -1,6 +1,7 @@
 package org.jzy.game.common.config.server;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
@@ -32,7 +33,7 @@ public class ServiceConfig {
 
     public <T> T getConfig(Class<T> tClass) {
         if (configObject == null) {
-            configObject = JSON.parseObject(serverConfig, tClass);
+            configObject = JSONObject.parseObject(serverConfig, tClass);
         }
         return (T) configObject;
     }

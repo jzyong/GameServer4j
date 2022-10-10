@@ -1,8 +1,8 @@
 package org.jzy.game.gate.service;
 
 
+import org.jzy.game.common.config.server.GateConfig;
 import org.jzy.game.gate.tcp.game.GameTcpService;
-import org.mmo.common.config.server.GateConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

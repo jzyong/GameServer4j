@@ -26,13 +26,18 @@
         </dependency>
         <dependency>
             <groupId>com.jzy.javalib</groupId>
+            <artifactId>javalib-base</artifactId>
+            <version>${javalib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jzy.javalib</groupId>
             <artifactId>javalib-math</artifactId>
-            <version>0.0.4</version>
+            <version>${javalib.version}</version>
         </dependency>
         <dependency>
             <groupId>com.jzy.javalib</groupId>
             <artifactId>javalib-network</artifactId>
-            <version>0.0.4</version>
+            <version>${javalib.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

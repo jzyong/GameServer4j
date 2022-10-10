@@ -45,7 +45,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.mmo.login.LoginApp</mainClass>
+                            <mainClass>org.game.api.ApiApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

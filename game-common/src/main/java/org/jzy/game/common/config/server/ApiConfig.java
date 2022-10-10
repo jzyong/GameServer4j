@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
  * @mail 359135103@qq.com
  */
 @Component
-@ConfigurationProperties("login")
+@ConfigurationProperties("api")
 public class ApiConfig {
 
     /**

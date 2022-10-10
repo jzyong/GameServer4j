@@ -1,12 +1,12 @@
 package org.jzy.game.gate.service;
 
+import com.jzy.javalib.base.util.MathUtil;
 import org.apache.curator.x.discovery.ServiceInstance;
-import org.mmo.common.config.server.ServiceConfig;
-import org.mmo.common.constant.ServiceName;
-import org.mmo.common.service.ZkClientService;
-import org.mmo.engine.util.math.MathUtil;
-import org.mmo.common.struct.server.LoginServerInfo;
-import org.mmo.message.AccountServiceGrpc;
+import org.jzy.game.common.config.server.ServiceConfig;
+import org.jzy.game.common.constant.ServiceName;
+import org.jzy.game.common.service.ZkClientService;
+import org.jzy.game.common.struct.server.ApiServerInfo;
+import org.jzy.game.proto.AccountServiceGrpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GateToLoginRpcService {
     public static final Logger LOGGER = LoggerFactory.getLogger(GateToLoginRpcService.class);
     //登陆服列表 key serverId
-    private Map<String, LoginServerInfo> loginServerInfoMap = new ConcurrentHashMap<>();
+    private Map<String, ApiServerInfo> apiServerInfoMap = new ConcurrentHashMap<>();
 
     @Autowired
     private ZkClientService zkClientService;
@@ -35,18 +35,18 @@ public class GateToLoginRpcService {
      * 随机选择发送消息
      */
     public AccountServiceGrpc.AccountServiceStub randomAccountStub() {
-        if (loginServerInfoMap.size() < 1) {
+        if (apiServerInfoMap.size() < 1) {
             Collection<ServiceInstance<ServiceConfig>> serviceInstances = zkClientService.getServiceInstances(ServiceName.LoginRpc.name());
             if (serviceInstances == null) {
                 return null;
             }
             serviceInstances.forEach(it -> {
-                LoginServerInfo loginServerInfo = new LoginServerInfo(it.getId(), it.buildUriSpec());
-                loginServerInfoMap.put(loginServerInfo.getId(), loginServerInfo);
+                ApiServerInfo loginServerInfo = new ApiServerInfo(it.getId(), it.buildUriSpec());
+                apiServerInfoMap.put(loginServerInfo.getId(), loginServerInfo);
                 loginServerInfo.connectLogin();
             });
         }
-        LoginServerInfo login = MathUtil.random(loginServerInfoMap.values());
+        ApiServerInfo login = MathUtil.random(apiServerInfoMap.values());
         AccountServiceGrpc.AccountServiceStub accountStub = login.getAccountStub();
         if (accountStub == null) {
             login.connectLogin();
@@ -67,25 +67,25 @@ public class GateToLoginRpcService {
             nowServiceIds.add(serviceInstance.getId());
             //移除不可用连接
             if (!serviceInstance.isEnabled()) {
-                LoginServerInfo loginServerInfo = loginServerInfoMap.remove(serviceInstance.getId());
+                ApiServerInfo loginServerInfo = apiServerInfoMap.remove(serviceInstance.getId());
                 if (loginServerInfo != null) {
                     loginServerInfo.stop();
                 }
                 continue;
             }
-            LoginServerInfo loginServerInfo = loginServerInfoMap.get(serviceInstance.getId());
+            ApiServerInfo loginServerInfo = apiServerInfoMap.get(serviceInstance.getId());
             //新建连接
             if (loginServerInfo == null) {
-                loginServerInfo = new LoginServerInfo(serviceInstance.getId(), serviceInstance.buildUriSpec());
-                loginServerInfoMap.put(loginServerInfo.getId(), loginServerInfo);
+                loginServerInfo = new ApiServerInfo(serviceInstance.getId(), serviceInstance.buildUriSpec());
+                apiServerInfoMap.put(loginServerInfo.getId(), loginServerInfo);
                 loginServerInfo.connectLogin();
             }
         }
         //删除关闭连接
-        HashSet<String> preIds = new HashSet<>(loginServerInfoMap.keySet());
+        HashSet<String> preIds = new HashSet<>(apiServerInfoMap.keySet());
         preIds.removeAll(nowServiceIds);
         preIds.forEach(id -> {
-            LoginServerInfo loginServerInfo = loginServerInfoMap.remove(id);
+            ApiServerInfo loginServerInfo = apiServerInfoMap.remove(id);
             loginServerInfo.stop();
         });
     }

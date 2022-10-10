@@ -4,10 +4,6 @@ import com.google.protobuf.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
-import org.mmo.engine.io.message.IdMessage;
-import org.mmo.engine.io.message.MsgType;
-import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.engine.script.ScriptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +16,6 @@ import java.util.List;
  */
 public class GameTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameTcpByteToMessageCodec.class);
-    private ScriptService scriptService;
     /**
      * 消息头长度，除去消息长度 消息类型2+玩家ID8+消息id
      */
