@@ -2,6 +2,14 @@ package org.jzy.game.gate.tcp.user;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
+import com.jzy.javalib.base.script.ScriptManager;
+import com.jzy.javalib.base.util.TimeUtil;
+import com.jzy.javalib.network.io.handler.HandlerManager;
+import com.jzy.javalib.network.io.handler.TcpHandler;
+import com.jzy.javalib.network.io.message.MsgUtil;
+import com.jzy.javalib.network.netty.IChannelHandlerScript;
+import com.jzy.javalib.network.netty.tcp.TcpService;
+import com.jzy.javalib.network.scene.IExecutorService;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -9,18 +17,11 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.AttributeKey;
-import org.mmo.common.constant.OfflineType;
-import org.mmo.engine.io.handler.TcpHandler;
-import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.engine.io.message.TcpMessageBean;
-import org.mmo.engine.io.netty.script.IChannelHandlerScript;
-import org.mmo.engine.io.service.TcpService;
-import org.mmo.engine.script.ScriptService;
-import org.mmo.engine.thread.IExecutorService;
-import org.mmo.engine.util.TimeUtil;
+import org.jzy.game.common.constant.OfflineType;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.User;
-import org.mmo.message.MIDMessage;
+import org.jzy.game.proto.MID;
+import org.jzy.game.proto.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +37,6 @@ import java.util.concurrent.Executor;
 public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTcpServerHandler.class);
 
-    private ScriptService scriptService;
 
     private IExecutorService executorService;
 
@@ -71,10 +71,9 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
      */
     public static final AttributeKey<Long> RESPONSE_RESET_TIME = AttributeKey.valueOf("ResponseResetTime");
 
-    public UserTcpServerHandler(ScriptService scriptService, IExecutorService executorService, TcpService tcpService) {
+    public UserTcpServerHandler(IExecutorService executorService) {
         this.executorService = executorService;
-        this.scriptService = scriptService;
-        this.tcpService = tcpService;
+        this.tcpService = GateManager.getInstance().getUserTcpService();
     }
 
     @Override
@@ -82,13 +81,13 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
         Channel channel = ctx.channel();
         LOGGER.info("{} 已打开连接", MsgUtil.getRemoteIpPort(channel));
         tcpService.onChannelConnect(ctx.channel());
-        boolean blackList = scriptService.functionScript("UserChannelHandlerScript",
+        boolean blackList = ScriptManager.getInstance().functionScript("UserChannelHandlerScript",
                 (IChannelHandlerScript script) -> script.isBlackList(ctx));
         if (blackList) {
             LOGGER.warn("客户端：{}被ip限制", MsgUtil.getIp(ctx.channel()));
             channel.close();
         }
-        scriptService.consumerScript("UserChannelHandlerScript",
+        ScriptManager.getInstance().consumerScript("UserChannelHandlerScript",
                 (IChannelHandlerScript script) -> script.channelActive(ctx));
     }
 
@@ -145,7 +144,7 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
             mid = byteBuf.readInt();
             user = ctx.channel().attr(USER).get();
             if (user == null) {
-                LOGGER.warn("{}请求消息{}用户未登录", MsgUtil.getRemoteIpPort(ctx.channel()), MIDMessage.MID.forNumber(mid));
+                LOGGER.warn("{}请求消息{}用户未登录", MsgUtil.getRemoteIpPort(ctx.channel()), MID.forNumber(mid));
                 channelClosed(ctx.channel(), OfflineType.IllegalRequest);
                 return;
             }
@@ -157,17 +156,17 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
             }
 
             // 消息在网关服注册
-            TcpMessageBean messageBean = scriptService.getMessagebean(mid);
-            if (messageBean != null) {
-                Message message = messageBean.buildMessage(bytes);
-                TcpHandler handler = (TcpHandler) messageBean.newHandler();
+            var tcpHandlerBuilder = HandlerManager.getInstance().getTcpHandlerBuilder(mid);
+            if (tcpHandlerBuilder != null) {
+                Message message = tcpHandlerBuilder.buildMessage(bytes);
+                TcpHandler handler = (TcpHandler) tcpHandlerBuilder.buildHandler();
                 if (handler != null) {
                     handler.setMessage(message);
                     handler.setMsgBytes(bytes);
                     handler.setChannel(ctx.channel());
                     handler.setCreateTime(TimeUtil.currentTimeMillis());
-                    handler.setPid(user.getPlayerId() > 0 ? user.getPlayerId() : user.getUserId());
-                    Executor executor = executorService.getExecutor(messageBean.getExecuteThread());
+                    handler.setId(user.getPlayerId() > 0 ? user.getPlayerId() : user.getUserId());
+                    Executor executor = executorService.getExecutor(tcpHandlerBuilder.getExecuteThread());
                     executor.execute(handler);
                     return;
                 }
@@ -181,7 +180,7 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
                 LOGGER.warn("{}-{}-{} 发送非法消息", user.getUserId(), user.getPlayerId(), ip);
             }
             if (mid > 0) {
-                LOGGER.error("消息{} {} 解析错误", mid, MIDMessage.MID.forNumber(mid));
+                LOGGER.error("消息{} {} 解析错误", mid, MID.forNumber(mid));
             }
             LOGGER.error("网络消息", e);
         } finally {

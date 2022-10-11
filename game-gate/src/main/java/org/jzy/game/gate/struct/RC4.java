@@ -1,7 +1,8 @@
 package org.jzy.game.gate.struct;
 
 
-import org.mmo.engine.util.math.MathUtil;
+
+import com.jzy.javalib.base.util.MathUtil;
 
 import java.util.Arrays;
 

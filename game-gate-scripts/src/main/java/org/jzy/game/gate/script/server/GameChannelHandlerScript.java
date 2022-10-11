@@ -1,9 +1,9 @@
 package org.jzy.game.gate.script.server;
 
+import com.jzy.javalib.network.netty.IChannelHandlerScript;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.SocketChannel;
-import org.mmo.engine.io.netty.script.IChannelHandlerScript;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

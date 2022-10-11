@@ -14,6 +14,7 @@
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javalib.version>0.0.6</javalib.version>
     </properties>
     <dependencies>
         <dependency>
@@ -26,8 +27,18 @@
         </dependency>
         <dependency>
             <groupId>com.jzy.javalib</groupId>
+            <artifactId>javalib-base</artifactId>
+            <version>${javalib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jzy.javalib</groupId>
             <artifactId>javalib-math</artifactId>
-            <version>0.0.4</version>
+            <version>${javalib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jzy.javalib</groupId>
+            <artifactId>javalib-network</artifactId>
+            <version>${javalib.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

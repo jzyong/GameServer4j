@@ -23,11 +23,10 @@
         <module>game-common</module>
         <module>game-gate</module>
         <module>game-message</module>
-        <!--  <module>game-manage</module>
-         <module>game-world</module>-->
-
-        <!-- <module>game-hall</module>
-         <module>game-api</module>-->
+        <module>game-manage</module>
+        <module>game-world</module>
+        <module>game-hall</module>
+        <module>game-api</module>
     </modules>
 
     <dependencyManagement>
@@ -59,11 +58,12 @@
             <artifactId>validation-api</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-        <dependency>
+    <!--    <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.83</version>
-        </dependency>
+        </dependency>-->
+
     </dependencies>
     <build>
         <plugins>

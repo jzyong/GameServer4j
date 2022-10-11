@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
  * @mail 359135103@qq.com
  */
 @Component
-@ConfigurationProperties("login")
+@ConfigurationProperties("api")
 public class ApiConfig {
 
     /**
@@ -54,6 +54,10 @@ public class ApiConfig {
 
     public void setRpcPort(int rpcPort) {
         this.rpcPort = rpcPort;
+    }
+
+    public String buildRpcUrl(){
+        return this.privateIp+":"+this.rpcPort;
     }
 
     @Override

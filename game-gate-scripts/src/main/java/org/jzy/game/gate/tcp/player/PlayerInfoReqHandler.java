@@ -1,13 +1,14 @@
 package org.jzy.game.gate.tcp.player;
 
-import org.mmo.engine.io.handler.Handler;
-import org.mmo.engine.io.handler.TcpHandler;
-import org.mmo.engine.io.message.MsgUtil;
+import com.jzy.javalib.network.io.handler.Handler;
+import com.jzy.javalib.network.io.handler.TcpHandler;
+import com.jzy.javalib.network.io.message.MsgUtil;
+import org.jzy.game.common.struct.server.GameServerInfo;
+import org.jzy.game.proto.MID;
+import org.jzy.game.proto.MessageId;
 import org.jzy.game.gate.service.GateManager;
-import org.mmo.common.struct.server.GameServerInfo;
 import org.jzy.game.gate.struct.User;
-import org.mmo.message.MIDMessage;
-import org.mmo.message.PlayerInfoRequest;
+import org.jzy.game.proto.PlayerInfoRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,14 +19,14 @@ import java.util.Map;
  *
  * @author jzy
  */
-@Handler(mid = MIDMessage.MID.PlayerInfoReq_VALUE, msg = PlayerInfoRequest.class)
+@Handler(mid = MID.PlayerInfoReq_VALUE, msg = PlayerInfoRequest.class)
 public class PlayerInfoReqHandler extends TcpHandler {
     public static final Logger LOGGER = LoggerFactory.getLogger(PlayerInfoReqHandler.class);
 
     @Override
     public void run() {
         //TODO 进行游戏服选择连接
-        var request = (PlayerInfoRequest) getMessage();
+        var request = (PlayerInfoRequest) getRequest();
         User user = GateManager.getInstance().getUserService().getUserByUserId(request.getUserId());
         if (user == null) {
             LOGGER.warn("用户：{}未登录", request.getUserId());
@@ -44,7 +45,7 @@ public class PlayerInfoReqHandler extends TcpHandler {
             }
 
             user.setGameChannel(gameServerInfo.getChannel());
-            MsgUtil.sendInnerMsg(gameServerInfo.getChannel(), request, user.getUserId(), MIDMessage.MID.PlayerInfoReq_VALUE);
+            MsgUtil.sendInnerMsg(gameServerInfo.getChannel(), request, user.getUserId(), MID.PlayerInfoReq_VALUE);
             break;
         }
     }

@@ -3,7 +3,6 @@ package ProtoMessage;
 option java_package = "org.jzy.game.proto";
 option java_multiple_files = true;
 option java_outer_classname = "AccountProto";
-import "MessageId.proto";
 option go_package="message";
 
 

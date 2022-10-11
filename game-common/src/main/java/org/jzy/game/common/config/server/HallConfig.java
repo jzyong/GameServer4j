@@ -40,6 +40,15 @@ public class HallConfig {
      */
     private int maxLevel;
 
+    /**
+     * mongodb地址
+     */
+    private String mongodbUrl;
+
+    /**
+     * mongodb 数据库
+     */
+    private String mongodbDatabase;
 
     public int getId() {
         return id;
@@ -75,6 +84,22 @@ public class HallConfig {
 
     public String buildRpcUrl(){
         return this.privateIp+":"+this.rpcPort;
+    }
+
+    public String getMongodbUrl() {
+        return mongodbUrl;
+    }
+
+    public void setMongodbUrl(String mongodbUrl) {
+        this.mongodbUrl = mongodbUrl;
+    }
+
+    public String getMongodbDatabase() {
+        return mongodbDatabase;
+    }
+
+    public void setMongodbDatabase(String mongodbDatabase) {
+        this.mongodbDatabase = mongodbDatabase;
     }
 
     @Override

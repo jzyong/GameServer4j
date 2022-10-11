@@ -1,13 +1,10 @@
 package org.jzy.game.gate.tcp.server;
 
-import org.mmo.engine.io.handler.Handler;
-import org.mmo.engine.io.handler.TcpHandler;
+import com.jzy.javalib.network.io.handler.Handler;
+import com.jzy.javalib.network.io.handler.TcpHandler;
+import org.jzy.game.common.struct.server.GameServerInfo;
 import org.jzy.game.gate.service.GateManager;
-import org.mmo.common.struct.server.GameServerInfo;
-import org.mmo.message.MIDMessage;
-import org.mmo.message.ServerInfo;
-import org.mmo.message.ServerRegisterUpdateRequest;
-import org.mmo.message.ServerRegisterUpdateResponse;
+import org.jzy.game.proto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author jzy
  */
-@Handler(mid = MIDMessage.MID.ServerRegisterUpdateReq_VALUE, msg = ServerRegisterUpdateRequest.class)
+@Handler(mid = MID.ServerRegisterUpdateReq_VALUE, msg = ServerRegisterUpdateRequest.class)
 public class ServerRegisterUpdateReqHandler extends TcpHandler {
     public static final Logger LOGGER = LoggerFactory.getLogger(ServerRegisterUpdateReqHandler.class);
 
@@ -43,6 +40,6 @@ public class ServerRegisterUpdateReqHandler extends TcpHandler {
         ServerInfo.Builder replayServerInfo = ServerInfo.newBuilder();
         replayServerInfo.setId(GateManager.getInstance().getGateConfig().getId());
         builder.setServerInfo(replayServerInfo);
-        sendInnerMsg(MIDMessage.MID.ServerRegisterUpdateRes_VALUE, builder.build());
+        sendInnerMsg(builder.build());
     }
 }

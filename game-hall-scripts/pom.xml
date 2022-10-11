@@ -3,18 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>mmo</artifactId>
-        <groupId>org.mmo</groupId>
+        <artifactId>game4j</artifactId>
+        <groupId>org.jzy</groupId>
         <version>releases</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mmo-game-scripts</artifactId>
-
+    <artifactId>game-hall-scripts</artifactId>
+    <name>game-hall-scripts</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>mmo-game</artifactId>
+            <artifactId>game-hall</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

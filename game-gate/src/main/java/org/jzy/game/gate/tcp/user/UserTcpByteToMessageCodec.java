@@ -1,13 +1,14 @@
 package org.jzy.game.gate.tcp.user;
 
 import com.google.protobuf.Message;
+import com.jzy.javalib.base.script.ScriptManager;
+import com.jzy.javalib.network.io.message.MsgUtil;
+import com.jzy.javalib.network.netty.IChannelHandlerScript;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
-import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.engine.io.netty.script.IChannelHandlerScript;
-import org.mmo.engine.script.ScriptService;
-import org.mmo.message.MIDMessage;
+import org.jzy.game.proto.MID;
+import org.jzy.game.proto.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,10 +21,9 @@ import java.util.List;
  */
 public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTcpByteToMessageCodec.class);
-    private ScriptService scriptService;
 
-    public UserTcpByteToMessageCodec(ScriptService scriptService){
-        this.scriptService=scriptService;
+    public UserTcpByteToMessageCodec(){
+
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
             byte[] bytes = (byte[]) msg;
             out.writeInt(bytes.length);
             if (bytes.length > MsgUtil.MESSAGE_MAX_SIZE) {
-                LOGGER.warn("消息：{} 拥有{}字节，将拆包发送", MIDMessage.MID.forNumber(MsgUtil.getMessageID(bytes, 0)), bytes.length);
+                LOGGER.warn("消息：{} 拥有{}字节，将拆包发送", MID.forNumber(MsgUtil.getMessageID(bytes, 0)), bytes.length);
             }
             // 消息id+消息内容
             out.writeBytes(bytes);
@@ -47,11 +47,11 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
             Message message = (Message) msg;
             String className=message.getClass().getSimpleName();
             try {
-                int messageID = MIDMessage.MID.valueOf(className.substring(0,className.length()-5)).getNumber();
+                int messageID = MID.valueOf(className.substring(0,className.length()-5)).getNumber();
 
                 byte[] bytes = message.toByteArray();
                 if (bytes.length > MsgUtil.MESSAGE_MAX_SIZE) {
-                    LOGGER.warn("消息：{} 拥有{}字节，将拆包发送", MIDMessage.MID.forNumber(messageID), bytes.length);
+                    LOGGER.warn("消息：{} 拥有{}字节，将拆包发送", MID.forNumber(messageID), bytes.length);
                 }
                 out.writeInt(bytes.length + 4); // 消息id+消息内容长度
                 out.writeInt(messageID);
@@ -88,7 +88,7 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
         }
 
         ByteBuf readRetainedSlice = in.readRetainedSlice(dataLength);
-        if (!scriptService.functionScript("UserChannelHandlerScript",
+        if (!ScriptManager.getInstance().functionScript("UserChannelHandlerScript",
                 (IChannelHandlerScript script) -> script.inBoundMessageCheck(ctx,readRetainedSlice))) {
             return;
         }

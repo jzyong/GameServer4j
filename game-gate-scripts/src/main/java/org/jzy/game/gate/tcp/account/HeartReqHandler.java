@@ -1,21 +1,22 @@
 package org.jzy.game.gate.tcp.account;
 
-import org.mmo.engine.io.handler.Handler;
-import org.mmo.engine.io.handler.TcpHandler;
-import org.mmo.engine.util.TimeUtil;
-import org.mmo.message.HeartRequest;
-import org.mmo.message.HeartResponse;
-import org.mmo.message.MIDMessage;
+import com.jzy.javalib.base.util.TimeUtil;
+import com.jzy.javalib.network.io.handler.Handler;
+import com.jzy.javalib.network.io.handler.TcpHandler;
+import org.jzy.game.proto.HeartRequest;
+import org.jzy.game.proto.HeartResponse;
+import org.jzy.game.proto.MID;
+import org.jzy.game.proto.MessageId;
 
 /**
  * 心跳
  *
  * @author jzy
  */
-@Handler(mid = MIDMessage.MID.HeartReq_VALUE, msg = HeartRequest.class)
+@Handler(mid = MID.HeartReq_VALUE, msg = HeartRequest.class)
 public class HeartReqHandler extends TcpHandler {
     @Override
     public void run() {
-        sendMsg(HeartResponse.newBuilder().setTime(TimeUtil.currentTimeMillis()).build());
+        sendClientMsg(HeartResponse.newBuilder().setTime(TimeUtil.currentTimeMillis()).build());
     }
 }

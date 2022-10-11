@@ -1,10 +1,10 @@
 package org.jzy.game.gate.tcp.user;
 
 
-import org.mmo.common.config.server.GateConfig;
-import org.mmo.engine.io.netty.config.NettyServerConfig;
-import org.mmo.engine.io.netty.tcp.TcpServer;
-import org.mmo.engine.io.service.TcpService;
+import com.jzy.javalib.network.netty.config.NettyServerConfig;
+import com.jzy.javalib.network.netty.tcp.TcpServer;
+import com.jzy.javalib.network.netty.tcp.TcpService;
+import org.jzy.game.common.config.server.GateConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ import javax.annotation.PreDestroy;
 public class UserTcpService extends TcpService {
     private static final Logger LOG = LoggerFactory.getLogger(UserTcpService.class);
 
-    @Autowired
     private TcpServer nettyServer;
 
     @Autowired
@@ -35,6 +34,7 @@ public class UserTcpService extends TcpService {
     @PostConstruct
     public void start() {
         LOG.debug(" run user tcp ... ");
+        nettyServer=new TcpServer();
         NettyServerConfig nettyServerConfig = new NettyServerConfig();
         nettyServerConfig.setPort(gateConfig.getClientTcpPort());
         nettyServer.setNettyServerConfig(nettyServerConfig);

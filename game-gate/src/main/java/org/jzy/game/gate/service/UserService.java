@@ -1,10 +1,10 @@
 package org.jzy.game.gate.service;
 
+import com.jzy.javalib.network.io.message.MsgUtil;
 import io.netty.channel.Channel;
+import org.jzy.game.common.constant.OfflineType;
 import org.jzy.game.gate.struct.User;
 import org.jzy.game.gate.tcp.user.UserTcpServerHandler;
-import org.mmo.common.constant.OfflineType;
-import org.mmo.engine.io.message.MsgUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

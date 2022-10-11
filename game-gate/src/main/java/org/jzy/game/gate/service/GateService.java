@@ -1,5 +1,9 @@
 package org.jzy.game.gate.service;
 
+import com.jzy.javalib.base.script.ScriptManager;
+import com.jzy.javalib.base.util.TimeUtil;
+import com.jzy.javalib.network.io.handler.HandlerManager;
+import com.jzy.javalib.network.scene.AbstractScene;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.utils.CloseableUtils;
@@ -7,15 +11,12 @@ import org.apache.curator.x.discovery.ServiceCache;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.apache.curator.x.discovery.UriSpec;
 import org.apache.curator.x.discovery.details.ServiceCacheListener;
-import org.mmo.common.config.server.GateConfig;
-import org.mmo.common.config.server.ServiceConfig;
-import org.mmo.common.constant.ServiceName;
-import org.mmo.common.constant.ThreadType;
-import org.mmo.common.constant.ZKNode;
-import org.mmo.common.service.ZkClientService;
-import org.mmo.engine.script.ScriptService;
-import org.mmo.engine.thread.Scene.AbstractScene;
-import org.mmo.engine.util.TimeUtil;
+import org.jzy.game.common.config.server.GateConfig;
+import org.jzy.game.common.config.server.ServiceConfig;
+import org.jzy.game.common.constant.ServiceName;
+import org.jzy.game.common.constant.ThreadType;
+import org.jzy.game.common.constant.ZKNode;
+import org.jzy.game.common.service.ZkClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,6 @@ public class GateService extends AbstractScene {
     private GateExecutorService executorService;
 
     @Autowired
-    private ScriptService scriptService;
-    @Autowired
     private GateConfig gateConfig;
     @Autowired
     private ZkClientService zkClientService;
@@ -59,7 +58,8 @@ public class GateService extends AbstractScene {
     public void init() {
         try {
             LOGGER.info("gate service start：{}-{}...", gateConfig.toString());
-            scriptService.init((str) -> {
+            ScriptManager.getInstance().setHandlerLoader(HandlerManager.getInstance());
+            ScriptManager.getInstance().init((str) -> {
                 LOGGER.error("脚本加载错误：{}", str);
                 System.exit(0);
             });
@@ -118,7 +118,7 @@ public class GateService extends AbstractScene {
 
     @PreDestroy
     public void destroy() {
-        if(loginServiceCache!=null){
+        if (loginServiceCache != null) {
             CloseableUtils.closeQuietly(loginServiceCache);
         }
         zkClientService.unregisterService(clientServiceInstance);

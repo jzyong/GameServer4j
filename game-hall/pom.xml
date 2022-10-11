@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<description>游戏逻辑服</description>
 	<parent>
-		<groupId>org.mmo</groupId>
-		<artifactId>mmo</artifactId>
+		<groupId>org.jzy</groupId>
+		<artifactId>game4j</artifactId>
 		<version>releases</version>
 	</parent>
-	<artifactId>mmo-game</artifactId>
-	<name>mmo-game</name>
+	<artifactId>game-hall</artifactId>
+	<name>game-hall</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>mmo-common</artifactId>
+			<artifactId>game-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
@@ -42,7 +42,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>org.mmo.game.GameApp</mainClass>
+							<mainClass>org.jzy.game.hall.HallApp</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -68,7 +68,7 @@
 		</plugins>
 		<filters>
 			<filter>
-				src/main/resources/filter/game_jzy.properties
+				src/main/resources/filter/hall_jzy.properties
 			</filter>
 		</filters>
 		<resources>
@@ -99,7 +99,7 @@
 			<build>
 				<filters>
 					<filter>
-						src/main/resources/filter/game_jzy.properties
+						src/main/resources/filter/hall_jzy.properties
 					</filter>
 				</filters>
 			</build>
@@ -109,7 +109,7 @@
 			<build>
 				<filters>
 					<filter>
-						src/main/resources/filter/game_jzy2.properties
+						src/main/resources/filter/hall_jzy2.properties
 					</filter>
 				</filters>
 			</build>

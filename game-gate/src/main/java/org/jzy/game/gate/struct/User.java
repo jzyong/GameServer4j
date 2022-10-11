@@ -1,10 +1,11 @@
 package org.jzy.game.gate.struct;
 
+import com.jzy.javalib.network.io.message.IdMessage;
+import com.jzy.javalib.network.io.message.MsgUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
-import org.mmo.engine.io.message.IdMessage;
-import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.message.MIDMessage;
+import org.jzy.game.proto.MID;
+import org.jzy.game.proto.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,9 +190,9 @@ public class User {
     /**
      * 给前端发送消息
      *
-     * @note 发送byte[]和Message类型
      * @param msg
      * @return
+     * @note 发送byte[]和Message类型
      */
     public boolean sendToUser(Object msg) {
         try {
@@ -210,7 +211,7 @@ public class User {
      */
     public void sendToGame(byte[] data, int msgId) {
         if (userId < 1 || gameChannel == null) {
-            LOGGER.warn("连接{}未登录，消息{}转发失败", MsgUtil.getIp(clientChannel), MIDMessage.MID.forNumber(msgId));
+            LOGGER.warn("连接{}未登录，消息{}转发失败", MsgUtil.getIp(clientChannel), MID.forNumber(msgId));
             return;
         }
         IdMessage idMessage = IdMessage.newIDMessage(gameChannel, data, playerId < 1 ? userId : playerId, msgId);

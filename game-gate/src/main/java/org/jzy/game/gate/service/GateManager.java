@@ -1,8 +1,9 @@
 package org.jzy.game.gate.service;
 
 
+import org.jzy.game.common.config.server.GateConfig;
 import org.jzy.game.gate.tcp.game.GameTcpService;
-import org.mmo.common.config.server.GateConfig;
+import org.jzy.game.gate.tcp.user.UserTcpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,8 @@ public class GateManager {
 
     @Autowired
     GameTcpService gameTcpService;
+    @Autowired
+    UserTcpService userTcpService;
     @Autowired
     private GateConfig gateConfig;
 
@@ -70,5 +73,9 @@ public class GateManager {
 
     public GateConfig getGateConfig() {
         return gateConfig;
+    }
+
+    public UserTcpService getUserTcpService() {
+        return userTcpService;
     }
 }

@@ -50,3 +50,9 @@ The basic architecture of the project is shown below:
 ### TODO
 * add microservice
 * protobuf sync to GameServer4g
+ * Kafka完善
+ * 流程测试
+ * 网络调试
+ * 网络测试
+ * 各个服务数据库分开，不共享
+ * 消息id映射规则，不能通过编号获取
