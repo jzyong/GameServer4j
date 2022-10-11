@@ -1,10 +1,10 @@
-package org.mmo.world;
+package org.jzy.game.world;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class WorldApp
 {
     public static void main( String[] args )
     {

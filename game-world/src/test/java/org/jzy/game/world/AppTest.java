@@ -1,4 +1,4 @@
-package org.mmo.world;
+package org.jzy.game.world;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
