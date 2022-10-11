@@ -15,6 +15,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.jzy.game.common.constant.OfflineType;
 import org.jzy.game.gate.struct.User;
 import org.jzy.game.gate.service.GateManager;
+import org.jzy.game.proto.MID;
 import org.jzy.game.proto.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,7 +112,7 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
                     // 转发给客户端
                     User user = GateManager.getInstance().getUserService().getUserByPlayerId(id);
                     if (user == null) {
-                        LOGGER.warn("玩家{} 已下线，消息{}-{}发送失败", id, msgId, MessageId.MID.forNumber(msgId).toString());
+                        LOGGER.warn("玩家{} 已下线，消息{}-{}发送失败", id, msgId, MID.forNumber(msgId).toString());
                         return;
                     }
                     user.sendToUser(bytes);

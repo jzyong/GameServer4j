@@ -2,6 +2,7 @@ package org.jzy.game.gate.tcp.player;
 
 import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;
+import org.jzy.game.proto.MID;
 import org.jzy.game.proto.MessageId;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.User;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * 玩家加载成功
  * @author jzy
  */
-@Handler(mid = MessageId.MID.PlayerInfoRes_VALUE,msg = PlayerInfoResponse.class)
+@Handler(mid = MID.PlayerInfoRes_VALUE,msg = PlayerInfoResponse.class)
 public class PlayerInfoResHandler extends TcpHandler {
     public static final Logger LOGGER= LoggerFactory.getLogger(PlayerInfoResHandler.class);
     @Override

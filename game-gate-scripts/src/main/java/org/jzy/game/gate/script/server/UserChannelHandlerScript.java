@@ -14,6 +14,7 @@ import org.jzy.game.gate.tcp.user.UserTcpServerHandler;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.RC4;
 import org.jzy.game.gate.struct.User;
+import org.jzy.game.proto.MID;
 import org.jzy.game.proto.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,7 +169,7 @@ public class UserChannelHandlerScript implements IChannelHandlerScript {
                 if (LOGGER.isDebugEnabled()) {
                     Map<Integer, Integer> msgIdMap = ctx.channel().attr(UserTcpServerHandler.REQUEST_MESSAGE_IDS).get();
                     msgIdMap.forEach((id, count) -> {
-                        LOGGER.warn("{} 消息{}-{}", userSession.getAccount(), MessageId.MID.forNumber(id), count);
+                        LOGGER.warn("{} 消息{}-{}", userSession.getAccount(), MID.forNumber(id), count);
                     });
                 }
                 String ip = MsgUtil.getIp(ctx.channel());

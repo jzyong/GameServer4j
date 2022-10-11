@@ -5,7 +5,5 @@
  * Login authentication
  * Billing Verify
  
- #### TODO
- * Kafka完善
- * 流程测试
+
  

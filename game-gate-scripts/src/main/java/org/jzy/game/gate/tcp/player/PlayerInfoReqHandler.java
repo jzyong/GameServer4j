@@ -4,6 +4,7 @@ import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;
 import com.jzy.javalib.network.io.message.MsgUtil;
 import org.jzy.game.common.struct.server.GameServerInfo;
+import org.jzy.game.proto.MID;
 import org.jzy.game.proto.MessageId;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.User;
@@ -18,7 +19,7 @@ import java.util.Map;
  *
  * @author jzy
  */
-@Handler(mid = MessageId.MID.PlayerInfoReq_VALUE, msg = PlayerInfoRequest.class)
+@Handler(mid = MID.PlayerInfoReq_VALUE, msg = PlayerInfoRequest.class)
 public class PlayerInfoReqHandler extends TcpHandler {
     public static final Logger LOGGER = LoggerFactory.getLogger(PlayerInfoReqHandler.class);
 
@@ -44,7 +45,7 @@ public class PlayerInfoReqHandler extends TcpHandler {
             }
 
             user.setGameChannel(gameServerInfo.getChannel());
-            MsgUtil.sendInnerMsg(gameServerInfo.getChannel(), request, user.getUserId(), MessageId.MID.PlayerInfoReq_VALUE);
+            MsgUtil.sendInnerMsg(gameServerInfo.getChannel(), request, user.getUserId(), MID.PlayerInfoReq_VALUE);
             break;
         }
     }

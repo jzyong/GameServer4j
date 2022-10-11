@@ -42,7 +42,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>org.mmo.game.GameApp</mainClass>
+							<mainClass>org.jzy.game.hall.HallApp</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -68,7 +68,7 @@
 		</plugins>
 		<filters>
 			<filter>
-				src/main/resources/filter/game_jzy.properties
+				src/main/resources/filter/hall_jzy.properties
 			</filter>
 		</filters>
 		<resources>
@@ -99,7 +99,7 @@
 			<build>
 				<filters>
 					<filter>
-						src/main/resources/filter/game_jzy.properties
+						src/main/resources/filter/hall_jzy.properties
 					</filter>
 				</filters>
 			</build>
@@ -109,7 +109,7 @@
 			<build>
 				<filters>
 					<filter>
-						src/main/resources/filter/game_jzy2.properties
+						src/main/resources/filter/hall_jzy2.properties
 					</filter>
 				</filters>
 			</build>

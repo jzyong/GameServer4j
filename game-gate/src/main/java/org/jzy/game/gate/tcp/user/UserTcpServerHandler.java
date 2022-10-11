@@ -20,6 +20,7 @@ import io.netty.util.AttributeKey;
 import org.jzy.game.common.constant.OfflineType;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.User;
+import org.jzy.game.proto.MID;
 import org.jzy.game.proto.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,7 +144,7 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
             mid = byteBuf.readInt();
             user = ctx.channel().attr(USER).get();
             if (user == null) {
-                LOGGER.warn("{}请求消息{}用户未登录", MsgUtil.getRemoteIpPort(ctx.channel()), MessageId.MID.forNumber(mid));
+                LOGGER.warn("{}请求消息{}用户未登录", MsgUtil.getRemoteIpPort(ctx.channel()), MID.forNumber(mid));
                 channelClosed(ctx.channel(), OfflineType.IllegalRequest);
                 return;
             }
@@ -179,7 +180,7 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
                 LOGGER.warn("{}-{}-{} 发送非法消息", user.getUserId(), user.getPlayerId(), ip);
             }
             if (mid > 0) {
-                LOGGER.error("消息{} {} 解析错误", mid, MessageId.MID.forNumber(mid));
+                LOGGER.error("消息{} {} 解析错误", mid, MID.forNumber(mid));
             }
             LOGGER.error("网络消息", e);
         } finally {

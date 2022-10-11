@@ -3,10 +3,7 @@ package org.jzy.game.gate.tcp.account;
 import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;
 import io.grpc.stub.StreamObserver;
-import org.jzy.game.proto.AccountServiceGrpc;
-import org.jzy.game.proto.LoginRequest;
-import org.jzy.game.proto.LoginResponse;
-import org.jzy.game.proto.MessageId;
+import org.jzy.game.proto.*;
 import org.jzy.game.gate.tcp.user.UserTcpServerHandler;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.User;
@@ -19,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author jzy
  */
-@Handler(mid = MessageId.MID.LoginReq_VALUE, msg = LoginRequest.class)
+@Handler(mid = MID.LoginReq_VALUE, msg = LoginRequest.class)
 public class LoginReqHandler extends TcpHandler {
     public static final Logger LOGGER = LoggerFactory.getLogger(LoginReqHandler.class);
 

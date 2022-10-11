@@ -5,6 +5,7 @@ import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;
 import org.jzy.game.proto.HeartRequest;
 import org.jzy.game.proto.HeartResponse;
+import org.jzy.game.proto.MID;
 import org.jzy.game.proto.MessageId;
 
 /**
@@ -12,7 +13,7 @@ import org.jzy.game.proto.MessageId;
  *
  * @author jzy
  */
-@Handler(mid = MessageId.MID.HeartReq_VALUE, msg = HeartRequest.class)
+@Handler(mid = MID.HeartReq_VALUE, msg = HeartRequest.class)
 public class HeartReqHandler extends TcpHandler {
     @Override
     public void run() {
