@@ -9,8 +9,8 @@
 		<artifactId>game4j</artifactId>
 		<version>releases</version>
 	</parent>
-	<artifactId>game-game</artifactId>
-	<name>game-game</name>
+	<artifactId>game-hall</artifactId>
+	<name>game-hall</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

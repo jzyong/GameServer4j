@@ -1,11 +1,11 @@
 package org.jzy.game.gate.tcp.player;
 
-import org.mmo.engine.io.handler.Handler;
-import org.mmo.engine.io.handler.TcpHandler;
+import com.jzy.javalib.network.io.handler.Handler;
+import com.jzy.javalib.network.io.handler.TcpHandler;
+import org.jzy.game.proto.MessageId;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.User;
-import org.mmo.message.MIDMessage;
-import org.mmo.message.PlayerInfoResponse;
+import org.jzy.game.proto.PlayerInfoResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * 玩家加载成功
  * @author jzy
  */
-@Handler(mid = MIDMessage.MID.PlayerInfoRes_VALUE,msg = PlayerInfoResponse.class)
+@Handler(mid = MessageId.MID.PlayerInfoRes_VALUE,msg = PlayerInfoResponse.class)
 public class PlayerInfoResHandler extends TcpHandler {
     public static final Logger LOGGER= LoggerFactory.getLogger(PlayerInfoResHandler.class);
     @Override

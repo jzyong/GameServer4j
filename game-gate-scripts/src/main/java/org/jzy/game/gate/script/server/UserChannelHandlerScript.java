@@ -1,5 +1,8 @@
 package org.jzy.game.gate.script.server;
 
+import com.jzy.javalib.base.util.TimeUtil;
+import com.jzy.javalib.network.io.message.MsgUtil;
+import com.jzy.javalib.network.netty.IChannelHandlerScript;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -8,13 +11,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.util.Attribute;
 import io.netty.util.concurrent.ScheduledFuture;
 import org.jzy.game.gate.tcp.user.UserTcpServerHandler;
-import org.mmo.engine.io.message.MsgUtil;
-import org.mmo.engine.io.netty.script.IChannelHandlerScript;
-import org.mmo.engine.util.TimeUtil;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.RC4;
 import org.jzy.game.gate.struct.User;
-import org.mmo.message.MIDMessage;
+import org.jzy.game.proto.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -168,7 +168,7 @@ public class UserChannelHandlerScript implements IChannelHandlerScript {
                 if (LOGGER.isDebugEnabled()) {
                     Map<Integer, Integer> msgIdMap = ctx.channel().attr(UserTcpServerHandler.REQUEST_MESSAGE_IDS).get();
                     msgIdMap.forEach((id, count) -> {
-                        LOGGER.warn("{} 消息{}-{}", userSession.getAccount(), MIDMessage.MID.forNumber(id), count);
+                        LOGGER.warn("{} 消息{}-{}", userSession.getAccount(), MessageId.MID.forNumber(id), count);
                     });
                 }
                 String ip = MsgUtil.getIp(ctx.channel());

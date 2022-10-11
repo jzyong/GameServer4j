@@ -1,6 +1,8 @@
 package org.jzy.game.gate.tcp.game;
 
 import com.google.protobuf.Message;
+import com.jzy.javalib.network.io.message.IdMessage;
+import com.jzy.javalib.network.io.message.MsgUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
@@ -21,8 +23,7 @@ public class GameTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
      */
     public static final int HEADER_EXCLUDE_LENGTH = 14;
 
-    public GameTcpByteToMessageCodec(ScriptService scriptService) {
-        this.scriptService = scriptService;
+    public GameTcpByteToMessageCodec() {
     }
 
     @Override
@@ -34,7 +35,7 @@ public class GameTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
             if (idMessage.getMsg() instanceof byte[]) {
                 byte[] bytes = (byte[]) idMessage.getMsg();
                 out.writeInt(HEADER_EXCLUDE_LENGTH + bytes.length);
-                out.writeShort(MsgType.IDMESSAGE.getType());
+                out.writeShort(1);
                 out.writeLong(idMessage.getId());
                 out.writeInt(idMessage.getMsgId());
                 out.writeBytes(bytes);
@@ -42,7 +43,7 @@ public class GameTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
                 Message message = (Message) idMessage.getMsg();
                 byte[] bytes = message.toByteArray();
                 out.writeInt(HEADER_EXCLUDE_LENGTH + bytes.length);
-                out.writeShort(MsgType.IDMESSAGE.getType());
+                out.writeShort(1);
                 out.writeLong(idMessage.getId());
                 out.writeInt(idMessage.getMsgId());
                 out.writeBytes(bytes);

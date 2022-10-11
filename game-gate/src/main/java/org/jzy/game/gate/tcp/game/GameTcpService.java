@@ -1,11 +1,11 @@
 package org.jzy.game.gate.tcp.game;
 
 
-import org.mmo.common.config.server.GateConfig;
-import org.mmo.engine.io.netty.config.NettyServerConfig;
-import org.mmo.engine.io.netty.tcp.TcpServer;
-import org.mmo.engine.io.service.TcpService;
-import org.mmo.common.struct.server.GameServerInfo;
+import com.jzy.javalib.network.netty.config.NettyServerConfig;
+import com.jzy.javalib.network.netty.tcp.TcpServer;
+import com.jzy.javalib.network.netty.tcp.TcpService;
+import org.jzy.game.common.config.server.GateConfig;
+import org.jzy.game.common.struct.server.GameServerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GameTcpService extends TcpService {
     private static final Logger LOG = LoggerFactory.getLogger(GameTcpService.class);
 
-    @Autowired
     private TcpServer nettyServer;
 
     @Autowired
@@ -43,6 +42,7 @@ public class GameTcpService extends TcpService {
     @PostConstruct
     public void start() {
         LOG.debug(" run game tcp ... ");
+        nettyServer=new TcpServer();
         NettyServerConfig nettyServerConfig = new NettyServerConfig();
         nettyServerConfig.setPort(gateConfig.getGameTcpPort());
         nettyServer.setNettyServerConfig(nettyServerConfig);

@@ -1,15 +1,15 @@
 package org.jzy.game.gate.tcp.account;
 
+import com.jzy.javalib.network.io.handler.Handler;
+import com.jzy.javalib.network.io.handler.TcpHandler;
 import io.grpc.stub.StreamObserver;
-import org.mmo.engine.io.handler.Handler;
-import org.mmo.engine.io.handler.TcpHandler;
+import org.jzy.game.proto.AccountServiceGrpc;
+import org.jzy.game.proto.LoginRequest;
+import org.jzy.game.proto.LoginResponse;
+import org.jzy.game.proto.MessageId;
 import org.jzy.game.gate.tcp.user.UserTcpServerHandler;
 import org.jzy.game.gate.service.GateManager;
 import org.jzy.game.gate.struct.User;
-import org.mmo.message.AccountServiceGrpc;
-import org.mmo.message.LoginRequest;
-import org.mmo.message.LoginResponse;
-import org.mmo.message.MIDMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,14 +19,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author jzy
  */
-@Handler(mid = MIDMessage.MID.LoginReq_VALUE, msg = LoginRequest.class)
+@Handler(mid = MessageId.MID.LoginReq_VALUE, msg = LoginRequest.class)
 public class LoginReqHandler extends TcpHandler {
     public static final Logger LOGGER = LoggerFactory.getLogger(LoginReqHandler.class);
 
     @Override
     public void run() {
 
-        var request = (LoginRequest) getMsg();
+        var request = (LoginRequest) getRequest();
         LOGGER.debug("登录消息：{}", request.toString());
         AccountServiceGrpc.AccountServiceStub stub = GateManager.getInstance().getGateToLoginRpcService().randomAccountStub();
         if (stub == null) {
@@ -46,7 +46,7 @@ public class LoginReqHandler extends TcpHandler {
                 LOGGER.debug("登录返回：{}", value.toString());
                 user.setUserId(value.getUserId());
                 GateManager.getInstance().getUserService().onUserLoginSuccess(user);
-                sendMsg(value);
+                sendClientMsg(value);
             }
 
             @Override

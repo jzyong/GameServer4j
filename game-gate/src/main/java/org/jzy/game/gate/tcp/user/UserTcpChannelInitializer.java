@@ -1,12 +1,12 @@
 package org.jzy.game.gate.tcp.user;
 
+import com.jzy.javalib.base.script.ScriptManager;
+import com.jzy.javalib.network.netty.IChannelHandlerScript;
+import com.jzy.javalib.network.netty.config.NettyServerConfig;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
-import org.mmo.common.config.server.GateConfig;
-import org.mmo.engine.io.netty.config.NettyServerConfig;
-import org.mmo.engine.io.netty.script.IChannelHandlerScript;
-import org.mmo.engine.script.ScriptService;
+import org.jzy.game.common.config.server.GateConfig;
 import org.jzy.game.gate.service.GateExecutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -22,11 +22,7 @@ import org.springframework.stereotype.Component;
 public class UserTcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
     @Autowired
-    private ScriptService scriptService;
-    @Autowired
     GateExecutorService gateExecutorService;
-    @Autowired
-    UserTcpService tcpService;
     @Autowired
     private GateConfig gateConfig;
 
@@ -35,15 +31,15 @@ public class UserTcpChannelInitializer extends ChannelInitializer<SocketChannel>
     }
 
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
-        ch.pipeline().addLast("Codec", new UserTcpByteToMessageCodec(scriptService));
-        ch.pipeline().addLast("MessageHandler", new UserTcpServerHandler(scriptService, gateExecutorService, tcpService));
+    protected void initChannel(SocketChannel ch) {
+        ch.pipeline().addLast("Codec", new UserTcpByteToMessageCodec());
+        ch.pipeline().addLast("MessageHandler", new UserTcpServerHandler(gateExecutorService));
 
         NettyServerConfig nettyServerConfig = new NettyServerConfig();
         nettyServerConfig.setPort(gateConfig.getClientTcpPort());
         int bothIdleTime = Math.min(nettyServerConfig.getReaderIdleTime(), nettyServerConfig.getWriterIdleTime());
         ch.pipeline().addLast("IdleStateHandler", new IdleStateHandler(nettyServerConfig.getReaderIdleTime(),
                 nettyServerConfig.getWriterIdleTime(), bothIdleTime));
-        scriptService.consumerScript("UserChannelHandlerScript", (IChannelHandlerScript script) -> script.initChannel(ch));
+        ScriptManager.getInstance().consumerScript("UserChannelHandlerScript", (IChannelHandlerScript script) -> script.initChannel(ch));
     }
 }

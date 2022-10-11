@@ -1,9 +1,9 @@
 package org.jzy.game.gate.tcp.user;
 
 
-import com.jzy.javalib.network.netty.TcpServer;
-import com.jzy.javalib.network.netty.TcpService;
 import com.jzy.javalib.network.netty.config.NettyServerConfig;
+import com.jzy.javalib.network.netty.tcp.TcpServer;
+import com.jzy.javalib.network.netty.tcp.TcpService;
 import org.jzy.game.common.config.server.GateConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
