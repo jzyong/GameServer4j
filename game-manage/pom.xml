@@ -88,7 +88,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.mmo.manage.ManageApp</mainClass>
+                            <mainClass>org.jzy.game.manage.ManageApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

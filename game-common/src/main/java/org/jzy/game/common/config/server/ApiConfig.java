@@ -56,6 +56,10 @@ public class ApiConfig {
         this.rpcPort = rpcPort;
     }
 
+    public String buildRpcUrl(){
+        return this.privateIp+":"+this.rpcPort;
+    }
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);

@@ -31,16 +31,16 @@ public enum ZKNode {
     GateConfig("/game/%s/gate%s"),
 
     /**
-     * 登陆服配置 profile serverId
+     * api服配置 profile serverId
      * {@link ApiConfig}
      */
-    LoginConfig("/game/%s/login%s"),
+    ApiConfig("/game/%s/api%s"),
 
     /**
      * 游戏服配置 profile serverId
      * {@link HallConfig}
      */
-    GameConfig("/game/%s/game%s"),
+    HallConfig("/game/%s/hall%s"),
 
     /**
      * 游戏mongo数据库

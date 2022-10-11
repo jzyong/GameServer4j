@@ -66,7 +66,7 @@ public class ApiService extends AbstractScene {
         try {
             LOGGER.info("login server start：{}-->{} ", apiConfig.getId(), apiConfig.toString());
             //推送配置，数据库配置只在此推送
-            zkClientService.pushConfig(ZKNode.LoginConfig.getKey(globalProperties.getProfile(), apiConfig.getId()), apiConfig);
+            zkClientService.pushConfig(ZKNode.ApiConfig.getKey(globalProperties.getProfile(), apiConfig.getId()), apiConfig);
             serviceInstance = ServiceInstance.<ServiceConfig>builder()
                     .id(String.valueOf(apiConfig.getId()))
                     .registrationTimeUTC(TimeUtil.currentTimeMillis())

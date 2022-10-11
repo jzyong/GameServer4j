@@ -1,5 +1,6 @@
-package org.mmo.manage.service;
+package org.jzy.game.manage.service;
 
+import com.jzy.javalib.base.util.TimeUtil;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.utils.CloseableUtils;
@@ -7,13 +8,12 @@ import org.apache.curator.x.discovery.ServiceCache;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.apache.curator.x.discovery.UriSpec;
 import org.apache.curator.x.discovery.details.ServiceCacheListener;
-import org.mmo.common.config.server.ManageConfig;
-import org.mmo.common.config.server.ServiceConfig;
-import org.mmo.common.constant.GlobalProperties;
-import org.mmo.common.constant.ServiceName;
-import org.mmo.common.constant.ZKNode;
-import org.mmo.common.service.ZkClientService;
-import org.mmo.engine.util.TimeUtil;
+import org.jzy.game.common.config.server.ManageConfig;
+import org.jzy.game.common.config.server.ServiceConfig;
+import org.jzy.game.common.constant.GlobalProperties;
+import org.jzy.game.common.constant.ServiceName;
+import org.jzy.game.common.constant.ZKNode;
+import org.jzy.game.common.service.ZkClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
-package org.mmo.manage.service;
+package org.jzy.game.manage.service;
 
 import org.apache.curator.x.discovery.ServiceInstance;
-import org.mmo.common.config.server.ServiceConfig;
+import org.jzy.game.common.config.server.ServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

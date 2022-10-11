@@ -1,8 +1,8 @@
-package org.mmo.manage.service;
+package org.jzy.game.manage.service;
 
-import org.mmo.common.config.server.ManageConfig;
-import org.mmo.common.constant.LogTopic;
-import org.mmo.manage.util.kafka.LogConsumer;
+import org.jzy.game.common.config.server.ManageConfig;
+import org.jzy.game.common.constant.LogTopic;
+import org.jzy.game.manage.util.kafka.LogConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package org.mmo.manage.controller;
+package org.jzy.game.manage.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

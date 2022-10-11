@@ -1,6 +1,6 @@
-package org.mmo.manage.controller;
+package org.jzy.game.manage.controller;
 
-import org.mmo.manage.service.GateInfoService;
+import org.jzy.game.manage.service.GateInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

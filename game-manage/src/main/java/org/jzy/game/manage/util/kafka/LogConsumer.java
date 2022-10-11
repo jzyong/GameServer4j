@@ -1,4 +1,4 @@
-package org.mmo.manage.util.kafka;
+package org.jzy.game.manage.util.kafka;
 
 import com.alibaba.fastjson.JSON;
 import kafka.utils.ShutdownableThread;
@@ -6,8 +6,8 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.mmo.common.constant.LogTopic;
-import org.mmo.common.struct.log.LoginLog;
+import org.jzy.game.common.constant.LogTopic;
+import org.jzy.game.common.struct.log.LoginLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

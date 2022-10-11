@@ -105,7 +105,7 @@ public class HallService extends AbstractScene {
     private void initZkService() throws Exception {
         long now = TimeUtil.currentTimeMillis();
         //推送配置
-        zkClientService.pushConfig(ZKNode.GameConfig.getKey(globalProperties.getProfile(), hallConfig.getId()), hallConfig);
+        zkClientService.pushConfig(ZKNode.HallConfig.getKey(globalProperties.getProfile(), hallConfig.getId()), hallConfig);
         zkClientService.starService(ZKNode.ServicePath.getKey(globalProperties.getProfile()), null);
         gateServiceCache = zkClientService.getServiceDiscovery().serviceCacheBuilder().name(ServiceName.GateGameTcp.name()).build();
         gateServiceCache.addListener(new ServiceCacheListener() {

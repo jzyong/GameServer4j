@@ -1,17 +1,10 @@
-package org.mmo.manage.controller;
+package org.jzy.game.manage.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import org.mmo.common.constant.ServerType;
-import org.mmo.manage.service.RpcClientService;
-import org.mmo.manage.service.ServerGMService;
-import org.mmo.message.HttpRequest;
-import org.mmo.message.HttpResponse;
-import org.mmo.message.ServerServiceGrpc;
+import org.jzy.game.manage.service.RpcClientService;
+import org.jzy.game.manage.service.ServerGMService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +37,9 @@ public class ServerGMController {
      */
     @RequestMapping("/server/gm/load/scripts")
     public ResponseEntity loadScript(int serverType, int serverId, String path) {
-        return serverGMService.loadScript(serverType, serverId, path);
+        //TODO
+        // return serverGMService.loadScript(serverType, serverId, path);
+        return null;
     }
 
     /**
@@ -59,13 +54,15 @@ public class ServerGMController {
      */
     @RequestMapping("/server/gm/close")
     public ResponseEntity closeServer(int serverType, int serverId) {
-        ServerServiceGrpc.ServerServiceBlockingStub serverServiceBlocking = rpcClientService.getServerServiceBlocking(ServerType.valueOf(serverType), serverId);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("test", "hello");
-        jsonObject.put("id", 1);
-        var httpResponse = serverServiceBlocking.httpPost(HttpRequest.newBuilder().setPath("/server/gm/close").setJsonParam(jsonObject.toJSONString()).build());
-        LOGGER.info("关服：{}", httpResponse.toString());
-        return new ResponseEntity(httpResponse.getResult(), HttpStatus.OK);
+//        ServerServiceGrpc.ServerServiceBlockingStub serverServiceBlocking = rpcClientService.getServerServiceBlocking(ServerType.valueOf(serverType), serverId);
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("test", "hello");
+//        jsonObject.put("id", 1);
+//        var httpResponse = serverServiceBlocking.httpPost(HttpRequest.newBuilder().setPath("/server/gm/close").setJsonParam(jsonObject.toJSONString()).build());
+//        LOGGER.info("关服：{}", httpResponse.toString());
+//        return new ResponseEntity(httpResponse.getResult(), HttpStatus.OK);
+        //TODO
+        return null;
     }
 
 }

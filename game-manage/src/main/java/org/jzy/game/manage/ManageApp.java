@@ -1,4 +1,4 @@
-package org.mmo.manage;
+package org.jzy.game.manage;
 
 import java.util.Arrays;
 
@@ -21,7 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author JiangZhiYong
  * @mail 359135103@qq.com
  */
-@ComponentScan("org.mmo")
+@ComponentScan("org.jzy.game")
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class ManageApp {
     public static final Logger LOGGER = LoggerFactory.getLogger(ManageApp.class);
