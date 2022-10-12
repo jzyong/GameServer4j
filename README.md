@@ -54,4 +54,6 @@ The basic architecture of the project is shown below:
  * 网络调试
  * 各个服务数据库分开，不共享
  * 消息id映射规则，不能通过编号获取
+ * 脚本加载接口
+ * docker-compose 一键部署
 

@@ -8,7 +8,7 @@ import org.jzy.game.hall.service.HallManager;
  * 游戏Handler
  * @author jzy
  */
-public abstract class GameHandler extends TcpHandler {
+public abstract class HallHandler extends TcpHandler {
 
     public Player getPlayer(){
         return HallManager.getInstance().getPlayerService().getPlayer(id);

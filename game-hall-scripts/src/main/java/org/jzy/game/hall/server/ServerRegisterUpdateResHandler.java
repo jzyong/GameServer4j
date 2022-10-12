@@ -1,4 +1,4 @@
-package org.jzy.game.hall.tcp.server;
+package org.jzy.game.hall.server;
 
 import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;

@@ -69,6 +69,7 @@ public class Player extends MapObject {
         return JSON.toJSONString(this);
     }
 
+    //TODO 序列号
     public void sendMsg(Message message,int messageId){
         if(channel==null||!channel.isActive()){
             LOGGER.warn("失去网关服连接：{} 发送失败", MID.forNumber(messageId));

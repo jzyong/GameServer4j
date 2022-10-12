@@ -1,4 +1,4 @@
-package org.jzy.game.hall.tcp.player;
+package org.jzy.game.hall.player;
 
 
 import com.jzy.javalib.base.util.IdUtil;

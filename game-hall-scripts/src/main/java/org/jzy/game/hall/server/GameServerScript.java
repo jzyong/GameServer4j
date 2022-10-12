@@ -1,4 +1,4 @@
-package org.jzy.game.hall.script.server;
+package org.jzy.game.hall.server;
 
 
 import org.apache.curator.x.discovery.ServiceCache;
