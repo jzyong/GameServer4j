@@ -1,28 +1,35 @@
-package org.jzy.game.api.script;
+package org.jzy.game.api.account;
 
-
+import com.jzy.javalib.base.script.IInitScript;
 import com.jzy.javalib.base.util.IdUtil;
 import com.jzy.javalib.base.util.StringUtil;
+import com.jzy.javalib.network.grpc.RpcServerManager;
 import io.grpc.stub.StreamObserver;
 import org.jzy.game.api.service.ApiManager;
 import org.jzy.game.api.struct.Account;
 import org.jzy.game.common.struct.log.LoginLog;
+import org.jzy.game.proto.AccountServiceGrpc;
 import org.jzy.game.proto.LoginRequest;
 import org.jzy.game.proto.LoginResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 登录
+ * 账号rpc请求
  *
  * @author jzy
+ * @mail 359135103@qq.com
  */
-public class AccountScript implements IAccountScript {
-    public static final Logger LOGGER = LoggerFactory.getLogger(AccountScript.class);
+public class AccountRpcScript extends AccountServiceGrpc.AccountServiceImplBase implements IInitScript {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountRpcScript.class);
+
+    @Override
+    public void init() {
+        RpcServerManager.getInstance().registerMutableService(this);
+    }
 
     @Override
     public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
-        //TODO mongo 用户数据操作
         LOGGER.debug("登录消息：{}", request.toString());
 
         if (StringUtil.isEmpty(request.getAccount())) {
@@ -48,10 +55,11 @@ public class AccountScript implements IAccountScript {
             }
         }
 
-        ApiManager.getInstance().getKafkaProducerService().sendLog(new LoginLog(IdUtil.getId(), account.getId()));
+        //  ApiManager.getInstance().getKafkaProducerService().sendLog(new LoginLog(IdUtil.getId(), account.getId()));
 
         LoginResponse.Builder builder = LoginResponse.newBuilder();
         builder.setUserId(account.getId());
+        LOGGER.debug("登录返回信息：{}", builder.build().toString());
         responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }

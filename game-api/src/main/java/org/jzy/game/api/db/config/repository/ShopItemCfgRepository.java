@@ -1,5 +1,6 @@
 package org.jzy.game.api.db.config.repository;
 
+import org.bson.types.ObjectId;
 import org.jzy.game.api.db.config.MongodbConfigService;
 import org.jzy.game.api.db.config.enity.ShopItemCfg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.Optional;
  * @author jzy
  */
 @Repository
-public class ShopItemCfgRepository implements CrudRepository<ShopItemCfg, Integer> {
+public class ShopItemCfgRepository implements CrudRepository<ShopItemCfg, ObjectId> {
 
     @Autowired
     MongodbConfigService mongodbConfigService;
@@ -31,12 +32,12 @@ public class ShopItemCfgRepository implements CrudRepository<ShopItemCfg, Intege
     }
 
     @Override
-    public Optional<ShopItemCfg> findById(Integer integer) {
+    public Optional<ShopItemCfg> findById(ObjectId integer) {
         return Optional.empty();
     }
 
     @Override
-    public boolean existsById(Integer integer) {
+    public boolean existsById(ObjectId integer) {
         return false;
     }
 
@@ -47,7 +48,7 @@ public class ShopItemCfgRepository implements CrudRepository<ShopItemCfg, Intege
     }
 
     @Override
-    public Iterable<ShopItemCfg> findAllById(Iterable<Integer> integers) {
+    public Iterable<ShopItemCfg> findAllById(Iterable<ObjectId> integers) {
         return null;
     }
 
@@ -57,7 +58,7 @@ public class ShopItemCfgRepository implements CrudRepository<ShopItemCfg, Intege
     }
 
     @Override
-    public void deleteById(Integer integer) {
+    public void deleteById(ObjectId integer) {
 
     }
 
@@ -67,7 +68,7 @@ public class ShopItemCfgRepository implements CrudRepository<ShopItemCfg, Intege
     }
 
     @Override
-    public void deleteAllById(Iterable<? extends Integer> integers) {
+    public void deleteAllById(Iterable<? extends ObjectId> integers) {
 
     }
 

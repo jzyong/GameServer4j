@@ -1,4 +1,4 @@
-package org.jzy.game.api.rpc;
+package org.jzy.game.api.server;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jzy.javalib.network.io.handler.Handler;

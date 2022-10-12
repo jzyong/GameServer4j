@@ -12,9 +12,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * 处理登录，支付等接口,无状态服务器
  */
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
-//@SpringBootApplication()
 @ComponentScan("org.jzy.game")
-//@EnableMongoRepositories
 public class ApiApp implements CommandLineRunner {
     public static void main(String[] args) {
 

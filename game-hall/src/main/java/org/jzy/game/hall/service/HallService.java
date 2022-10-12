@@ -3,6 +3,7 @@ package org.jzy.game.hall.service;
 import com.jzy.javalib.base.script.ScriptManager;
 import com.jzy.javalib.base.util.IdUtil;
 import com.jzy.javalib.base.util.TimeUtil;
+import com.jzy.javalib.network.grpc.RpcServerManager;
 import com.jzy.javalib.network.io.handler.HandlerManager;
 import com.jzy.javalib.network.scene.AbstractScene;
 import org.apache.curator.framework.CuratorFramework;
@@ -17,7 +18,6 @@ import org.jzy.game.common.constant.ThreadType;
 import org.jzy.game.common.constant.ZKNode;
 import org.jzy.game.common.scripts.IServerScript;
 import org.jzy.game.common.service.CommonServerService;
-import org.jzy.game.common.service.RpcService;
 import org.jzy.game.common.service.ZkClientService;
 import org.jzy.game.hall.db.MongoGameService;
 import org.slf4j.Logger;
@@ -56,8 +56,6 @@ public class HallService extends AbstractScene {
     @Autowired
     private MongoGameService mongoGameService;
     @Autowired
-    private RpcService rpcService;
-    @Autowired
     private CommonServerService commonServerService;
 
 
@@ -73,7 +71,8 @@ public class HallService extends AbstractScene {
                 LOGGER.error("脚本加载错误:{}", str);
                 System.exit(0);
             });
-            initRpcService();
+            RpcServerManager.getInstance().registerService(commonServerService);
+            RpcServerManager.getInstance().start(hallConfig.getRpcPort());
 //            //初始化数据库
 //            mongoGameService.init();
 
@@ -84,11 +83,6 @@ public class HallService extends AbstractScene {
         } catch (Exception e) {
             LOGGER.error("game start", e);
         }
-    }
-
-    private void initRpcService() {
-        rpcService.registerService(commonServerService);
-        rpcService.start(hallConfig.getRpcPort());
     }
 
 

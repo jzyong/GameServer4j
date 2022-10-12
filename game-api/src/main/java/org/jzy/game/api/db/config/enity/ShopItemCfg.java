@@ -10,10 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  * @author jzy
  */
-@Document(collection = "shop_item")
+@Document(collection = "config_shop_item")
 public class ShopItemCfg {
 
     @Id
+    private ObjectId _id;
+
     private int id;
 
     /**
