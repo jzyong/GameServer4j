@@ -22,7 +22,7 @@ public class CloseServerHandler extends RpcHttpHandler {
     @Override
     public void run() {
         JSONObject jsonParams = getJsonParams();
-        LOGGER.info("服务器关闭....{}", jsonParams.getString("test"));
+        LOGGER.info("apl close....{}", jsonParams.getString("test"));
         getBuilder().setResult("关服成功");
 
         //延迟关服

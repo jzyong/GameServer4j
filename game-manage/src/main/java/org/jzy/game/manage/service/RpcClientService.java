@@ -29,6 +29,7 @@ public class RpcClientService {
 
     private List<GameServerInfo> gameServerInfos = new ArrayList<>();
 
+    //TODO 使用微服务
     private List<ApiServerInfo> apiServerInfos = new ArrayList<>();
 
     @Autowired

@@ -22,6 +22,8 @@ public class ApiManager {
 
     @Autowired
     KafkaProducerService kafkaProducerService;
+    @Autowired
+    ApiConfigService apiConfigService;
 
 
     @PostConstruct()
@@ -45,4 +47,7 @@ public class ApiManager {
         return kafkaProducerService;
     }
 
+    public ApiConfigService getApiConfigService() {
+        return apiConfigService;
+    }
 }

@@ -20,7 +20,6 @@ message HttpResponse{
 
 
 
-
 //rpc
 service CommonRpcService{
   //http请求

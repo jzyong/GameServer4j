@@ -12,6 +12,7 @@ import org.jzy.game.common.config.server.ApiConfig;
 import org.jzy.game.common.config.server.MongoConfig;
 import org.jzy.game.common.config.server.ServiceConfig;
 import org.jzy.game.common.constant.*;
+import org.jzy.game.common.service.CommonServerService;
 import org.jzy.game.common.service.KafkaProducerService;
 import org.jzy.game.common.service.ZkClientService;
 import org.slf4j.Logger;
@@ -54,6 +55,8 @@ public class ApiService extends AbstractScene {
     private GlobalProperties globalProperties;
     @Autowired
     private KafkaProducerService kafkaProducerService;
+    @Autowired
+    private CommonServerService commonServerService;
 
 
     /**
@@ -84,6 +87,7 @@ public class ApiService extends AbstractScene {
                 LOGGER.error("load scripts error:{}", str);
                 System.exit(0);
             });
+            RpcServerManager.getInstance().registerService(commonServerService);
             apiExecutorService.registerScene(ThreadType.server.toString(), this);
             RpcServerManager.getInstance().start(apiConfig.getRpcPort());
         } catch (Exception e) {

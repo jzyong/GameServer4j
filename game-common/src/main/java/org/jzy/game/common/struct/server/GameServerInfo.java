@@ -7,10 +7,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 游戏服信息
- *
+ * TODO 网关游戏TCP 和grpc 微服务分开
  * @author jzy
  * @mail 359135103@qq.com
  */
+@Deprecated
 public class GameServerInfo {
     public static final Logger LOGGER = LoggerFactory.getLogger(GameServerInfo.class);
     private Channel channel;

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author jzy
  * @mail 359135103@qq.com
  */
+@Deprecated
 public class ApiServerInfo {
     public static final Logger LOGGER = LoggerFactory.getLogger(ApiServerInfo.class);
 
@@ -66,7 +67,7 @@ public class ApiServerInfo {
 
     public void stop() {
         LOGGER.info("close to login：{} {}", id, url);
-        if(channel!=null){
+        if (channel != null) {
             channel.shutdownNow();
         }
 
