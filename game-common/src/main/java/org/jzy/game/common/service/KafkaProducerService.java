@@ -5,7 +5,7 @@ import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.jzy.game.common.constant.ZKNode;
 import org.jzy.game.common.constant.GlobalProperties;
-import org.jzy.game.common.struct.log.ILog;
+import org.jzy.game.common.struct.logger.ILog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

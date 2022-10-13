@@ -25,7 +25,7 @@ public class LoginReqHandler extends TcpHandler {
 
         var request = (LoginRequest) getRequest();
         LOGGER.debug("登录消息：{}", request.toString());
-        AccountServiceGrpc.AccountServiceStub stub = GateManager.getInstance().getGateToLoginRpcService().randomAccountStub();
+        AccountServiceGrpc.AccountServiceStub stub = GateManager.getInstance().getApiClientService().randomAccountServiceStub();
         if (stub == null) {
             LOGGER.warn("登陆服grpc不可用.. {}", request.toString());
             return;

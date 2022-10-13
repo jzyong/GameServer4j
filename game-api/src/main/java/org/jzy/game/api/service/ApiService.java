@@ -68,7 +68,7 @@ public class ApiService extends AbstractScene {
             serviceInstance = ServiceInstance.<ServiceConfig>builder()
                     .id(String.valueOf(apiConfig.getId()))
                     .registrationTimeUTC(TimeUtil.currentTimeMillis())
-                    .name(ServiceName.LoginRpc.name())
+                    .name(ServiceName.ApiRpc.name())
                     .address(apiConfig.getPrivateIp())
                     .payload(new ServiceConfig())
                     .port(apiConfig.getRpcPort())

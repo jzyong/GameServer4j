@@ -7,7 +7,6 @@ import com.jzy.javalib.network.grpc.RpcServerManager;
 import io.grpc.stub.StreamObserver;
 import org.jzy.game.api.service.ApiManager;
 import org.jzy.game.api.struct.Account;
-import org.jzy.game.common.struct.log.LoginLog;
 import org.jzy.game.proto.AccountServiceGrpc;
 import org.jzy.game.proto.LoginRequest;
 import org.jzy.game.proto.LoginResponse;
