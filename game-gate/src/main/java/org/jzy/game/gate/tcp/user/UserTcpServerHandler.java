@@ -19,6 +19,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.AttributeKey;
 import org.jzy.game.common.constant.OfflineType;
 import org.jzy.game.gate.service.GateManager;
+import org.jzy.game.gate.struct.RC4;
 import org.jzy.game.gate.struct.User;
 import org.jzy.game.proto.MID;
 import org.jzy.game.proto.MessageId;
@@ -29,7 +30,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
- * 登录服tcp消息处理
+ * tcp消息处理
  *
  * @author JiangZhiYong
  * @date 2018/12/11
@@ -37,10 +38,8 @@ import java.util.concurrent.Executor;
 public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTcpServerHandler.class);
 
-
     private IExecutorService executorService;
 
-    private TcpService tcpService;
 
     public static final AttributeKey<User> USER = AttributeKey.valueOf("User");
     /**
@@ -73,14 +72,12 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
 
     public UserTcpServerHandler(IExecutorService executorService) {
         this.executorService = executorService;
-        this.tcpService = GateManager.getInstance().getUserTcpService();
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
-        LOGGER.info("{} 已打开连接", MsgUtil.getRemoteIpPort(channel));
-        tcpService.onChannelConnect(ctx.channel());
+        GateManager.getInstance().getUserTcpService().onChannelConnect(ctx.channel());
         boolean blackList = ScriptManager.getInstance().functionScript("UserChannelHandlerScript",
                 (IChannelHandlerScript script) -> script.isBlackList(ctx));
         if (blackList) {
@@ -92,16 +89,26 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx) {
+        LOGGER.trace("{} 连接不活跃", ctx.channel().remoteAddress().toString());
         channelClosed(ctx.channel(), OfflineType.Network);
+
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        super.handlerRemoved(ctx);
+        LOGGER.trace("{} 连接移除 ", ctx.channel().remoteAddress().toString());
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        if (cause.getMessage().contains("Connection reset by peer") || cause.getMessage().contains("远程主机强迫关闭了一个现有的连接")) {
-            channelClosed(ctx.channel(), OfflineType.Network);
+        String message = cause.getMessage();
+        if (message.contains("Connection reset by peer") || message.contains("远程主机强迫关闭了一个现有的连接")
+                || message.contains("Connection reset") || message.contains("Connection timed out")) {
+            channelClosed(ctx.channel(), OfflineType.ClientClose);
         } else {
-            LOGGER.warn("连接{} 异常关闭 -->{} ", ctx.channel().remoteAddress(), cause.getMessage());
+            LOGGER.warn("连接{} 异常关闭 -->{} ", ctx.channel().remoteAddress(), message);
             LOGGER.warn("exceptionCaught ", cause);
             channelClosed(ctx.channel(), OfflineType.Exception);
         }
@@ -114,7 +121,7 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
      * @param offlineType
      */
     private void channelClosed(Channel channel, OfflineType offlineType) {
-        tcpService.onChannelClosed(channel);
+        GateManager.getInstance().getUserTcpService().onChannelClosed(channel);
         GateManager.getInstance().getUserService().offLine(channel, offlineType);
     }
 
@@ -128,32 +135,52 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
             if (e.state() == IdleState.READER_IDLE) {
                 channelClosed(ctx.channel(), OfflineType.Idle);
             } else if (e.state() == IdleState.WRITER_IDLE) {
-                LOGGER.warn("[{}-{}]连接超两分钟未收到任何服务器消息", user.getAccount(), user.getUserId());
+                LOGGER.warn("[{}-{}]连接超两分钟未收到任何服务器消息", user.getAccount(), user.getPlayerId());
             }
         }
     }
 
-
     @SuppressWarnings("rawtypes")
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf byteBuf = (ByteBuf) msg;
         User user = null;
         int mid = 0;
         try {
-            mid = byteBuf.readInt();
+
+            int messageInfo = byteBuf.readIntLE();
+            mid = byteBuf.readIntLE();
+            // 21-31位为保留字段，31位是否加密；0-20为确认序号
+            int ackMsgSequence = byteBuf.readIntLE();
+            int msgSequence = byteBuf.readIntLE(); // 消息序列号
+
             user = ctx.channel().attr(USER).get();
             if (user == null) {
                 LOGGER.warn("{}请求消息{}用户未登录", MsgUtil.getRemoteIpPort(ctx.channel()), MID.forNumber(mid));
                 channelClosed(ctx.channel(), OfflineType.IllegalRequest);
+                GateManager.getInstance().getUserService().offLine(ctx.channel(), OfflineType.IllegalRequest);
                 return;
             }
+            if (LOGGER.isDebugEnabled() && mid != MID.HeartReq_VALUE) {
+                LOGGER.trace("{}收到消息：{} {}", user.getPlayerId(), mid, MID.forNumber(mid));
+            }
+
             byte[] bytes = new byte[byteBuf.readableBytes()];
             byteBuf.readBytes(bytes);
-            //解码
-            if (user.getRc4() != null) {
-                user.getRc4().crypt(bytes, 0, -1);
+            if ((messageInfo & 0x40000000) != 0) {
+                RC4 rc4 = user.getRc4();
+                rc4.crypt(bytes, 0, -1);
+                LOGGER.debug("{} {} 消息加密", user.getPlayerId(), mid);
             }
+
+            LOGGER.debug("{} 请求序号{} 确认{} 协议{}-{} 长度{}", user.getPlayerId(), msgSequence, ackMsgSequence,
+                    mid, MID.forNumber(mid), bytes.length);
+            if (user.sendCacheMessage(msgSequence, mid)) {
+                return;
+            }
+            //更新心跳
+            long now = TimeUtil.currentTimeMillis();
+            user.setHeartTime(now);
 
             // 消息在网关服注册
             var tcpHandlerBuilder = HandlerManager.getInstance().getTcpHandlerBuilder(mid);
@@ -163,21 +190,23 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
                 if (handler != null) {
                     handler.setMessage(message);
                     handler.setMsgBytes(bytes);
+                    handler.setMsgSequence(msgSequence);
                     handler.setChannel(ctx.channel());
-                    handler.setCreateTime(TimeUtil.currentTimeMillis());
-                    handler.setId(user.getPlayerId() > 0 ? user.getPlayerId() : user.getUserId());
+                    handler.setCreateTime(now);
+                    handler.setId(user.getPlayerId() > 0 ? user.getPlayerId() : -1);
                     Executor executor = executorService.getExecutor(tcpHandlerBuilder.getExecuteThread());
                     executor.execute(handler);
                     return;
                 }
             } else {
-                // 直接转发
-                user.sendToGame(bytes, mid);
+                // 直接转发 需要判断是发往大厅还是  TODO 暂时直接发送大厅，添加其他服务器类型，需要判断
+                user.sendToHall(bytes, mid, msgSequence);
             }
+            user.ackMessage(ackMsgSequence);
         } catch (Exception e) {
             if (e instanceof InvalidProtocolBufferException) {
                 String ip = MsgUtil.getIp(ctx.channel());
-                LOGGER.warn("{}-{}-{} 发送非法消息", user.getUserId(), user.getPlayerId(), ip);
+                LOGGER.warn("{}-{} 发送非法消息", user.getPlayerId(), ip);
             }
             if (mid > 0) {
                 LOGGER.error("消息{} {} 解析错误", mid, MID.forNumber(mid));

@@ -1,4 +1,4 @@
-package org.jzy.game.gate.tcp.account;
+package org.jzy.game.gate.user;
 
 import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;
@@ -42,7 +42,7 @@ public class LoginReqHandler extends TcpHandler {
             public void onNext(LoginResponse value) {
                 LOGGER.debug("登录返回：{}", value.toString());
                 user.setUserId(value.getUserId());
-                GateManager.getInstance().getUserService().onUserLoginSuccess(user);
+                GateManager.getInstance().getUserService().onUserLoginSuccess(user,null);
                 sendClientMsg(value);
             }
 

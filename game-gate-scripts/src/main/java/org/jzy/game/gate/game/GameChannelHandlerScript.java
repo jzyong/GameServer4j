@@ -1,4 +1,4 @@
-package org.jzy.game.gate.script.server;
+package org.jzy.game.gate.game;
 
 import com.jzy.javalib.network.netty.IChannelHandlerScript;
 import io.netty.buffer.ByteBuf;

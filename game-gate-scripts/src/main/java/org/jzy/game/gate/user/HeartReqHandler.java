@@ -1,4 +1,4 @@
-package org.jzy.game.gate.tcp.account;
+package org.jzy.game.gate.user;
 
 import com.jzy.javalib.base.util.TimeUtil;
 import com.jzy.javalib.network.io.handler.Handler;

@@ -43,6 +43,11 @@ public class GateConfig {
      */
     private String privateIp;
 
+    /**
+     * 消息合并 ,合并消息包可优化网络，减少避免路由器丢弃，排队消耗，丢包重发
+     */
+    private boolean messageMerge;
+
     public int getId() {
         return id;
     }
@@ -85,5 +90,13 @@ public class GateConfig {
 
     public String toString() {
         return JSON.toJSONString(this);
+    }
+
+    public boolean isMessageMerge() {
+        return messageMerge;
+    }
+
+    public void setMessageMerge(boolean messageMerge) {
+        this.messageMerge = messageMerge;
     }
 }

@@ -12,6 +12,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.AttributeKey;
 import org.jzy.game.common.constant.OfflineType;
 import org.jzy.game.gate.struct.User;
 import org.jzy.game.gate.service.GateManager;
@@ -34,30 +35,32 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
 
     private IExecutorService executorService;
 
-    private TcpService tcpService;
-
+    /**
+     * 游戏服务器信息
+     */
+    public static final AttributeKey<GameServerInfo> GameServerInfo = AttributeKey.valueOf("GameServerInfo");
 
     public GameTcpServerHandler(IExecutorService executorService) {
         this.executorService = executorService;
-        this.tcpService = GateManager.getInstance().getGameTcpService();
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         LOGGER.info("{} 已打开连接", MsgUtil.getRemoteIpPort(ctx.channel()));
-        tcpService.onChannelConnect(ctx.channel());
+        GateManager.getInstance().getGameTcpService().onChannelConnect(ctx.channel());
         ScriptManager.getInstance().consumerScript("GameChannelHandlerScript",
                 (IChannelHandlerScript script) -> script.channelActive(ctx));
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(ChannelHandlerContext ctx)  {
         channelClosed(ctx.channel(), OfflineType.Network);
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        if (cause.getMessage().contains("Connection reset by peer") || cause.getMessage().contains("远程主机强迫关闭了一个现有的连接")) {
+        if (cause.getMessage().contains("Connection reset by peer")
+                || cause.getMessage().contains("远程主机强迫关闭了一个现有的连接")) {
             channelClosed(ctx.channel(), OfflineType.Network);
         } else {
             LOGGER.warn("连接{} 异常关闭 -->{} ", ctx.channel().remoteAddress(), cause.getMessage());
@@ -73,54 +76,49 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
      * @param offlineType
      */
     private void channelClosed(Channel channel, OfflineType offlineType) {
-        tcpService.onChannelClosed(channel);
-        //TODO 踢下所有连接该游戏服的角色
+        GateManager.getInstance().getGameTcpService().onChannelClosed(channel);
     }
-
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        //TODO 修改
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf byteBuf = (ByteBuf) msg;
         try {
-            int msgType = byteBuf.readShort();
+            int msgId = byteBuf.readInt();
             long id = byteBuf.readLong();
-            if (msgType == 1) {// 数据结构:msgId:pfbytes
-                int msgId = byteBuf.getInt(byteBuf.readerIndex());
-                // 在本地注册，必须预处理
-                var tcpHandlerBuilder = HandlerManager.getInstance().getTcpHandlerBuilder(msgId);
-                //本地拦截处理
-                if (tcpHandlerBuilder != null) {
-                    byteBuf.readInt();  //删除消息id
-                    byte[] bytes = new byte[byteBuf.readableBytes()];
-                    byteBuf.readBytes(bytes);// 消息内容
-                    Message message = tcpHandlerBuilder.buildMessage(bytes);
-                    TcpHandler handler = (TcpHandler) tcpHandlerBuilder.buildHandler();
-                    if (handler != null) {
-                        handler.setId(id);
-                        handler.setMsgBytes(bytes);
-                        handler.setMessage(message);
-                        handler.setChannel(ctx.channel());
-                        Executor executor = executorService.getExecutor(tcpHandlerBuilder.getExecuteThread());
-                        executor.execute(handler);
-                        return;
-                    }
-                } else {
-                    byte[] bytes = new byte[byteBuf.readableBytes()];
-                    byteBuf.readBytes(bytes);// 消息id+消息内容
-                    // 转发给客户端
-                    User user = GateManager.getInstance().getUserService().getUserByPlayerId(id);
-                    if (user == null) {
-                        LOGGER.warn("玩家{} 已下线，消息{}-{}发送失败", id, msgId, MID.forNumber(msgId).toString());
-                        return;
-                    }
-                    user.sendToUser(bytes);
+            int msgSequence = byteBuf.readInt();
+            if (LOGGER.isTraceEnabled() && msgId != MID.HeartReq_VALUE) {
+                LOGGER.debug("返回消息：{}-{}", msgId, MID.forNumber(msgId));
+            }
+            // 在本地注册，必须预处理
+            var tcpHandlerBuilder = HandlerManager.getInstance().getTcpHandlerBuilder(msgId);
+            // 本地拦截处理
+            if (tcpHandlerBuilder != null) {
+                byte[] bytes = new byte[byteBuf.readableBytes()];
+                byteBuf.readBytes(bytes);// 消息内容
+                Message message = tcpHandlerBuilder.buildMessage(bytes);
+                TcpHandler handler = (TcpHandler) tcpHandlerBuilder.buildHandler();
+                if (handler != null) {
+                    handler.setId(id);
+                    handler.setMsgBytes(bytes);
+                    handler.setMsgSequence(msgSequence);
+                    handler.setMessage(message);
+                    handler.setChannel(ctx.channel());
+                    Executor executor = executorService.getExecutor(tcpHandlerBuilder.getExecuteThread());
+                    executor.execute(handler);
+                    return;
                 }
-            } else if (msgType == 2) {
-                // note 暂时无跨服需求
             } else {
-                LOGGER.warn("消息类型{}未实现,玩家{}消息发送失败", msgType, id);
+                byte[] bytes = new byte[byteBuf.readableBytes()];
+                byteBuf.readBytes(bytes);// 消息id+消息内容
+                // 转发给客户端
+                User user = GateManager.getInstance().getUserService().getUserByPlayerId(id);
+                if (user == null) {
+                    return;
+                }
+                //返回长度+16（消息头）
+                LOGGER.debug("{} 返回序号{} 确认0 协议{}-{} 长度{}", id, msgSequence, msgId,MID.forNumber(msgId),bytes.length+16);
+                user.receiveUserMessage(msgId, msgSequence, bytes);
             }
         } catch (Exception e) {
             LOGGER.error("消息处理", e);

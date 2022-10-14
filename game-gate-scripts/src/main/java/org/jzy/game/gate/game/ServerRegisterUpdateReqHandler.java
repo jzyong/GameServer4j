@@ -1,10 +1,14 @@
-package org.jzy.game.gate.tcp.server;
+package org.jzy.game.gate.game;
 
 import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;
-import org.jzy.game.common.struct.server.GameServerInfo;
+import io.netty.util.Attribute;
 import org.jzy.game.gate.service.GateManager;
-import org.jzy.game.proto.*;
+import org.jzy.game.gate.tcp.game.GameServerInfo;
+import org.jzy.game.gate.tcp.game.GameTcpServerHandler;
+import org.jzy.game.proto.MID;
+import org.jzy.game.proto.ServerInfo;
+import org.jzy.game.proto.ServerRegisterUpdateRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,25 +25,29 @@ public class ServerRegisterUpdateReqHandler extends TcpHandler {
     public void run() {
         var request = (ServerRegisterUpdateRequest) getMessage();
         ServerInfo serverInfo = request.getServerInfo();
-        GameServerInfo gameServerInfo = GateManager.getInstance().getGameTcpService().getGameServers().get(serverInfo.getId());
+
+        GateManager gateManager = GateManager.getInstance();
+        if (gateManager == null || gateManager.getGameTcpService() == null) {
+            LOGGER.debug("网关未准备好，注册失败：{}-{}", serverInfo.getType(), serverInfo.getId());
+            return;
+        }
+        GameServerInfo gameServerInfo = gateManager.getGameTcpService().getGameServerInfo(serverInfo.getType(), serverInfo.getId());
         if (gameServerInfo == null) {
-            //TODO 设置channel属性，channel关闭移除服务器信息
             gameServerInfo = new GameServerInfo();
             gameServerInfo.setChannel(this.channel);
             gameServerInfo.setId(serverInfo.getId());
-            GateManager.getInstance().getGameTcpService().getGameServers().put(serverInfo.getId(), gameServerInfo);
+            gameServerInfo.setIp(serverInfo.getIp());
+            gameServerInfo.setServerType(serverInfo.getType());
+            Attribute<GameServerInfo> attr = channel.attr(GameTcpServerHandler.GameServerInfo);
+            attr.set(gameServerInfo);
+            GateManager.getInstance().getGameTcpService().addGameServerInfo(gameServerInfo);
             LOGGER.info("服务器：{}-{}-{} 连接网关成功", serverInfo.getId(), serverInfo.getName(), serverInfo.getIp());
         }
+        //LOGGER.debug("服务器：{}-{}-{} 更新网关成功", serverInfo.getServerId(), serverInfo.getServerName(), serverInfo.getIp());
         gameServerInfo.setChannel(this.channel);
         gameServerInfo.setId(serverInfo.getId());
         gameServerInfo.setIp(serverInfo.getIp());
-        gameServerInfo.setVersion(serverInfo.getVersion());
         gameServerInfo.setServerState(serverInfo.getState());
         gameServerInfo.setOnline(serverInfo.getOnline());
-        ServerRegisterUpdateResponse.Builder builder = ServerRegisterUpdateResponse.newBuilder();
-        ServerInfo.Builder replayServerInfo = ServerInfo.newBuilder();
-        replayServerInfo.setId(GateManager.getInstance().getGateConfig().getId());
-        builder.setServerInfo(replayServerInfo);
-        sendInnerMsg(builder.build());
     }
 }

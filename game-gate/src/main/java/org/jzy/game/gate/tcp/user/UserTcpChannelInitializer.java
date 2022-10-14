@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
  * 用户 tcp channel初始化
  *
  * @author JiangZhiYong
+ * @mail 359135103@qq.com
  */
 @Component
 @Scope("prototype")
