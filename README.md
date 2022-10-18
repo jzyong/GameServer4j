@@ -51,7 +51,7 @@ The basic architecture of the project is shown below:
 * add microservice
 * protobuf sync to GameServer4g
  * 流程测试
- * 网络调试
+ * 网络调试（网关到大厅，网关到客户端）
  * 各个服务数据库分开，不共享
  * 消息id映射规则，不能通过编号获取
  * docker-compose 一键部署
