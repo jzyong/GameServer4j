@@ -56,7 +56,7 @@ public class GateServerInfo {
      * 向网关发现消息
      */
     public void sendMsg(Message message, int messageId, long playerId) {
-        MsgUtil.sendInnerMsg(gateTcpClient.getChannel(), message, playerId, messageId);
+        MsgUtil.sendInnerMsg(gateTcpClient.getChannel(), message, playerId, messageId,0);
     }
 
     public String getId() {

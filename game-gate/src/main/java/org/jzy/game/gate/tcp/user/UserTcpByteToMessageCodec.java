@@ -16,16 +16,25 @@ import java.util.List;
 
 /**
  * 解析与客户端连接的消息
- * 
+ *
  * @author JiangZhiYong
+ * @mail 359135103@qq.com
  */
 public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTcpByteToMessageCodec.class);
 
-    public UserTcpByteToMessageCodec(){
+    public UserTcpByteToMessageCodec() {
 
     }
 
+    /**
+     * 消息长度4+消息id4+客户端已收到最小序号4+消息序号4+protobuf消息体
+     *
+     * @param ctx
+     * @param msg
+     * @param out
+     * @throws Exception
+     */
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
         if (msg instanceof byte[]) {
@@ -37,27 +46,29 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
             }
             // 消息id+消息内容
             out.writeBytes(bytes);
-        }else if (msg instanceof ByteBuf) {
+        } else if (msg instanceof ByteBuf) {
             ByteBuf byteBuf = (ByteBuf) msg;
             if (byteBuf.readableBytes() > MsgUtil.MESSAGE_MAX_SIZE) {
-                LOGGER.warn("向{} 一次性发送 {} 字节", MsgUtil.getLocalIpPort(ctx.channel()), byteBuf.readableBytes());
+                LOGGER.warn("向{} 一次性发送{}  {} 字节", MsgUtil.getLocalIpPort(ctx.channel()), MID.forNumber(byteBuf.getIntLE(4)), byteBuf.readableBytes());
             }
+            // LOGGER.debug("消息长度{} 消息id：{}",byteBuf.getIntLE(0),byteBuf.getIntLE(4));
             out.writeBytes(byteBuf);
-        }else if(msg instanceof Message){
+        } else if (msg instanceof Message) {  //此发送方式不推荐，不能返回消息序号
             Message message = (Message) msg;
-            String className=message.getClass().getSimpleName();
             try {
-                int messageID = MID.valueOf(className.substring(0,className.length()-5)).getNumber();
-
+                int messageID = MsgUtil.getMessageID(message);
                 byte[] bytes = message.toByteArray();
                 if (bytes.length > MsgUtil.MESSAGE_MAX_SIZE) {
                     LOGGER.warn("消息：{} 拥有{}字节，将拆包发送", MID.forNumber(messageID), bytes.length);
                 }
-                out.writeInt(bytes.length + 4); // 消息id+消息内容长度
-                out.writeInt(messageID);
+                out.writeIntLE(bytes.length + 12); // 消息id+消息内容长度
+                out.writeIntLE(messageID);
+                out.writeIntLE(0); //保留字段
+                out.writeIntLE(0); //此次不能获取消息序号，不要发送message
                 out.writeBytes(bytes);
-            }catch (Exception e){
-                LOGGER.error(String.format("获取消息id异常:%s ,请按标准定义协议id，协议ID未消息类目去掉最后五个字符",className),e);
+            } catch (Exception e) {
+                String className = message.getClass().getSimpleName();
+                LOGGER.error(String.format("获取消息id异常:%s ,请按标准定义协议id，协议ID未消息类目去掉最后五个字符", className), e);
             }
         } else {
             LOGGER.warn("加密类型{}未实现", msg.getClass().getSimpleName());
@@ -65,14 +76,15 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
 
     }
 
-    //消息长度（4）+消息id（4）+消息体
+    //消息长度4+消息id4+客户端已收到最小序号4+消息序号4+protobuf消息体
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         if (in.readableBytes() < 4) {
             return;
         }
         in.markReaderIndex();
-        int dataLength = in.readInt();
+        int dataLength = in.readIntLE();
+//        int dataLength=in.getIntLE(0);
 
         if (dataLength < 1) {
             LOGGER.warn("消息解析异常,长度{}，id{}", dataLength, in.readInt());
@@ -81,19 +93,21 @@ public class UserTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
             return;
         }
 
+        dataLength = dataLength & 0xFFFFF;
+
         // 消息体长度不够，继续等待
         if (in.readableBytes() < dataLength) {
             in.resetReaderIndex();
             return;
         }
-
-        ByteBuf readRetainedSlice = in.readRetainedSlice(dataLength);
+        in.resetReaderIndex();
+        ByteBuf readRetainedSlice = in.readRetainedSlice(dataLength + 4);
         if (!ScriptManager.getInstance().functionScript("UserChannelHandlerScript",
-                (IChannelHandlerScript script) -> script.inBoundMessageCheck(ctx,readRetainedSlice))) {
+                (IChannelHandlerScript script) -> script.inBoundMessageCheck(ctx, readRetainedSlice))) {
             return;
         }
-
         out.add(readRetainedSlice);
     }
 
 }
+

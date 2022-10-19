@@ -18,16 +18,13 @@ public class ApiManager {
     ApiService apiService;
 
     @Autowired
-    BillingService billingService;
-
-    @Autowired
-    AccountService accountService;
-
-    @Autowired
     AccountRepository accountRepository;
 
     @Autowired
     KafkaProducerService kafkaProducerService;
+    @Autowired
+    ApiConfigService apiConfigService;
+
 
     @PostConstruct()
     public void Init() {
@@ -42,19 +39,15 @@ public class ApiManager {
         return apiService;
     }
 
-    public BillingService getBillingService() {
-        return billingService;
-    }
-
-    public AccountService getAccountService() {
-        return accountService;
-    }
-
     public AccountRepository getAccountRepository() {
         return accountRepository;
     }
 
     public KafkaProducerService getKafkaProducerService() {
         return kafkaProducerService;
+    }
+
+    public ApiConfigService getApiConfigService() {
+        return apiConfigService;
     }
 }

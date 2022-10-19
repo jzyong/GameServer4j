@@ -19,13 +19,15 @@ import java.util.List;
 public class GameTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameTcpByteToMessageCodec.class);
     /**
-     * 消息头长度，除去消息长度 消息类型2+玩家ID8+消息id
+     * 消息头长度，除去消息长度
      */
-    public static final int HEADER_EXCLUDE_LENGTH = 14;
+    public static final int HEADER_EXCLUDE_LENGTH = 16;
 
     public GameTcpByteToMessageCodec() {
+
     }
 
+    //消息长度4+消息id4+玩家id8+消息序列号4+protobuf消息体
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 
@@ -35,17 +37,17 @@ public class GameTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
             if (idMessage.getMsg() instanceof byte[]) {
                 byte[] bytes = (byte[]) idMessage.getMsg();
                 out.writeInt(HEADER_EXCLUDE_LENGTH + bytes.length);
-                out.writeShort(1);
-                out.writeLong(idMessage.getId());
                 out.writeInt(idMessage.getMsgId());
+                out.writeLong(idMessage.getId());
+                out.writeInt(idMessage.getMsgSequence());
                 out.writeBytes(bytes);
             } else if (idMessage.getMsg() instanceof Message) {
                 Message message = (Message) idMessage.getMsg();
                 byte[] bytes = message.toByteArray();
                 out.writeInt(HEADER_EXCLUDE_LENGTH + bytes.length);
-                out.writeShort(1);
-                out.writeLong(idMessage.getId());
                 out.writeInt(idMessage.getMsgId());
+                out.writeLong(idMessage.getId());
+                out.writeInt(idMessage.getMsgSequence());
                 out.writeBytes(bytes);
             } else {
                 LOGGER.warn("IdMessage加密类型{}未实现", idMessage.getMsg().getClass().getSimpleName());
@@ -56,8 +58,7 @@ public class GameTcpByteToMessageCodec extends ByteToMessageCodec<Object> {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         MsgUtil.decode(ctx, in, out);
     }
-
 }

@@ -14,7 +14,7 @@
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javalib.version>0.0.6</javalib.version>
+        <javalib.version>0.0.7</javalib.version>
     </properties>
     <dependencies>
         <dependency>

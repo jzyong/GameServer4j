@@ -33,4 +33,17 @@ public enum OfflineType {
      * 非法请求|攻击
      */
     IllegalRequest,
+    /**
+     * 重复登录
+     */
+    RepeatLogin,
+    /**
+     * 客户端关闭
+     */
+    ClientClose,
+    /**
+     * 禁止账号
+     */
+    ForbidAccount,
+
 }

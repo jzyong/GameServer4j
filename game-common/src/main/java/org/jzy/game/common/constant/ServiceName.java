@@ -8,9 +8,9 @@ package org.jzy.game.common.constant;
  */
 public enum ServiceName {
     /**
-     * 登陆服rpc
+     * Api服rpc
      */
-    LoginRpc,
+    ApiRpc,
     /**
      * 网关游戏服tcp
      */

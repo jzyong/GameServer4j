@@ -31,9 +31,9 @@ public class GameTcpChannelInitializer extends ChannelInitializer<SocketChannel>
     }
 
     @Override
-    protected void initChannel(SocketChannel ch)  {
+    protected void initChannel(SocketChannel ch) {
         ch.pipeline().addLast("Codec", new GameTcpByteToMessageCodec());
-        ch.pipeline().addLast("MessageHandler", new GameTcpServerHandler( gateExecutorService));
+        ch.pipeline().addLast("MessageHandler", new GameTcpServerHandler(gateExecutorService));
 
         NettyServerConfig nettyServerConfig = new NettyServerConfig();
         nettyServerConfig.setPort(gateConfig.getGameTcpPort());

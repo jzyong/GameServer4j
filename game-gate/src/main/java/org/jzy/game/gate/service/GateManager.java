@@ -28,10 +28,10 @@ public class GateManager {
     UserService userService;
 
     @Autowired
-    GateToLoginRpcService gateToLoginRpcService;
+    GateService gateService;
 
     @Autowired
-    GateService gateService;
+    ApiClientService apiClientService;
 
     @Autowired
     GameTcpService gameTcpService;
@@ -59,10 +59,6 @@ public class GateManager {
         return userService;
     }
 
-    public GateToLoginRpcService getGateToLoginRpcService() {
-        return gateToLoginRpcService;
-    }
-
     public GateService getGateService() {
         return gateService;
     }
@@ -77,5 +73,9 @@ public class GateManager {
 
     public UserTcpService getUserTcpService() {
         return userTcpService;
+    }
+
+    public ApiClientService getApiClientService() {
+        return apiClientService;
     }
 }

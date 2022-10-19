@@ -19,7 +19,7 @@ import com.alibaba.fastjson.JSON;
  */
 @Document(collection = "player")
 public class Player extends MapObject {
-    public static final Logger LOGGER= LoggerFactory.getLogger(Player.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Player.class);
     /**
      * 等级
      */
@@ -38,7 +38,6 @@ public class Player extends MapObject {
      * 连接的网关channel
      */
     private transient Channel channel;
-
 
 
     public int getLevel() {
@@ -69,12 +68,27 @@ public class Player extends MapObject {
         return JSON.toJSONString(this);
     }
 
-    public void sendMsg(Message message,int messageId){
-        if(channel==null||!channel.isActive()){
-            LOGGER.warn("失去网关服连接：{} 发送失败", MID.forNumber(messageId));
+    /**
+     * 发送消息
+     *
+     * @param message
+     */
+    public void sendMsg(Message message) {
+        sendMsg(message, 0);
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param message
+     * @param msgSequence 序列号
+     */
+    public void sendMsg(Message message, int msgSequence) {
+        if (channel == null || !channel.isActive()) {
+            LOGGER.warn("失去网关服连接：{} 发送失败", MID.forNumber(MsgUtil.getMessageID(message)));
             return;
         }
-        MsgUtil.sendInnerMsg(channel,message,this.getId(),messageId);
+        MsgUtil.sendInnerMsg(channel, message, this.getId(), msgSequence);
     }
 
     public long getUserId() {

@@ -9,7 +9,7 @@ import org.jzy.game.common.service.KafkaProducerService;
  * @author jzy
  * @mail 359135103@qq.com
  */
-@Ignore
+//@Ignore
 public class KafkaProducerServiceTest {
 
     @Test

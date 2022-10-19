@@ -38,7 +38,7 @@ public class GateService extends AbstractScene {
 
     private ServiceInstance<ServiceConfig> clientServiceInstance;
     private ServiceInstance<ServiceConfig> gameServiceInstance;
-    ServiceCache<ServiceConfig> loginServiceCache;
+    ServiceCache<ServiceConfig> apiServiceCache;
 
     @Autowired
     private GateExecutorService executorService;
@@ -47,8 +47,6 @@ public class GateService extends AbstractScene {
     private GateConfig gateConfig;
     @Autowired
     private ZkClientService zkClientService;
-    @Autowired
-    private GateToLoginRpcService gateToLoginRpcService;
 
     @Value("${global.profile}")
     private String profile;
@@ -60,7 +58,7 @@ public class GateService extends AbstractScene {
             LOGGER.info("gate service start：{}-{}...", gateConfig.toString());
             ScriptManager.getInstance().setHandlerLoader(HandlerManager.getInstance());
             ScriptManager.getInstance().init((str) -> {
-                LOGGER.error("脚本加载错误：{}", str);
+                LOGGER.error("load script error：{}", str);
                 System.exit(0);
             });
 
@@ -72,6 +70,11 @@ public class GateService extends AbstractScene {
 
     }
 
+    /**
+     * 初始化zookeeper
+     *
+     * @throws Exception
+     */
     private void initZkService() throws Exception {
         long now = TimeUtil.currentTimeMillis();
         //推送配置
@@ -98,28 +101,13 @@ public class GateService extends AbstractScene {
                 .uriSpec(new UriSpec("{address}:{port}"))
                 .build();
         zkClientService.registerService(clientServiceInstance);
-        //监听登陆服
-        loginServiceCache = zkClientService.getServiceDiscovery().serviceCacheBuilder().name(ServiceName.LoginRpc.name()).build();
-        loginServiceCache.addListener(new ServiceCacheListener() {
-            @Override
-            public void cacheChanged() {
-                LOGGER.info("login service change {}", loginServiceCache.getInstances().size());
-                gateToLoginRpcService.updateLoginRpc(loginServiceCache.getInstances());
-            }
-
-            @Override
-            public void stateChanged(CuratorFramework client, ConnectionState newState) {
-
-            }
-        });
-        loginServiceCache.start();
     }
 
 
     @PreDestroy
     public void destroy() {
-        if (loginServiceCache != null) {
-            CloseableUtils.closeQuietly(loginServiceCache);
+        if (apiServiceCache != null) {
+            CloseableUtils.closeQuietly(apiServiceCache);
         }
         zkClientService.unregisterService(clientServiceInstance);
         zkClientService.unregisterService(gameServiceInstance);

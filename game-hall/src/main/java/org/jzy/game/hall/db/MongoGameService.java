@@ -25,8 +25,6 @@ public class MongoGameService {
 
     @Autowired
     private HallConfig hallConfig;
-    @Autowired
-    private GlobalProperties globalProperties;
 
     @PostConstruct
     public void init() {

@@ -5,7 +5,7 @@ import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.jzy.game.common.constant.ZKNode;
 import org.jzy.game.common.constant.GlobalProperties;
-import org.jzy.game.common.struct.log.ILog;
+import org.jzy.game.common.struct.logger.ILog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,7 @@ public class KafkaProducerService {
     private GlobalProperties globalProperties;
 
 
+
     /**
      * 连接kafka
      *
@@ -46,19 +47,30 @@ public class KafkaProducerService {
     }
 
     /**
-     * 连接日志kafka
+     * 连接日志kafka ,地址从zookeeper获取
      *
      * @param clientId
      */
     public void connectLog(String clientId) {
         String url = zkClientService.getConfig(ZKNode.LogKafkaUrl.getKey(globalProperties.getProfile()), String.class);
         if (url == null) {
-            throw new IllegalStateException(String.format("log kafka url not init to zookeeper"));
+            LOGGER.warn("zookeeper not find kafka url,kafka start fail");
+            return;
         }
         this.connect(url, clientId);
     }
 
+    /**
+     * 发送日志
+     * @param topic
+     * @param key
+     * @param value
+     */
     public void send(String topic, String key, String value) {
+        if (producer==null){
+            LOGGER.warn("topic:{} key:{} push fail",topic,key);
+            return;
+        }
         long time = TimeUtil.currentTimeMillis();
         producer.send(new ProducerRecord<>(topic, key, value), new Callback() {
             @Override

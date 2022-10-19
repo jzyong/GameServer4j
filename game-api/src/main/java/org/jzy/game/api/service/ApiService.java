@@ -3,6 +3,7 @@ package org.jzy.game.api.service;
 
 import com.jzy.javalib.base.script.ScriptManager;
 import com.jzy.javalib.base.util.TimeUtil;
+import com.jzy.javalib.network.grpc.RpcServerManager;
 import com.jzy.javalib.network.io.handler.HandlerManager;
 import com.jzy.javalib.network.scene.AbstractScene;
 import org.apache.curator.x.discovery.ServiceInstance;
@@ -10,10 +11,8 @@ import org.apache.curator.x.discovery.UriSpec;
 import org.jzy.game.common.config.server.ApiConfig;
 import org.jzy.game.common.config.server.MongoConfig;
 import org.jzy.game.common.config.server.ServiceConfig;
-import org.jzy.game.common.constant.GlobalProperties;
-import org.jzy.game.common.constant.ServiceName;
-import org.jzy.game.common.constant.ThreadType;
-import org.jzy.game.common.constant.ZKNode;
+import org.jzy.game.common.constant.*;
+import org.jzy.game.common.service.CommonServerService;
 import org.jzy.game.common.service.KafkaProducerService;
 import org.jzy.game.common.service.ZkClientService;
 import org.slf4j.Logger;
@@ -56,6 +55,8 @@ public class ApiService extends AbstractScene {
     private GlobalProperties globalProperties;
     @Autowired
     private KafkaProducerService kafkaProducerService;
+    @Autowired
+    private CommonServerService commonServerService;
 
 
     /**
@@ -64,13 +65,13 @@ public class ApiService extends AbstractScene {
     @PostConstruct
     public void init() {
         try {
-            LOGGER.info("login server start：{}-->{} ", apiConfig.getId(), apiConfig.toString());
+            LOGGER.info("api server start：{}-->{} ", apiConfig.getId(), apiConfig.toString());
             //推送配置，数据库配置只在此推送
             zkClientService.pushConfig(ZKNode.ApiConfig.getKey(globalProperties.getProfile(), apiConfig.getId()), apiConfig);
             serviceInstance = ServiceInstance.<ServiceConfig>builder()
                     .id(String.valueOf(apiConfig.getId()))
                     .registrationTimeUTC(TimeUtil.currentTimeMillis())
-                    .name(ServiceName.LoginRpc.name())
+                    .name(ServiceName.ApiRpc.name())
                     .address(apiConfig.getPrivateIp())
                     .payload(new ServiceConfig())
                     .port(apiConfig.getRpcPort())
@@ -78,17 +79,17 @@ public class ApiService extends AbstractScene {
                     .build();
             zkClientService.starService(ZKNode.ServicePath.getKey(globalProperties.getProfile()), serviceInstance);
             zkClientService.pushConfig(ZKNode.MongoExcelConfig.getKey(globalProperties.getProfile()), new MongoConfig(mongoConfigUrl, mongoConfigDatabase));
-            zkClientService.pushConfig(ZKNode.MongoGameConfig.getKey(globalProperties.getProfile()), new MongoConfig(mongoApiUrl, mongoApiDatabase));
 
-            //TODO 暂时禁用kafka
-          //  kafkaProducerService.connectLog("mmo.login" + apiConfig.getId());
+           // kafkaProducerService.connectLog(KafkaClientId.Api.getName() + apiConfig.getId());
 
             ScriptManager.getInstance().setHandlerLoader(HandlerManager.getInstance());
             ScriptManager.getInstance().init((str) -> {
                 LOGGER.error("load scripts error:{}", str);
                 System.exit(0);
             });
+            RpcServerManager.getInstance().registerService(commonServerService);
             apiExecutorService.registerScene(ThreadType.server.toString(), this);
+            RpcServerManager.getInstance().start(apiConfig.getRpcPort());
         } catch (Exception e) {
             LOGGER.error("login server start", e);
         }
@@ -103,7 +104,7 @@ public class ApiService extends AbstractScene {
     @PreDestroy
     public void destroy() {
         zkClientService.unregisterService(serviceInstance);
-        LOGGER.info("login server stop：{}-->{} ", apiConfig.getId(), apiConfig.toString());
+        LOGGER.info("api server stop：{}-->{} ", apiConfig.getId(), apiConfig.toString());
 
     }
 

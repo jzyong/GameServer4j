@@ -297,4 +297,8 @@ public class ZkClientService {
     public ServiceDiscovery<ServiceConfig> getServiceDiscovery() {
         return serviceDiscovery;
     }
+
+    public CuratorFramework getClient() {
+        return client;
+    }
 }

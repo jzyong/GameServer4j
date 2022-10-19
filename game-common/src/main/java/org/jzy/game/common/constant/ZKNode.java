@@ -42,11 +42,6 @@ public enum ZKNode {
      */
     HallConfig("/game/%s/hall%s"),
 
-    /**
-     * 游戏mongo数据库
-     * {@link MongoConfig}
-     */
-    MongoGameConfig("/game/%s/mongo/game"),
 
     /**
      * 策划excel mongo数据库
