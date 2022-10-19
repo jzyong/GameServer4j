@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class GameToGateMessageCodec extends ByteToMessageCodec<Object> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameToGateMessageCodec.class);
-    /** 消息头长度，除去消息长度 消息类型2+玩家ID8 +消息ID4 */
-    private static final int HEADER_EXCLUDE_LENGHT = 14;
+    /** 消息头长度，除去消息长度  */
+    private static final int HEADER_EXCLUDE_LENGTH = 16;
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
@@ -29,18 +29,18 @@ public class GameToGateMessageCodec extends ByteToMessageCodec<Object> {
             IdMessage idMessage=(IdMessage)msg;
             if(idMessage.getMsg() instanceof byte[]) {
                 byte[] bytes=(byte[])idMessage.getMsg();
-                out.writeInt(HEADER_EXCLUDE_LENGHT+bytes.length);
-                out.writeShort(1);
-                out.writeLong(idMessage.getId());
+                out.writeInt(HEADER_EXCLUDE_LENGTH +bytes.length);
                 out.writeInt(idMessage.getMsgId());
+                out.writeLong(idMessage.getId());
+                out.writeInt(idMessage.getMsgSequence());
                 out.writeBytes(bytes);
             }else if(idMessage.getMsg() instanceof Message){
                 Message message = (Message) idMessage.getMsg();
                 byte[] bytes = message.toByteArray();
-                out.writeInt(HEADER_EXCLUDE_LENGHT+bytes.length);
-                out.writeShort(2);
-                out.writeLong(idMessage.getId());
+                out.writeInt(HEADER_EXCLUDE_LENGTH + bytes.length);
                 out.writeInt(idMessage.getMsgId());
+                out.writeLong(idMessage.getId());
+                out.writeInt(idMessage.getMsgSequence());
                 out.writeBytes(bytes);
             }else {
                 LOGGER.warn("IDMessage加密类型{}未实现", idMessage.getMsg().getClass().getSimpleName());

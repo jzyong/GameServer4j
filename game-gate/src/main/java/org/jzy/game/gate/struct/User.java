@@ -29,7 +29,7 @@ public class User {
      */
     private int gameId;
     /**
-     * 用户id
+     * 用户id 暂时和玩家id一致,如果一个账号需要对应多个玩家，需要修改
      */
     private long userId;
     /**

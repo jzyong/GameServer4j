@@ -3,6 +3,7 @@ package org.jzy.game.gate.tcp.user;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.jzy.javalib.base.script.ScriptManager;
+import com.jzy.javalib.base.util.ByteUtil;
 import com.jzy.javalib.base.util.TimeUtil;
 import com.jzy.javalib.network.io.handler.HandlerManager;
 import com.jzy.javalib.network.io.handler.TcpHandler;
@@ -173,8 +174,8 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
                 LOGGER.debug("{} {} 消息加密", user.getPlayerId(), mid);
             }
 
-            LOGGER.debug("{} 请求序号{} 确认{} 协议{}-{} 长度{}", user.getPlayerId(), msgSequence, ackMsgSequence,
-                    mid, MID.forNumber(mid), bytes.length);
+            LOGGER.debug("{} 请求序号{} 确认{} 协议{}-{} 长度{} ==> {}", user.getPlayerId(), msgSequence, ackMsgSequence,
+                    mid, MID.forNumber(mid), bytes.length, ByteUtil.bytesToHex(bytes));
             if (user.sendCacheMessage(msgSequence, mid)) {
                 return;
             }
@@ -195,11 +196,15 @@ public class UserTcpServerHandler extends ChannelInboundHandlerAdapter {
                     handler.setCreateTime(now);
                     handler.setId(user.getPlayerId() > 0 ? user.getPlayerId() : -1);
                     Executor executor = executorService.getExecutor(tcpHandlerBuilder.getExecuteThread());
-                    executor.execute(handler);
+                    if (executor!=null){
+                        executor.execute(handler);
+                    }else {
+                        handler.run();
+                    }
                     return;
                 }
             } else {
-                // 直接转发 需要判断是发往大厅还是  TODO 暂时直接发送大厅，添加其他服务器类型，需要判断
+                // 直接转发 需要判断是发往大厅还是其他服务器。 暂时直接发送大厅，添加其他服务器类型，需要判断
                 user.sendToHall(bytes, mid, msgSequence);
             }
             user.ackMessage(ackMsgSequence);

@@ -28,7 +28,7 @@ public class PlayerInfoHandler extends TcpHandler {
         List<Player> players = HallManager.getInstance().getPlayerRepository().findByUserId(request.getUserId());
         if (players.isEmpty()) {
             Player player = new Player();
-            player.setId(IdUtil.getId());
+            player.setId(request.getUserId()); // 暂时一个用户只能创建一个玩家
             player.setLevel(1);
             player.setUserId(request.getUserId());
             player.setName("Test" + MathUtil.random(10000000));
@@ -46,7 +46,7 @@ public class PlayerInfoHandler extends TcpHandler {
         playerInfo.setName(player.getName());
         builder.setPlayer(playerInfo);
         builder.setUserId(request.getUserId());
-        player.sendMsg(builder.build(), MID.PlayerInfoRes_VALUE);
+        sendInnerMsg(builder.build());
         LOGGER.info("玩家信息：{}", builder.build().toString());
     }
 }

@@ -1,11 +1,10 @@
 package org.jzy.game.gate.client;
 
+import com.jzy.javalib.base.util.ByteUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.jzy.game.proto.LoginRequest;
-import org.jzy.game.proto.LoginResponse;
-import org.jzy.game.proto.MID;
+import org.jzy.game.proto.*;
 
 import java.text.MessageFormat;
 
@@ -27,17 +26,30 @@ public class PlayerTest {
             public void handMessage(int messageId, byte[] bytes) {
                 try {
                     switch (messageId) {
+                        case -1 ->{
+                            System.out.println("加密字符串："+ ByteUtil.bcdToString(bytes));
+                        }
                         case MID
                                 .LoginRes_VALUE -> {
                             LoginResponse loginResponse = LoginResponse.parseFrom(bytes);
-                            System.out.println(MessageFormat.format("登录返回： {}", loginResponse.toString()));
+                            System.out.println(MessageFormat.format("登录返回： {0}", loginResponse.toString()));
+                        }
+                        case MID.PlayerInfoRes_VALUE -> {
+                            PlayerInfoResponse playerInfoResponse = PlayerInfoResponse.parseFrom(bytes);
+                            System.out.println(MessageFormat.format("玩家信息： {0}", playerInfoResponse.toString()));
+                            //请求 道具列表
+                            userClient.sendMsg(MID.ItemListReq, ItemListRequest.newBuilder().build());
+                        }
+                        case MID.ItemListRes_VALUE -> {
+                            ItemListResponse itemListResponse = ItemListResponse.parseFrom(bytes);
+                            System.out.println(MessageFormat.format("道具信息： {0}", itemListResponse.toString()));
                         }
                         default -> {
-                            System.out.println(MessageFormat.format("消息 {} 未实现", MID.forNumber(messageId)));
+                            System.out.println(MessageFormat.format("消息 {0} 未实现", MID.forNumber(messageId)));
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println(MessageFormat.format("消息处理异常 {} ", e));
+                    e.printStackTrace();
                 }
             }
         });
@@ -47,8 +59,8 @@ public class PlayerTest {
 
     @After
     public void destroy() throws Exception {
-        //暂停 5s
-        Thread.sleep(5000);
+        //暂停 50s
+        Thread.sleep(50000);
     }
 
     /**

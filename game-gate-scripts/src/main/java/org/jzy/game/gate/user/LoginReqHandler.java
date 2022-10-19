@@ -3,6 +3,7 @@ package org.jzy.game.gate.user;
 import com.jzy.javalib.network.io.handler.Handler;
 import com.jzy.javalib.network.io.handler.TcpHandler;
 import io.grpc.stub.StreamObserver;
+import org.jzy.game.gate.player.PlayerInfoReqHandler;
 import org.jzy.game.proto.*;
 import org.jzy.game.gate.tcp.user.UserTcpServerHandler;
 import org.jzy.game.gate.service.GateManager;
@@ -42,8 +43,11 @@ public class LoginReqHandler extends TcpHandler {
             public void onNext(LoginResponse value) {
                 LOGGER.debug("登录返回：{}", value.toString());
                 user.setUserId(value.getUserId());
-                GateManager.getInstance().getUserService().onUserLoginSuccess(user,null);
+                user.setPlayerId(value.getUserId());
+                GateManager.getInstance().getUserService().onUserLoginSuccess(user, null);
                 sendClientMsg(value);
+                // 转发给大厅创建角色
+                PlayerInfoReqHandler.requestPlayerInfo(user, PlayerInfoRequest.newBuilder().setUserId(user.getUserId()).build(), 0);
             }
 
             @Override

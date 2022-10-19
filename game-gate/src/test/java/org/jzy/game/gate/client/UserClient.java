@@ -1,6 +1,7 @@
 package org.jzy.game.gate.client;
 
 import com.google.protobuf.Message;
+import com.jzy.javalib.base.util.ByteUtil;
 import com.jzy.javalib.network.io.message.MsgUtil;
 import com.jzy.javalib.network.netty.config.NettyClientConfig;
 import com.jzy.javalib.network.netty.tcp.TcpClient;
@@ -124,10 +125,10 @@ public class UserClient {
                 byte[] bytes = message.toByteArray();
                 out.writeInt(Integer.reverseBytes(HEADER_EXCLUDE_LENGTH + bytes.length));
                 out.writeInt(Integer.reverseBytes(UserClient.this.mid.getNumber()));
-                out.writeLong(Integer.reverseBytes(requestSequence));
+                out.writeInt(Integer.reverseBytes(requestSequence));
                 out.writeInt(Integer.reverseBytes(++requestSequence));
                 out.writeBytes(bytes);
-                System.err.println(MessageFormat.format("send message id {0} sequence {1} length {2}",mid,requestSequence,bytes.length));
+                System.err.println(MessageFormat.format("send message id {0} sequence {1} length {2} ==> {3}", mid, requestSequence, bytes.length, ByteUtil.bytesToHex(bytes)));
             } else {
                 System.out.println("消息类型不支持");
             }
@@ -136,7 +137,26 @@ public class UserClient {
 
         @Override
         protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-            MsgUtil.decode(ctx, in, out);
+            if (in.readableBytes() < 4) {
+                return;
+            }
+            in.markReaderIndex();
+            int dataLength = in.readIntLE();
+
+            if (dataLength < 1) {
+                System.out.println(MessageFormat.format("消息解析异常,长度{}，id{}", dataLength, in.readIntLE()));
+                in.clear();
+                ctx.close();
+                return;
+            }
+            // 消息体长度不够，继续等待
+            if (in.readableBytes() < dataLength) {
+                in.resetReaderIndex();
+                return;
+            }
+
+            ByteBuf readRetainedSlice = in.readRetainedSlice(dataLength);
+            out.add(readRetainedSlice);
         }
     }
 

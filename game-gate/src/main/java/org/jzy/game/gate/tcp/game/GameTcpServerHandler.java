@@ -53,7 +53,7 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx)  {
+    public void channelInactive(ChannelHandlerContext ctx) {
         channelClosed(ctx.channel(), OfflineType.Network);
     }
 
@@ -105,7 +105,12 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
                     handler.setMessage(message);
                     handler.setChannel(ctx.channel());
                     Executor executor = executorService.getExecutor(tcpHandlerBuilder.getExecuteThread());
-                    executor.execute(handler);
+                    if (executor != null) {
+                        executor.execute(handler);
+                    } else {
+                        handler.run();
+                    }
+
                     return;
                 }
             } else {
@@ -117,7 +122,7 @@ public class GameTcpServerHandler extends ChannelInboundHandlerAdapter {
                     return;
                 }
                 //返回长度+16（消息头）
-                LOGGER.debug("{} 返回序号{} 确认0 协议{}-{} 长度{}", id, msgSequence, msgId,MID.forNumber(msgId),bytes.length+16);
+                LOGGER.debug("{} 返回序号{} 确认0 协议{}-{} 长度{}", id, msgSequence, msgId, MID.forNumber(msgId), bytes.length + 16);
                 user.receiveUserMessage(msgId, msgSequence, bytes);
             }
         } catch (Exception e) {

@@ -7,7 +7,7 @@ option go_package="message";
 
 
 
-//玩家信息请求
+//玩家信息请求 （网关请求）
 message PlayerInfoRequest{
     int64 userId                            = 1; //用户id
 }
