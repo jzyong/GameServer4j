@@ -9,6 +9,8 @@ import com.jzy.javalib.network.scene.AbstractScene;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.x.discovery.ServiceCache;
+import org.apache.curator.x.discovery.ServiceInstance;
+import org.apache.curator.x.discovery.UriSpec;
 import org.apache.curator.x.discovery.details.ServiceCacheListener;
 import org.jzy.game.common.config.server.HallConfig;
 import org.jzy.game.common.config.server.ServiceConfig;
@@ -42,6 +44,7 @@ public class HallService extends AbstractScene {
      * 网关连接缓存
      */
     private ServiceCache<ServiceConfig> gateServiceCache;
+    private ServiceInstance<ServiceConfig> serviceInstance;
 
     @Autowired
     private ExecutorService executorService;
@@ -101,6 +104,18 @@ public class HallService extends AbstractScene {
         //推送配置
         zkClientService.pushConfig(ZKNode.HallConfig.getKey(globalProperties.getProfile(), hallConfig.getId()), hallConfig);
         zkClientService.starService(ZKNode.ServicePath.getKey(globalProperties.getProfile()), null);
+
+        serviceInstance = ServiceInstance.<ServiceConfig>builder()
+                .id(String.valueOf(hallConfig.getId()))
+                .registrationTimeUTC(TimeUtil.currentTimeMillis())
+                .name(ServiceName.HallRpc.name())
+                .address(hallConfig.getPrivateIp())
+                .payload(new ServiceConfig())
+                .port(hallConfig.getRpcPort())
+                .uriSpec(new UriSpec("{address}:{port}"))
+                .build();
+        zkClientService.starService(ZKNode.ServicePath.getKey(globalProperties.getProfile()), serviceInstance);
+
         gateServiceCache = zkClientService.getServiceDiscovery().serviceCacheBuilder().name(ServiceName.GateGameTcp.name()).build();
         gateServiceCache.addListener(new ServiceCacheListener() {
             @Override

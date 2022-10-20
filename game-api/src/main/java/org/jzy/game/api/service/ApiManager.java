@@ -35,7 +35,7 @@ public class ApiManager {
         return instance;
     }
 
-    public ApiService getLoginService() {
+    public ApiService getApiService() {
         return apiService;
     }
 

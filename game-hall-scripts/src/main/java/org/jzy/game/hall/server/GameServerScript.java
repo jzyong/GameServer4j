@@ -7,7 +7,6 @@ import org.jzy.game.common.constant.ServerType;
 import org.jzy.game.common.scripts.IServerScript;
 import org.jzy.game.hall.service.HallManager;
 import org.jzy.game.proto.MID;
-import org.jzy.game.proto.MessageId;
 import org.jzy.game.proto.ServerInfo;
 import org.jzy.game.proto.ServerRegisterUpdateRequest;
 import org.slf4j.Logger;
@@ -36,7 +35,7 @@ public class GameServerScript implements IServerScript {
         HallManager.getInstance().getGateInfoService().broadcastMessage(serverRegisterUpdateRequest, MID.ServerRegisterUpdateReq_VALUE, -1);
 
         //获取网关列表,刚起服需要主动拉取
-        ServiceCache<ServiceConfig> gateServiceCache = HallManager.getInstance().getGameService().getGateServiceCache();
+        ServiceCache<ServiceConfig> gateServiceCache = HallManager.getInstance().getHallService().getGateServiceCache();
         if (gateServiceCache.getInstances().size() != gateServerCount) {
             gateServerCount = gateServiceCache.getInstances().size();
             HallManager.getInstance().getGateInfoService().updateGateServer(gateServiceCache.getInstances());

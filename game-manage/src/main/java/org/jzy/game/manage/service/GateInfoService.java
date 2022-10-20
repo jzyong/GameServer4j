@@ -29,7 +29,7 @@ public class GateInfoService {
 
     /**
      * 轮询获取网关<br>
-     * or根据网关人数获取？
+     * or根据网关人数获取？根据IP地址进行分配
      *
      * @return
      */
