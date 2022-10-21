@@ -10,10 +10,6 @@ public enum ServerType {
 
     NONE(0),
     /**
-     * 注册中心
-     */
-    CLUSTER(1),
-    /**
      * 网关
      */
     GATE(2),

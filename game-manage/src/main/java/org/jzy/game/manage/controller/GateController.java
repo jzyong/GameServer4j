@@ -21,8 +21,8 @@ public class GateController {
     /**
      * 获取可连接的网关地址
      * <br>轮询获取，
-     * http://127.0.0.1:7020/gate/get
-     * http://127.0.0.1:7021/gate/get
+     * http://127.0.0.1:7061/gate/get
+     * http://127.0.0.1:7062/gate/get
      * @return
      */
     @RequestMapping("/gate/get")

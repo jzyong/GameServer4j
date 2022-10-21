@@ -15,12 +15,15 @@ public class ApiServiceInfo extends AbstractMicroserviceInfo {
 
     private AccountServiceGrpc.AccountServiceStub accountServiceStub;
 
+
+
     public ApiServiceInfo(String id, String url, String name) {
         super(id, url, name);
     }
 
     @Override
     public void register() {
+        super.register();
         accountServiceStub = AccountServiceGrpc.newStub(getChannel());
     }
 

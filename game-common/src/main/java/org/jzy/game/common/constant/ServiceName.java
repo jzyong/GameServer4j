@@ -12,6 +12,10 @@ public enum ServiceName {
      */
     ApiRpc,
     /**
+     * 大厅服rpc
+     */
+    HallRpc,
+    /**
      * 网关游戏服tcp
      */
     GateGameTcp,

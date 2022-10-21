@@ -1,8 +1,8 @@
-package org.jzy.game.api.server;
+package org.jzy.game.hall.server;
 
 import com.jzy.javalib.network.io.handler.Handler;
-import org.jzy.game.api.service.ApiManager;
 import org.jzy.game.common.util.RpcHttpHandler;
+import org.jzy.game.hall.service.HallManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +23,6 @@ public class CloseServerHandler extends RpcHttpHandler {
         getBuilder().setResult("关服成功");
 
         //延迟关服
-        ApiManager.getInstance().getApiService().schedule(() -> Runtime.getRuntime().exit(0), 5000, TimeUnit.MILLISECONDS);
+        HallManager.getInstance().getHallService().schedule(() -> Runtime.getRuntime().exit(0), 1000, TimeUnit.MILLISECONDS);
     }
 }

@@ -59,7 +59,7 @@ public class HallManager {
 		return gateInfoService;
 	}
 
-	public HallService getGameService() {
+	public HallService getHallService() {
 		return hallService;
 	}
 
