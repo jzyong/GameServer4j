@@ -1,10 +1,9 @@
 
 rem must copy file...
-xcopy ..\mmo-gate-scripts\src mmo-gate-scripts\src\ /s /e
-copy /y "%JAVA_HOME%\lib\tools.jar" target\lib\
+xcopy ..\game-gate-scripts\src game-gate-scripts\src\ /s /e
 
-docker image build -t mmo-gate:releases .
+docker image build -t game-gate:releases .
 
-rd /s/q mmo-gate-scripts
+rd /s/q game-gate-scripts
 
 

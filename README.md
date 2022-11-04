@@ -53,4 +53,5 @@ The basic architecture of the project is shown below:
  * world 开发
  * docker-compose 一键部署
  * mdbook 文档制作
+ * 添加加载脚本和配置 maven插件
 

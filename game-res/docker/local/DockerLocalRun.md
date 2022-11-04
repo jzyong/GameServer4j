@@ -1,97 +1,47 @@
-# docker服务器本地运行
+# 本地运行
+
+&emsp;&emsp;本地demo在windows环境下使用docker-compose允许。
 
 ## 前置条件
-1.本地windows安装docker运行环境<br>
-2.默认端口需求<br>
 
-|  端口   | 描述  |  端口   | 描述  |  端口   | 描述  |
-|  ----  | ----  |  ----  | ----  |  ----  | ----  |
-| 7000  | 登陆服1 rpc | 7001  | 登陆服2 rpc |
-| 7010  | 网关服1 客户端 | 7012  | 网关服2 客户端 |
-| 7011  | 网关服1 游戏 |7013  | 网关服2 游戏 |
-| 7020  | 后台1服 http | 7021  | 后台2服 http | 7022  | 后台nginx代理 |
-| 7030  | 游戏服1 rpc | 7031  | 游戏服2 rpc |
-| 2181  | zookeeper |
-| 9092  | kafka     |
+1. 本地windows安装docker-compose运行环境<br>
+2. 默认端口需求<br>
+3. JDK14允许环境
+4. 下表端口
+
+| 端口    | 描述         | 端口    | 描述            | 端口  | 描述  |
+|-------|------------|-------|---------------|-----|-----|
+| 7000  | api1 rpc   | 7001  |
+| 7020  | 网关1 客户端    | 7021  | 网关1 游戏        |
+| 7030  | 大厅1 rpc    |
+| 7061  | 后台1 http   |
+| 2181  | zookeeper  |
+| 9092  | kafka      |
 | 9090  | nginx http |
-| 16379  | redis |
-| 27017  | mongodb |
+| 16379 | redis      |
+| 27017 | mongodb    | 27018 | mongo-express |
 
-3.修改/resources/filter目录下配置文件ip地址
+## 运行
 
-4.打包项目<br>
+* [build_image.cmd](build_image.cmd) 打包项目为docker image
+* [docker-compose.yml](docker-compose.yml) docker运行配置
 
-    mvn clean package -Pjzy -DskipTests
+```shell
+# 1.打开build_image.cmd 修改JAVA_HOME 环境变量
+set JAVA_HOME=D:\Program Files\Java\jdk-14.0.1
 
-## Zookeeper 
-**安装zookeeper：**
+# 2.运行 build_image.cmd
+build_image.cmd
 
-       rem docker run --privileged=true -d --name zookeeper -p 2181:2181 zookeeper:latest
-双击 zookeeper_run.cmd启动 zookeeper
+# 3.启动项目
+docker-compose up -d
 
-## Mongodb
-安装配置参考：https://www.runoob.com/docker/docker-install-mongodb.html
+```
 
-**安装mongodb：**
+* mongo数据库访问： <http://localhost:27018/>  `root` `123456`
 
-    docker run -itd --name mongo -p 27017:27017 mongo --auth
 
-执行如下命令设置mongodb信息：    
-    
-    docker exec -it mongo mongo admin
-    #创建账号
-    db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'},"readWriteAnyDatabase"]});
-    db.auth('admin', '123456')
 
-双击mongo_run.cmd 运行mongodb
-
-## Redis
-**安装redis:**
-
-    docker pull redis
-    docker run --name redis -p 16379:6379  -d redis:latest redis-server --appendonly yes
-    docker exec -it 4a20 bash
-    cd /usr/local/bin/
-    ./redis-cli
-    info
-    
-## kafka
-    docker pull wurstmeister/kafka
-    docker run -d --name kafka -p 9092:9092 --link zookeeper --env KAFKA_ZOOKEEPER_CONNECT=192.168.0.2:2181 --env KAFKA_ADVERTISED_HOST_NAME=192.168.0.2 --env KAFKA_ADVERTISED_PORT=9092 wurstmeister/kafka
-    docker exec -it kafka /bin/sh
-    cd /opt/kafka_2.13-2.6.0/bin
-    
-## nginx
-    docker pull nginx:latest
-    docker run -d --name=nginx nginx
-    #docker cp [容器id]:/etc/nginx D:\soft\nginx\config
-    docker cp 3c103:/etc/nginx D:\soft\nginx\config
-    docker run -d --name nginx -p 9090:80 -p 7022:7022 -v D:\soft\nginx\config\nginx:/etc/nginx nginx
-    # http://127.0.0.1:9090/
-
-[manage http代理配置文件](https://github.com/jzyong/mmo-server/blob/master/mmo-res/docker/local/backup/nginx/conf.d/manage.conf)
-       
-
-## java进程启动
-**login运行：**
-
- mmo_login_start_jzy.cmd <br>
- mmo_login_start_jzy2.cmd
-
-**gate运行：**
-
- mmo_gate_start_jzy.cmd <br>
- mmo_gate_start_jzy2.cmd
-
-**manage运行：**
-
- mmo_manage_start_jzy.cmd <br>
- mmo_manage_start_jzy2.cmd
-
-**game运行：**
-
- mmo_game_start_jzy.cmd <br>
- mmo_game_start_jzy2.cmd
 
 
 

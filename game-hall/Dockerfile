@@ -1,11 +1,11 @@
-FROM openjdk:14-jdk-alpine
+FROM openjdk:14-jdk
 
-COPY target/lib /usr/src/mmo-game/lib
-COPY target/mmo-game-releases.jar /usr/src/mmo-game/mmo-game-releases.jar
-COPY mmo-game-scripts/src /usr/src/mmo-game-scripts/src
+COPY target/lib /usr/src/game-hall/lib
+COPY target/game-hall-releases.jar /usr/src/game-hall/game-hall-releases.jar
+COPY game-hall-scripts/src /usr/src/game-hall-scripts/src
 
-ENV CLASSPATH .:${JAVA_HOME}/lib:${JRE_HOME}/lib:/usr/src/mmo-game/lib
+ENV CLASSPATH .:${JAVA_HOME}/lib:${JRE_HOME}/lib:/usr/src/game-hall/lib
 
-WORKDIR /usr/src/mmo-game
+WORKDIR /usr/src/game-hall
 
-CMD  java -jar mmo-game-releases.jar
+CMD  java -jar game-hall-releases.jar

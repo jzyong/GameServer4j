@@ -48,13 +48,13 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>3.3.1</version>
+            <version>3.6.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>4.0.0</version>
+            <version>5.2.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
         <dependency>
@@ -165,6 +165,16 @@
                 <filters>
                     <filter>
                         src/main/resources/filter/manage_jzy2.properties
+                    </filter>
+                </filters>
+            </build>
+        </profile>
+        <profile>
+            <id>default</id>
+            <build>
+                <filters>
+                    <filter>
+                        src/main/resources/filter/manage_default.properties
                     </filter>
                 </filters>
             </build>

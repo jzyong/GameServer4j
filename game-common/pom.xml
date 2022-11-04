@@ -58,7 +58,7 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-x-discovery</artifactId>
-            <version>5.2.0</version>
+            <version>5.4.0</version>
         </dependency>
         <!--kafka -->
         <dependency>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-examples</artifactId>
-            <version>5.2.0</version>
+            <version>5.4.0</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>

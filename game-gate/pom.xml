@@ -115,5 +115,15 @@
                 </filters>
             </build>
         </profile>
+        <profile>
+            <id>default</id>
+            <build>
+                <filters>
+                    <filter>
+                        src/main/resources/filter/gate_default.properties
+                    </filter>
+                </filters>
+            </build>
+        </profile>
     </profiles>
 </project>
