@@ -1,10 +1,9 @@
 
 rem must copy file...
-xcopy ..\mmo-login-scripts\src mmo-login-scripts\src\ /s /e
-copy /y "%JAVA_HOME%\lib\tools.jar" target\lib\
+xcopy ..\game-api-scripts\src game-api-scripts\src\ /s /e
 
-docker image build -t mmo-login:releases .
+docker image build -t game-api:releases .
 
-rd /s/q mmo-login-scripts
+rd /s/q game-api-scripts
 
 

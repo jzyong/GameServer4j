@@ -1,8 +1,8 @@
 
 rem must copy file...
 
-docker image build -t mmo-manage:releases .
+docker image build -t game-manage:releases .
 
-rd /s/q mmo-manage-scripts
+rd /s/q game-manage-scripts
 
 

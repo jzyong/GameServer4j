@@ -1,10 +1,9 @@
 
 rem must copy file...
-xcopy ..\mmo-game-scripts\src mmo-game-scripts\src\ /s /e
-copy /y "%JAVA_HOME%\lib\tools.jar" target\lib\
+xcopy ..\game-hall-scripts\src game-hall-scripts\src\ /s /e
 
-docker image build -t mmo-game:releases .
+docker image build -t game-hall:releases .
 
-rd /s/q mmo-game-scripts
+rd /s/q game-hall-scripts
 
 

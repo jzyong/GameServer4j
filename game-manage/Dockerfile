@@ -1,10 +1,10 @@
-FROM openjdk:14-jdk-alpine
+FROM openjdk:14-jdk
 
-COPY target/lib /usr/src/mmo-manage/lib
-COPY target/mmo-manage-releases.jar /usr/src/mmo-manage/mmo-manage-releases.jar
+COPY target/lib /usr/src/game-manage/lib
+COPY target/game-manage-releases.jar /usr/src/game-manage/game-manage-releases.jar
 
-ENV CLASSPATH .:${JAVA_HOME}/lib:${JRE_HOME}/lib:/usr/src/mmo-manage/lib
+ENV CLASSPATH .:${JAVA_HOME}/lib:${JRE_HOME}/lib:/usr/src/game-manage/lib
 
-WORKDIR /usr/src/mmo-manage
+WORKDIR /usr/src/game-manage
 
-CMD  java -jar mmo-manage-releases.jar
+CMD  java -jar game-manage-releases.jar

@@ -98,6 +98,16 @@
 
     <profiles>
         <profile>
+            <id>default</id>
+            <build>
+                <filters>
+                    <filter>
+                        src/main/resources/filter/api_default.properties
+                    </filter>
+                </filters>
+            </build>
+        </profile>
+        <profile>
             <id>jzy</id>
             <build>
                 <filters>

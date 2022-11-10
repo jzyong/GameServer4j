@@ -1,6 +1,6 @@
-#Kafka
+# Kafka
 
-##Install
+## Install
 参考文档：<https://hub.docker.com/r/bitnami/kafka>  
 ```shell script
 # 官方操作
