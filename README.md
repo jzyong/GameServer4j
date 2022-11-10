@@ -12,7 +12,7 @@ The basic architecture of the project is shown below:
 
 
 ## Module
-1. Logical scripts that end with the project module at the end of `scripts` as the corresponding project can be hot-updated. [docker run](game-res/docker/local/DockerLocalRun.md)  
+1. Logical scripts that end with the project module at the end of `scripts` as the corresponding project can be hot-updated. [docker run](game-res/docker/local/DockerComposeRun.md)  
 * [game-common](game-common/README.md) Common logic code  
 
 * [game-message](game-message/README.md) Protobuf message,grpc service  
@@ -43,15 +43,13 @@ The basic architecture of the project is shown below:
   
   
   
-[中文文档](https://blog.csdn.net/jzhiy/category_10634655.html)  
+[Document]( https://jzyong.github.io/GameServer4j/)  
 **QQ Communication group:** 143469012
 
 
 ### TODO
-* add microservice
-* protobuf sync to GameServer4g
+ * add microservice
+ * protobuf sync to GameServer4g
  * world 开发
- * docker-compose 一键部署
- * mdbook 文档制作
  * 添加加载脚本和配置 maven插件
 

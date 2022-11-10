@@ -1,0 +1,24 @@
+[book]
+authors = ["Jzyong"]
+language = "cn"
+multilingual = false
+src = ""
+description = "Game micro-service server,grpc,zookeeper,mongodb,redis,netty,spring-boot" # A description for the book, which is added as meta information in the html <head> of each page
+title = "Game4J Document"
+
+[build]
+build-dir = "../docs"             # the directory where the output is placed
+create-missing = true             # whether or not to create missing pages
+use-default-preprocessors = true  # use the default preprocessors
+
+[output.html]
+git-repository-url = "https://github.com/jzyong/GameServer4j"
+
+[output.html.search]
+limit-results = 20
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 2
+boost-paragraph = 1
+expand = true
+heading-split-level = 2
