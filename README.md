@@ -43,7 +43,7 @@ The basic architecture of the project is shown below:
   
   
   
-[中文文档](https://blog.csdn.net/jzhiy/category_10634655.html)  
+[Document]( https://jzyong.github.io/GameServer4j/)  
 **QQ Communication group:** 143469012
 
 
@@ -51,6 +51,5 @@ The basic architecture of the project is shown below:
  * add microservice
  * protobuf sync to GameServer4g
  * world 开发
- * mdbook 文档制作
  * 添加加载脚本和配置 maven插件
 
