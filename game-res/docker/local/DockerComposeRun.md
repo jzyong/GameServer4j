@@ -1,5 +1,4 @@
 # 本地运行
-
 &emsp;&emsp;本地demo在windows环境下使用docker-compose允许。
 
 ## 前置条件
